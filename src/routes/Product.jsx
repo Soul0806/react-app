@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useParams } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { Outlet, Link, useLoaderData, Form, json, useNavigation, NavLink } from "react-router-dom";
 import Popup from "./popup";
@@ -6,11 +6,14 @@ import Popup from "./popup";
 
 // import { getContacts, createContact  } from "../contacts";
 // import Contact from "./contact";
+
 const API_URL = 'https://localhost:7123/api/product';
 const WRITE_ACTION = 'https://localhost:7123/write';
+const PAGE_ACTION = 'https://localhost:7123/?page=';
 
 function Get(id = null) {
     let result;
+
     if (id != null) {
         result = fetch(`${API_URL}/${id}`)
             .then(res => { return res.json() })
@@ -24,7 +27,16 @@ function Get(id = null) {
                 return data;
             })
     }
+    return result;
+}
 
+function pageAction(page) {
+    let result;
+    result = fetch(`${PAGE_ACTION}${page}`)
+        .then(res => { return res.json() })
+        .then(data => {
+            return data;
+        })
     return result;
 }
 
@@ -56,10 +68,17 @@ async function write(rebuild) {
     return result;
 }
 
-export async function loader() {
-
-    const products = await Get();
-    const pages = [...Array(Math.ceil(Object.keys(products).length / 10)).keys()];;
+export async function loader({ params }) {
+    let products 
+    const allProducts = await Get(); 
+    const page = params.pageN
+    if(page != null) {
+        products = await pageAction(page);
+    }
+    else {
+        products = allProducts
+    }
+    const pages = [...Array(Math.ceil(Object.keys(allProducts).length / 10)).keys()];;
     return { products, pages };
 }
 
@@ -68,13 +87,15 @@ export async function action({ request }) {
     const data = await request.formData();
     const formData = Object.fromEntries(data);
     const products = await write(formData.rebuild);
+
     return { products }
 }
 
 export default function Product() {
-
+    
     const { products, pages } = useLoaderData();
     const navigation = useNavigation();
+
 
     const [isLoading, setIsLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -87,22 +108,8 @@ export default function Product() {
         Thumbnail: '',
     });
 
-    var handleModalOpen = (pId = null) => {
-        setShowModal(true);
-        if (pId != null) {
-            Get(pId).then(res => {
-                setP(res);
-            });
-        } else {
-            setP('');
-        }
-    }
-
-    var handleDelete = (pId) => {
-        Delete(pId);
-    }
-
     return (
+
         <div id="container">
             <aside>
                 <h1>Product</h1>
@@ -132,48 +139,20 @@ export default function Product() {
                             <div class="pages">
                                 <span>&lt;</span>
                                 {pages.map(p => (
-                                    <span>
-                                        <NavLink>{p + 1}</NavLink>
+                                    <span key={p}>
+                                        <NavLink style={({ isActive, isPending }) => {
+                                            return {
+                                                fontWeight: isActive ? "bold" : "",
+                                                color: isActive ? "red" : "black",
+                                            };
+                                        }}
+                                            to={`page/${p + 1}`}>{p + 1}</NavLink>
                                     </span>
                                 ))}
                                 <span>&gt;</span>
-                                </div>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Ttile</th>
-                                        <th>Price</th>
-                                        <th>Brand</th>
-                                        <th>Category</th>
-
-                                        <th>操作</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        products.map(p => (
-                                            <tr key={p.ID}>
-                                                <td className="id">{p.ID}</td>
-                                                <td className="title">{p.Title}</td>
-                                                <td className="price">{p.Price}</td>
-                                                <td className="brand">{p.Brand}</td>
-                                                <td className="category">{p.Category}</td>
-
-                                                <td>
-                                                    <span class="material-symbols-outlined" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                        onClick={() => handleModalOpen(p.ID)}>edit</span>
-                                                    <span class="material-symbols-outlined" onClick={() => handleDelete(p.ID)}>
-                                                        delete
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    }
-                                </tbody>
-                            </table>
+                            </div>
+                            <Outlet context={[products]} />
                         </>
-
                     )}
             </div>
             <Popup showModal={showModal} setShowModal={setShowModal} p={p} setP={setP} />
