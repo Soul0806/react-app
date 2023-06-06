@@ -1,9 +1,71 @@
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useState } from 'react'; 
+
+import { useOutletContext, useParams, useLoaderData } from 'react-router-dom';
+const API_URL = 'https://localhost:7123/api/product';
+const PAGE_ACTION = `${API_URL}/page/`;
+
+function pageAction(page) {
+    let result;
+    result = fetch(`${PAGE_ACTION}${page}`)
+        .then(res => { return res.json() })
+        .then(data => {
+            return data;
+        })
+    return result;
+}
+
+const handleDelete = (pId) => {
+    let data = { ID: pId };
+    fetch(`${API_URL}/${pId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+    })
+        .then(res => { return res.json })
+        .then(data => window.location.replace('/'));
+}
 
 
-export default function Table() {
+export async function loader({ params }) {
+   
+    let products;
+    let page = params.pageN
+    if(page != null) {
+        products = await pageAction(page);
+    } else {
+        page = 1;
+        products = await pageAction(page);
+    }
+    return { products };
+}
 
-    let [ products ] = useOutletContext();
+export default function Table({}) {
+    const { products } = useLoaderData();
+
+    const [p, setP] = useState({
+        Title: '',
+        Price: '',
+        Brand: '',
+        Category: '',
+        Thumbnail: '',
+    });
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setP((prevFormData) => ({
+            ...prevFormData,
+            [name]: value
+        }));
+    };
+
+    const handleModalOpen = (p) => {
+        setP((prevFormData) => ({
+            ...prevFormData
+        }));
+    }
+
     return (
         <table>
             <thead>
@@ -28,7 +90,7 @@ export default function Table() {
                             <td className="category">{p.Category}</td>
                             <td>
                                 <span class="material-symbols-outlined" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                    onClick={() => handleModalOpen(p.ID)}>edit</span>
+                                    onClick={() => handleModalOpen(p)}>edit</span>
                                 <span class="material-symbols-outlined" onClick={() => handleDelete(p.ID)}>
                                     delete
                                 </span>

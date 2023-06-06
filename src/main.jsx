@@ -10,7 +10,7 @@ import './index.scss';
 // import Department, { loader as rootLoader, action as rootAction } from "./routes/Department";
 import Product, { loader as rootLoader, action as rootAction } from './routes/Product';
 import Popup, { loader as popupLoader, action as popupAction } from './routes/popup';
-import Table from './routes/Table';
+import Table, { loader as tableLoader } from './routes/Table';
 import ErrorPage from "./error-page";
 
 const router = createBrowserRouter([
@@ -24,10 +24,12 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Table />,
+        loader: tableLoader,
       },
       {
         path: "/page/:pageN",
         element: <Table />,
+        loader: tableLoader,
       }
     ]
     

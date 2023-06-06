@@ -3,13 +3,12 @@ import { Button, Modal } from 'react-bootstrap';
 import { Outlet, Link, useLoaderData, Form, json, useNavigation, NavLink } from "react-router-dom";
 import Popup from "./popup";
 
-
 // import { getContacts, createContact  } from "../contacts";
 // import Contact from "./contact";
 
 const API_URL = 'https://localhost:7123/api/product';
 const WRITE_ACTION = 'https://localhost:7123/write';
-const PAGE_ACTION = 'https://localhost:7123/?page=';
+const PAGE_ACTION = `${API_URL}/page/`;
 
 function Get(id = null) {
     let result;
@@ -30,28 +29,6 @@ function Get(id = null) {
     return result;
 }
 
-function pageAction(page) {
-    let result;
-    result = fetch(`${PAGE_ACTION}${page}`)
-        .then(res => { return res.json() })
-        .then(data => {
-            return data;
-        })
-    return result;
-}
-
-const Delete = (pId) => {
-    let data = { ID: pId };
-    fetch(`${API_URL}/${pId}`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data), // body data type must match "Content-Type" header
-    })
-        .then(res => { return res.json })
-        .then(data => window.location.replace('/'));
-}
 // async function Put(id) {
 //   let dep = await fetch(`${api_url}/${id}`)
 //     .then(res => { return res.json() })
@@ -69,21 +46,14 @@ async function write(rebuild) {
 }
 
 export async function loader({ params }) {
-    let products 
-    const allProducts = await Get(); 
-    const page = params.pageN
-    if(page != null) {
-        products = await pageAction(page);
-    }
-    else {
-        products = allProducts
-    }
-    const pages = [...Array(Math.ceil(Object.keys(allProducts).length / 10)).keys()];;
+
+    const products = await Get(); 
+    const pages = [...Array(Math.ceil(Object.keys(products).length / 10)).keys()];
     return { products, pages };
 }
 
 export async function action({ request }) {
-
+  
     const data = await request.formData();
     const formData = Object.fromEntries(data);
     const products = await write(formData.rebuild);
@@ -107,6 +77,8 @@ export default function Product() {
         Category: '',
         Thumbnail: '',
     });
+
+
 
     return (
 
@@ -151,7 +123,7 @@ export default function Product() {
                                 ))}
                                 <span>&gt;</span>
                             </div>
-                            <Outlet context={[products]} />
+                            <Outlet context={[pages]} />
                         </>
                     )}
             </div>

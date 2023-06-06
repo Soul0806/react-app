@@ -40,6 +40,7 @@ function Popup({ showModal, setShowModal, p, setP }) {
 
     };
 
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         let data;
@@ -67,7 +68,6 @@ function Popup({ showModal, setShowModal, p, setP }) {
                 .then(() => window.location.replace('/'));
         }
     }
-
 
     return (
         <div className="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
