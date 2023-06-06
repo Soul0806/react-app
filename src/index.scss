@@ -1,0 +1,68 @@
+html {
+  box-sizing: border-box;
+
+  #container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+
+    aside {
+      padding: 2rem;
+      text-align: center;
+
+    }
+
+    .detail {
+      margin: 1rem;
+      .pages {
+        text-align: center;
+        span {
+          margin: 0 .5rem;
+        }
+      }
+      table {
+        border-collapse: separate;
+        border-spacing: 0 1rem;
+
+        tr {
+          text-align: center;
+          display: grid;
+          grid-template-columns: repeat(7, 1fr);
+
+          th {
+            padding: 1rem;
+          }
+        }
+
+        tbody {
+
+          tr {
+            .material-symbols-outlined {
+              margin: 0 .5rem;
+              cursor: pointer;
+              visibility: hidden;            
+            }
+            &:hover { 
+              .material-symbols-outlined {
+                visibility: visible;
+                opacity: .4;
+                &:hover {
+                  opacity: 1;
+                }
+              }
+            }
+            td {
+              // display: inline-block;
+              // vertical-align: middle;
+            }
+            &:hover {
+              td:not(:last-child) {
+                background-color: rgba(185, 185, 180, 0.993);
+              }
+            }
+          }
+        }
+
+      }
+    }
+  }
+}
