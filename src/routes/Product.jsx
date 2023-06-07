@@ -1,7 +1,7 @@
 import { useState, useEffect, useParams } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { Outlet, Link, useLoaderData, Form, json, useNavigation, NavLink } from "react-router-dom";
-import Popup from "./popup";
+
 
 // import { getContacts, createContact  } from "../contacts";
 // import Contact from "./contact";
@@ -48,7 +48,8 @@ async function write(rebuild) {
 export async function loader({ params }) {
 
     const products = await Get(); 
-    const pages = [...Array(Math.ceil(Object.keys(products).length / 10)).keys()];
+    const pages = [...Array(Math.ceil(Object.keys(products).length / 15)).keys()];
+
     return { products, pages };
 }
 
@@ -61,33 +62,20 @@ export async function action({ request }) {
     return { products }
 }
 
+
+
 export default function Product() {
-    
+
     const { products, pages } = useLoaderData();
     const navigation = useNavigation();
 
-
     const [isLoading, setIsLoading] = useState(false);
-    const [showModal, setShowModal] = useState(false);
-
-    const [p, setP] = useState({
-        Title: '',
-        Price: '',
-        Brand: '',
-        Category: '',
-        Thumbnail: '',
-    });
-
-
 
     return (
-
         <div id="container">
             <aside>
-                <h1>Product</h1>
-                <button type="button" className="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                    onClick={() => handleModalOpen(null)}
-                >新增</button>
+                <h1><Link to="/">Product</Link></h1>
+     
                 <div>
                     <Form method="post">
                         <select name="rebuild">
@@ -116,6 +104,7 @@ export default function Product() {
                                             return {
                                                 fontWeight: isActive ? "bold" : "",
                                                 color: isActive ? "red" : "black",
+                                                cursor: isActive ? "text" : ""
                                             };
                                         }}
                                             to={`page/${p + 1}`}>{p + 1}</NavLink>
@@ -123,11 +112,10 @@ export default function Product() {
                                 ))}
                                 <span>&gt;</span>
                             </div>
-                            <Outlet context={[pages]} />
+                            <Outlet />
                         </>
                     )}
             </div>
-            <Popup showModal={showModal} setShowModal={setShowModal} p={p} setP={setP} />
         </div>
     );
 }

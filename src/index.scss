@@ -1,3 +1,9 @@
+:root {
+  a {
+    text-decoration: none;
+  }
+}
+
 html {
   box-sizing: border-box;
 
@@ -13,12 +19,16 @@ html {
 
     .detail {
       margin: 1rem;
+
       .pages {
         text-align: center;
+
         span {
           margin: 0 .5rem;
+
         }
       }
+
       table {
         border-collapse: separate;
         border-spacing: 0 1rem;
@@ -39,21 +49,25 @@ html {
             .material-symbols-outlined {
               margin: 0 .5rem;
               cursor: pointer;
-              visibility: hidden;            
+              visibility: hidden;
             }
-            &:hover { 
+
+            &:hover {
               .material-symbols-outlined {
                 visibility: visible;
                 opacity: .4;
+
                 &:hover {
                   opacity: 1;
                 }
               }
             }
+
             td {
               // display: inline-block;
               // vertical-align: middle;
             }
+
             &:hover {
               td:not(:last-child) {
                 background-color: rgba(185, 185, 180, 0.993);

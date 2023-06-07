@@ -1,6 +1,7 @@
-import { useState } from 'react'; 
+import { useState } from 'react';
 
 import { useOutletContext, useParams, useLoaderData } from 'react-router-dom';
+import Popup from "./popup";
 const API_URL = 'https://localhost:7123/api/product';
 const PAGE_ACTION = `${API_URL}/page/`;
 
@@ -29,10 +30,10 @@ const handleDelete = (pId) => {
 
 
 export async function loader({ params }) {
-   
+
     let products;
     let page = params.pageN
-    if(page != null) {
+    if (page != null) {
         products = await pageAction(page);
     } else {
         page = 1;
@@ -41,16 +42,13 @@ export async function loader({ params }) {
     return { products };
 }
 
-export default function Table({}) {
+export default function Table() {
+
     const { products } = useLoaderData();
 
-    const [p, setP] = useState({
-        Title: '',
-        Price: '',
-        Brand: '',
-        Category: '',
-        Thumbnail: '',
-    });
+    const [showModal, setShowModal] = useState(false);
+
+    const [p, setP] = useState({});
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -60,45 +58,41 @@ export default function Table({}) {
         }));
     };
 
-    const handleModalOpen = (p) => {
-        setP((prevFormData) => ({
-            ...prevFormData
-        }));
-    }
-
     return (
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Ttile</th>
-                    <th>Price</th>
-                    <th>Brand</th>
-                    <th>Category</th>
-
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody>
-                {
-                    products.map(p => (
-                        <tr key={p.ID}>
-                            <td className="id">{p.ID}</td>
-                            <td className="title">{p.Title}</td>
-                            <td className="price">{p.Price}</td>
-                            <td className="brand">{p.Brand}</td>
-                            <td className="category">{p.Category}</td>
-                            <td>
-                                <span class="material-symbols-outlined" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                    onClick={() => handleModalOpen(p)}>edit</span>
-                                <span class="material-symbols-outlined" onClick={() => handleDelete(p.ID)}>
-                                    delete
-                                </span>
-                            </td>
-                        </tr>
-                    ))
-                }
-            </tbody>
-        </table>
+        <>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ttile</th>
+                        <th>Price</th>
+                        <th>Brand</th>
+                        <th>Category</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {
+                        products.map(p => (
+                            <tr key={p.ID}>
+                                <td className="id">{p.ID}</td>
+                                <td className="title">{p.Title}</td>
+                                <td className="price">{p.Price}</td>
+                                <td className="brand">{p.Brand}</td>
+                                <td className="category">{p.Category}</td>
+                                <td>
+                                    <span class="material-symbols-outlined" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                        onClick={() => setP(p)}>edit</span>
+                                    <span class="material-symbols-outlined" onClick={() => handleDelete(p.ID)}>
+                                        delete
+                                    </span>
+                                </td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
+            <Popup showModal={showModal} setShowModal={setShowModal} p={p} setP={setP} />
+        </>
     )
 }

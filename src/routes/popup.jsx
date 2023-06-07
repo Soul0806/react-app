@@ -20,16 +20,16 @@ export async function action({ request, param }) {
 }
 
 function Popup({ showModal, setShowModal, p, setP }) {
-
+    
     const [modalValue, setModalValue] = useState(null);
 
-    var handleModalClose = () => {
-        setShowModal(false);
-    }
+    // var handleModalClose = () => {
+    //     setShowModal(false);
+    // }
 
-    var handleModalSubmit = () => {
-        setShowModal(false);
-    }
+    // var handleModalSubmit = () => {
+    //     setShowModal(false);
+    // }
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -37,10 +37,8 @@ function Popup({ showModal, setShowModal, p, setP }) {
             ...prevFormData,
             [name]: value
         }));
-
     };
 
-    
     const handleSubmit = (e) => {
         e.preventDefault();
         let data;
@@ -79,6 +77,10 @@ function Popup({ showModal, setShowModal, p, setP }) {
                     </div>
                     <form method="post" onSubmit={handleSubmit}>
                         <div className="modal-body">
+                            <div>
+                                <label>編號 : <span>{p?.ID}</span> </label>
+                               
+                            </div>
                             <div className="mb-3">
                                 <label className="col-form-label"></label>
                                 <input type="text" name="Title" defaultValue={p?.Title} onChange={handleInputChange} />
