@@ -1,17 +1,13 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { BrowserRouter, Route, Routes, NavLink } from 'react-router-dom';
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './index.scss';
-// import Root, { loader as rootLoader, action as rootAction, }  from './routes/Root';
-// import Contact, { loader as conatactLoader} from "./routes/contact";
-// import Edit, { action as editAction }from "./routes/edit";
-// import Department, { loader as rootLoader, action as rootAction } from "./routes/Department";
-import Product, { loader as rootLoader, action as rootAction } from './routes/Product';
+
+import Product, { action as productAction } from './routes/Product';
 import { loader as tableLoader } from './routes/Table';
 import Page, { loader as pageLoader }from './routes/Page';
+import Backend, { action as backendAction } from './routes/backend/Backend';
 import ErrorPage from "./error-page";
+import './index.scss';
 
 const router = createBrowserRouter([
   {
@@ -19,14 +15,24 @@ const router = createBrowserRouter([
     element: <Product />,
     errorElement: <ErrorPage />,
     loader: tableLoader,
-    action: rootAction,
+    action: productAction,
     children: [
+      {
+        index: true,
+        element: <Page />,
+        loader: pageLoader
+      },
       {
         path: "/page/:pageN",
         element: <Page />,
         loader: pageLoader
       }
     ]
+  },
+  {
+    path: "/backend",
+    element: <Backend />,
+    errorElement: <ErrorPage />,
   }
 ]);
 

@@ -1,63 +1,20 @@
 import { useState } from 'react';
 import { useOutletContext, useParams, useLoaderData, NavLink, Outlet } from 'react-router-dom';
-
+import { ajax_get } from '../lib/libs';
 
 const API_URL = 'https://localhost:7123/api/product';
 
-function Get(id = null) {
-    let result;
-
-    if (id != null) {
-        result = fetch(`${API_URL}/${id}`)
-            .then(res => { return res.json() })
-            .then(data => {
-                return data[0];
-            });
-    } else {
-        result = fetch(API_URL)
-            .then(res => { return res.json() })
-            .then(data => {
-                return data;
-            })
-    }
-    return result;
-}
-
-
-const handleDelete = (pId) => {
-    let data = { ID: pId };
-    fetch(`${API_URL}/${pId}`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data), // body data type must match "Content-Type" header
-    })
-        .then(res => { return res.json })
-        .then(data => window.location.replace('/'));
-}
-
-
 export async function loader({ params }) {
 
-    const allProducts = await Get(); 
-    const pages = [...Array(Math.ceil(Object.keys(allProducts).length / 15)).keys()];
-
+    const cutPageN = 15
+    const allProducts = await ajax_get(API_URL);
+    const pages = [...Array(Math.ceil(Object.keys(allProducts).length / cutPageN)).keys()];
     return { pages };
 }
 
 export default function Table() {
 
     const { products, pages } = useLoaderData();
-    const [showModal, setShowModal] = useState(false);
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setP((prevFormData) => ({
-            ...prevFormData,
-            [name]: value
-        }));
-    };
 
     return (
         <>

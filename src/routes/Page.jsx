@@ -1,34 +1,31 @@
 
 import { useState } from 'react';
-import { useLoaderData, useOutletContext } from "react-router-dom";
+import { useLoaderData, useOutletContext, useLocation } from "react-router-dom";
 import Popup from "./popup";
+import { ajax_get, ajax_del } from '../lib/libs';
 
 const API_URL = 'https://localhost:7123/api/product';
 const PAGE_ACTION = `${API_URL}/page/`;
 
-function pageAction(page) {
-    let result;
-    result = fetch(`${PAGE_ACTION}${page}`)
-        .then(res => { return res.json() })
-        .then(data => {
-            return data;
-        })
-    return result;
-}
 
 export async function loader({ params }) {
-    let products;
-    let page = params.pageN
-    products = await pageAction(page);
+
+    const page = params.pageN || 1 ;
+    const url = `${PAGE_ACTION}${page}`;
+    let products = await ajax_get(url);
     return { products }
 }
 
+const handleDelete = (pId) => {
+    const url = `${API_URL}/${pId}`;
+    ajax_del(url, location.pathname);
+}
 
 export default function Page() {
 
     let { products } = useLoaderData();
     const [p, setP] = useState();
-    const [ pages ]  = useOutletContext();
+
 
     return (
         <>

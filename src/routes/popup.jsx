@@ -13,25 +13,10 @@ async function Put(id) {
     return p;
 }
 
-export async function loader({ params }) {
-    return {};
-}
-export async function action({ request, param }) {
-    return {};
-}
-
-function Popup({ showModal, setShowModal, p, setP }) {
+function Popup({ p, setP }) {
 
     const location = useLocation();
     const [modalValue, setModalValue] = useState(null);
-
-    // var handleModalClose = () => {
-    //     setShowModal(false);
-    // }
-
-    // var handleModalSubmit = () => {
-    //     setShowModal(false);
-    // }
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
