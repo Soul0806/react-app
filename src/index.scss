@@ -5,21 +5,27 @@
 }
 
 html {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    .title {
+      margin: 2rem;
+    }
+    .manage {
+      font-style: italic;
+      margin: 1rem;
+    }
+  }
   box-sizing: border-box;
 
   #container {
     display: grid;
-    grid-template-columns: 300px 1fr;
-
-    aside {
-      padding: 2rem;
-      text-align: center;
-
-    }
+    grid-auto-flow: row;
+    width: 100%;
 
     .detail {
-      margin: 1rem;
-
+      width: 80%;
+      margin-left: 1rem;
       .pages {
         text-align: center;
 
@@ -32,12 +38,11 @@ html {
       table {
         border-collapse: separate;
         border-spacing: 0 1rem;
-
         tr {
           text-align: center;
           display: grid;
-          grid-template-columns: repeat(7, 1fr);
-
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          max-width: 1200px;
           th {
             padding: 1rem;
           }

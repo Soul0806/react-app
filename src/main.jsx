@@ -9,8 +9,8 @@ import './index.scss';
 // import Edit, { action as editAction }from "./routes/edit";
 // import Department, { loader as rootLoader, action as rootAction } from "./routes/Department";
 import Product, { loader as rootLoader, action as rootAction } from './routes/Product';
-import Popup, { loader as popupLoader, action as popupAction } from './routes/popup';
-import Table, { loader as tableLoader } from './routes/Table';
+import { loader as tableLoader } from './routes/Table';
+import Page, { loader as pageLoader }from './routes/Page';
 import ErrorPage from "./error-page";
 
 const router = createBrowserRouter([
@@ -18,21 +18,15 @@ const router = createBrowserRouter([
     path: "/",
     element: <Product />,
     errorElement: <ErrorPage />,
-    loader: rootLoader,
+    loader: tableLoader,
     action: rootAction,
     children: [
       {
-        path: "/",
-        element: <Table />,
-        loader: tableLoader,
-      },
-      {
         path: "/page/:pageN",
-        element: <Table />,
-        loader: tableLoader,
+        element: <Page />,
+        loader: pageLoader
       }
     ]
-    
   }
 ]);
 

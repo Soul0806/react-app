@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Form, redirect } from 'react-router-dom';
+import { Form, redirect, useLocation  } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
+
 const api_url = 'https://localhost:7123/api/product';
 
 async function Put(id) {
@@ -20,7 +21,8 @@ export async function action({ request, param }) {
 }
 
 function Popup({ showModal, setShowModal, p, setP }) {
-    
+
+    const location = useLocation();
     const [modalValue, setModalValue] = useState(null);
 
     // var handleModalClose = () => {
@@ -52,7 +54,7 @@ function Popup({ showModal, setShowModal, p, setP }) {
                 body: JSON.stringify(data), // body data type must match "Content-Type" header
             })
                 .then(res => {return res})
-                .then(() => window.location.replace('/'));
+                .then(() => window.location.replace(location.pathname));
         } else {
             data = { ID: p.ID, Title: p.Title, Price: p.Price, Brand: p.Brand, Category: p.Category, Thumbnail: p.Thumbnail };
             fetch(`${api_url}`, {
@@ -63,7 +65,7 @@ function Popup({ showModal, setShowModal, p, setP }) {
                 body: JSON.stringify(data), // body data type must match "Content-Type" header
             })
                 .then(res => {return res })
-                .then(() => window.location.replace('/'));
+                .then(() => window.location.replace(location.pathname));
         }
     }
 
