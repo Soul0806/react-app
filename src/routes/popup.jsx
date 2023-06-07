@@ -1,23 +1,11 @@
-import { useState, useEffect } from 'react';
-import { Form, redirect, useLocation  } from 'react-router-dom';
-import { Button, Modal } from 'react-bootstrap';
+import { useLocation  } from 'react-router-dom';
+import { ajax_post, ajax_put } from '../lib/libs';
 
-const api_url = 'https://localhost:7123/api/product';
-
-async function Put(id) {
-    let dep = await fetch(`${api_url}/${id}`)
-        .then(res => { return res.json() })
-        .then(data => {
-            return data[0];
-        })
-    return p;
-}
+const API_URL = 'https://localhost:7123/api/product';
 
 function Popup({ p, setP }) {
-
     const location = useLocation();
-    const [modalValue, setModalValue] = useState(null);
-
+ 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setP((prevFormData) => ({
@@ -28,29 +16,13 @@ function Popup({ p, setP }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let data;
+        let data, url;
         if (p.ID == null) {
             data = { Title: p.Title, Price: p.Price, Brand: p.Brand, Category: p.Category, Thumbnail: p.Thumbnail };
-            fetch(`${api_url}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data), // body data type must match "Content-Type" header
-            })
-                .then(res => {return res})
-                .then(() => window.location.replace(location.pathname));
+            ajax_post(API_URL, data, location.pathname);
         } else {
             data = { ID: p.ID, Title: p.Title, Price: p.Price, Brand: p.Brand, Category: p.Category, Thumbnail: p.Thumbnail };
-            fetch(`${api_url}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data), // body data type must match "Content-Type" header
-            })
-                .then(res => {return res })
-                .then(() => window.location.replace(location.pathname));
+            ajax_put(API_URL, data, location.pathname);
         }
     }
 

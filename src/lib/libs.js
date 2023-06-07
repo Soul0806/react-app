@@ -7,12 +7,20 @@ export async function ajax_get(url, redirect = '') {
     }).then(res => {return res.json()})
 }
 
-export function ajax_post(url, data) {
+export function ajax_post(url, data, redirect) {
     fetch(url, {
         method: "POST",
         headers: contentTypeJson,
         body: JSON.stringify(data), 
-    }).then(res => {return res.json()})
+    }).then(res => window.location.replace(redirect))
+}
+
+export function ajax_put(url, data, redirect) {
+    fetch(url, {
+        method: "PUT",
+        headers: contentTypeJson,
+        body: JSON.stringify(data), 
+    }).then(res => window.location.replace(redirect))
 }
 
 export function ajax_del(url, redirect = '') {

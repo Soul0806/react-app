@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useOutletContext, useParams, useLoaderData, NavLink, Outlet } from 'react-router-dom';
 import { ajax_get } from '../lib/libs';
 
@@ -13,7 +13,12 @@ export async function loader({ params }) {
 }
 
 export default function Table() {
+    const [ home, setHome ] = useState(false);
 
+    useEffect(() => {
+        location.pathname == '/' ? setHome(true) : setHome(false);
+        
+    })
     const { products, pages } = useLoaderData();
 
     return (
@@ -26,13 +31,16 @@ export default function Table() {
                             {pages.map(p => (
                                 <span key={p}>
                                     <NavLink style={({ isActive, isPending }) => {
+                                        if(home && p == 0 ) {
+                                            isActive = true;
+                                        }
                                         return {
-                                            fontWeight: isActive ? "bold" : "",
+                                            fontWeight: isActive ? "bold" : "bold",
                                             color: isActive ? "red" : "black",
-                                            cursor: isActive ? "text" : ""
+                                            cursor: isActive  ? "text" : ""
                                         };
                                     }}
-                                        to={`page/${p + 1}`}>{p + 1}</NavLink>
+                                        to={`page/${p + 1}`}>{p + 1} </NavLink>
                                 </span>
                             ))}
                             <span>&gt;</span>
