@@ -37,18 +37,18 @@ export default function Page() {
                 <th>Price</th>
                 <th>Brand</th>
                 <th>Category</th>
-                <th>操作</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             {
                 products.map(p => (
                     <tr key={p.ID}>
-                        <td className="id">{p.ID}</td>
+                        <td className="id left_round">{p.ID}</td>
                         <td className="title">{p.Title}</td>
                         <td className="price">{p.Price}</td>
                         <td className="brand">{p.Brand}</td>
-                        <td className="category">{p.Category}</td>
+                        <td className="category right_round">{p.Category}</td>
                         <td>
                             <span class="material-symbols-outlined" data-bs-toggle="modal" data-bs-target="#exampleModal"
                                 onClick={() => setP(p)}>edit</span>
