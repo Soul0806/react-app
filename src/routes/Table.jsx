@@ -9,6 +9,7 @@ export async function loader({ params }) {
     const cutPageN = 15
     const allProducts = await ajax_get(API_URL);
     const pages = [...Array(Math.ceil(Object.keys(allProducts).length / cutPageN)).keys()];
+    console.log(allProducts);
     return { pages };
 }
 

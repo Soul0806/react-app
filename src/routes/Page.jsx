@@ -34,19 +34,19 @@ export default function Page() {
             <tr>
                 <th>ID</th>
                 <th>Ttile</th>
-                <th>Price</th>
+                {/* <th>Price</th>
                 <th>Brand</th>
                 <th>Category</th>
-                <th></th>
+                <th></th> */}
             </tr>
         </thead>
         <tbody>
             {
                 products.map(p => (
-                    <tr key={p.ID}>
-                        <td className="id left_round">{p.ID}</td>
-                        <td className="title">{p.Title}</td>
-                        <td className="price">{p.Price}</td>
+                    <tr key={p.id}>
+                        <td className="id left_round">{p.id}</td>
+                        <td className="title">{p.title}</td>
+                        {/* <td className="price">{p.Price}</td>
                         <td className="brand">{p.Brand}</td>
                         <td className="category right_round">{p.Category}</td>
                         <td>
@@ -55,7 +55,7 @@ export default function Page() {
                             <span class="material-symbols-outlined" onClick={() => handleDelete(p.ID)}>
                                 delete
                             </span>
-                        </td>
+                        </td> */}
                     </tr>
                 ))
             }
