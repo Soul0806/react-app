@@ -20,7 +20,7 @@ export function ajax_put(url, data, redirect) {
         method: "PUT",
         headers: contentTypeJson,
         body: JSON.stringify(data), 
-    }).then(res => window.location.replace(redirect))
+    }).then(res => window.location.replace(redirect));
 }
 
 export function ajax_del(url, redirect = '') {

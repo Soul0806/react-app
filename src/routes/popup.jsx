@@ -17,11 +17,11 @@ function Popup({ p, setP }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         let data, url;
-        if (p.ID == null) {
-            data = { Title: p.Title, Price: p.Price, Brand: p.Brand, Category: p.Category, Thumbnail: p.Thumbnail };
+        if (p.id == null) {
+            data = { Title: p.title, Price: p.price, Brand: p.brand, Category: p.category, Thumbnail: p.thumbnail };
             ajax_post(API_URL, data, location.pathname);
         } else {
-            data = { ID: p.ID, Title: p.Title, Price: p.Price, Brand: p.Brand, Category: p.Category, Thumbnail: p.Thumbnail };
+            data = { ID: p.id, Title: p.title, Price: p.price, Brand: p.brand, Category: p.category, Thumbnail: p.thumbnail };
             ajax_put(API_URL, data, location.pathname);
         }
     }
@@ -42,23 +42,23 @@ function Popup({ p, setP }) {
                             </div>
                             <div className="mb-3">
                                 <label className="col-form-label"></label>
-                                <input type="text" name="Title" defaultValue={p?.Title} onChange={handleInputChange} />
+                                <input type="text" name="title" defaultValue={p?.title} onChange={handleInputChange} />
                             </div>
                             <div className="mb-3">
                                 <label className="col-form-label"></label>
-                                <input type="text" name="Price" defaultValue={p?.Price} onChange={handleInputChange} />
+                                <input type="text" name="price" defaultValue={p?.price} onChange={handleInputChange} />
                             </div>
                             <div className="mb-3">
                                 <label className="col-form-label"></label>
-                                <input type="text" name="Brand" defaultValue={p?.Brand} onChange={handleInputChange} />
+                                <input type="text" name="brand" defaultValue={p?.brand} onChange={handleInputChange} />
                             </div>
                             <div className="mb-3">
                                 <label className="col-form-label"></label>
-                                <input type="text" name="Category" defaultValue={p?.Category} onChange={handleInputChange} />
+                                <input type="text" name="category" defaultValue={p?.category} onChange={handleInputChange} />
                             </div>
                             <div className="mb-3">
                                 <label className="col-form-label"></label>
-                                <input type="text" name="Thumbnail" defaultValue={p?.Thumbnail} onChange={handleInputChange} />
+                                <input type="text" name="thumbnail" defaultValue={p?.thumbnail} onChange={handleInputChange} />
                             </div>
                         </div>
                         <div className="modal-footer">

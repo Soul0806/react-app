@@ -27,7 +27,6 @@ html {
     width: 100%;
 
     .detail {
-
       width: 80%;
       margin-left: 1rem;
 
@@ -38,6 +37,16 @@ html {
           margin: 0 .5rem;
 
         }
+
+      }
+
+      .add {
+        .md-18 {
+          font-size: 18px;
+        }
+        width: 80%;
+        cursor: pointer;
+        text-align: right;
       }
 
       table {
@@ -47,11 +56,12 @@ html {
         tr {
           text-align: center;
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          max-width: 1200px;
+          // grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          grid-template-columns: repeat(6, 1fr);
+          // max-width: 1200px;
 
           th {
-            padding: 1rem;
+            padding: .5rem;
           }
         }
 

@@ -23,11 +23,11 @@ export default function Table() {
     const { products, pages } = useLoaderData();
 
     return (
-        <>
+        <>  
             {navigation.state === "submitting" ?
                 (<div><img src="/img/Loading_icon.gif" alt="Loading_icon" /></div>) : (
                     <>
-                        <div class="pages">
+                        <div class="pages">   
                             <span>&lt;</span>
                             {pages.map(p => (
                                 <span key={p}>
