@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from "react-router-dom";
 import Table from './Table';
 
-const API_URL = 'https://localhost:7123/api/product';
+const API_URL = 'https://localhost:7123/api/merchandise';
 const WRITE_ACTION = 'https://localhost:7123/write';
 const PAGE_ACTION = `${API_URL}/page/`;
 

@@ -1,5 +1,7 @@
 const contentTypeJson = { "Content-Type": "application/json" };
 
+export const api_merchandise = 'https://localhost:7123/api/merchandise';
+
 export async function ajax_get(url, redirect = '') {
     return await fetch(url, {
         method: "GET",

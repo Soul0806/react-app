@@ -2,14 +2,13 @@ import { useEffect, useState } from 'react';
 import { useOutletContext, useParams, useLoaderData, NavLink, Outlet } from 'react-router-dom';
 import { ajax_get } from '../lib/libs';
 
-const API_URL = 'https://localhost:7123/api/product';
+const API_URL = 'https://localhost:7123/api/merchandise';
 
 export async function loader({ params }) {
 
     const cutPageN = 15
     const allProducts = await ajax_get(API_URL);
     const pages = [...Array(Math.ceil(Object.keys(allProducts).length / cutPageN)).keys()];
-    console.log(allProducts);
     return { pages };
 }
 

@@ -1,9 +1,11 @@
+import { Component } from 'react';
 import { Form } from 'react-router-dom';
 
 export function action() {
     return {}
 }
 export default function Backend() {
+
     return (
         <div>
             <Form method="post">
@@ -21,5 +23,6 @@ export default function Backend() {
             </Form>
         </div>
     )
+
 }
 

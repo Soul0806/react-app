@@ -4,7 +4,7 @@ import { useLoaderData, useOutletContext, useLocation } from "react-router-dom";
 import Popup from "./popup";
 import { ajax_get, ajax_del } from '../lib/libs';
 
-const API_URL = 'https://localhost:7123/api/product';
+const API_URL = 'https://localhost:7123/api/merchandise';
 const PAGE_ACTION = `${API_URL}/page/`;
 
 
@@ -12,8 +12,8 @@ export async function loader({ params }) {
 
     const page = params.pageN || 1;
     const url = `${PAGE_ACTION}${page}`;
-    let products = await ajax_get(url);
-    return { products }
+    let merchan = await ajax_get(url);
+    return { merchan }
 }
 
 const handleDelete = (pId) => {
@@ -23,7 +23,7 @@ const handleDelete = (pId) => {
 
 export default function Page() {
 
-    let { products } = useLoaderData();
+    let { merchan } = useLoaderData();
     const [p, setP] = useState();
 
     return (
@@ -46,16 +46,16 @@ export default function Page() {
                 </thead>
                 <tbody>
                     {
-                        products.map(p => (
-                            <tr key={p.id}>
-                                <td className="id left_round">{p.id}</td>
-                                <td className="title">{p.title}</td>
-                                <td className="price">{p.price}</td>
-                                <td className="brand">{p.brand}</td>
-                                <td className="category right_round">{p.category}</td>
+                        merchan.map(m => (
+                            <tr key={m.id}>
+                                <td className="id left_round">{m.id}</td>
+                                <td className="title">{m.title}</td>
+                                <td className="price">{m.price}</td>
+                                <td className="brand">{m.brand}</td>
+                                <td className="category right_round">{m.category}</td>
                                 <td>
                                     <span class="material-symbols-outlined" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                        onClick={() => setP(p)}>edit</span>
+                                        onClick={() => setP(m)}>edit</span>
                                     <span class="material-symbols-outlined" onClick={() => handleDelete(p.id)}>
                                         delete
                                     </span>
