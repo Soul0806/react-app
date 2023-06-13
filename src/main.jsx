@@ -33,6 +33,7 @@ const router = createBrowserRouter([
     path: "/backend",
     element: <Backend />,
     errorElement: <ErrorPage />,
+    action: backendAction,
   }
 ]);
 

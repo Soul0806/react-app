@@ -4,18 +4,11 @@ import { createRef, useEffect, useState } from 'react';
 
 const API_URL = 'https://localhost:7123/api/merchandise';
 
-export function loader() {
-
-}
-
-function Popup({ p, setP }) {
+function Popup({ p, setP, remain, pagesLength }) {
     
     const location = useLocation();
     const [modify, setModify] = useState({});
 
-    useEffect(()=> {
-    }, [origin])
-    
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setP((prevFormData) => ({
@@ -27,18 +20,15 @@ function Popup({ p, setP }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let data, url;
+        let data, url, path;
         if (p.id == null) {
             data = { Title: p.title, Price: p.price, Brand: p.brand, Category: p.category, Thumbnail: p.thumbnail };
-            ajax_post(API_URL, data, location.pathname);
+            path = remain == 0 ? `/page/${pagesLength + 1}`: location.pathname;
+            ajax_post(API_URL, data, path);
         } else {
             data = { ID: p.id, Title: p.title, Price: p.price, Brand: p.brand, Category: p.category, Thumbnail: p.thumbnail };
             ajax_put(API_URL, data, location.pathname);
         }
-    }
-
-    const recovery = (e) => {
-       
     }
 
     return (
@@ -46,15 +36,15 @@ function Popup({ p, setP }) {
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel">Edit</h5>
+                        <h5 className="modal-title" id="exampleModalLabel">{p?.id ? "編輯" : "新增"}</h5>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form key={p?.id} method="post" onSubmit={handleSubmit}>
                         <div className="modal-body">
-                            <div>
-                                <label>編號 : <span>{p?.id}</span> </label>
-                               
-                            </div>
+                            {p?.id ? 
+                            (<div className="mb-3">
+                                <h5>編號 : <span>{p?.id}</span></h5>
+                            </div>) : "" }
                             <div className="mb-3">
                                 <label className="col-form-label"></label>
                                 <input type="text" name="title" value={p?.title} onChange={handleInputChange} />
@@ -77,7 +67,7 @@ function Popup({ p, setP }) {
                             </div>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={recovery}>Close</button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit"
                                 className="btn btn-primary">Send message</button>
                         </div>

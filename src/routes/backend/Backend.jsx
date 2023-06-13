@@ -1,13 +1,24 @@
 import { Component } from 'react';
 import { Form } from 'react-router-dom';
+import { ajax_importJson } from '../../lib/libs';
+const HOST_URL = 'https://localhost:7123';
+const WRITE_ACTION = `${HOST_URL}/write/`
 
-export function action() {
+export async function action({ request }) {
+    const formData = Object.fromEntries(await request.formData());
+    const rebuild = formData.rebuild;
+    const url = `${WRITE_ACTION}${rebuild}`;
+    ajax_importJson(url);
     return {}
 }
 export default function Backend() {
-
+    const test = true;
     return (
-        <div>
+        <> {
+        test == true ? (<div>123</div>) : 
+        
+        (
+               <div>
             <Form method="post">
                 <select name="rebuild">
                     <option value=""> --------</option>
@@ -22,6 +33,11 @@ export default function Backend() {
                 <button className="" value="submit">確定</button>
             </Form>
         </div>
+        ) 
+        }
+     
+        </>
+       
     )
 
 }

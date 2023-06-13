@@ -1,7 +1,7 @@
 
-import { useState } from 'react';
-import { useLoaderData, useOutletContext, useLocation } from "react-router-dom";
-import Popup from "./popup";
+import { useContext, useEffect, useState } from 'react';
+import { useLoaderData, useOutletContext } from "react-router-dom";
+import Popup from "./Popup";
 import { ajax_get, ajax_del } from '../lib/libs';
 
 const API_URL = 'https://localhost:7123/api/merchandise';
@@ -12,31 +12,42 @@ export async function loader({ params }) {
 
     const page = params.pageN || 1;
     const url = `${PAGE_ACTION}${page}`;
-    let merchan = await ajax_get(url);
-    return { merchan }
-}
-
-const handleDelete = (pId) => {
-    const url = `${API_URL}/${pId}`;
-    ajax_del(url, location.pathname);
+    const merchan = await ajax_get(url);
+    const merchanLength = Object.keys(merchan).length; 
+    const lastOne = (merchanLength == 1 ) ? true : false;
+    return { merchan, page, lastOne }
 }
 
 export default function Page() {
 
-    let { merchan } = useLoaderData();
+    const { merchan, page, lastOne } = useLoaderData();
     const [p, setP] = useState();
+    const ctxt = useOutletContext();
+
+    const handleDelete = (pId, lastone) => {
+        let path;
+        const url = `${API_URL}/${pId}`;
+        if(page > 1) {
+            path = lastOne == true ? `/page/${page - 1}`: location.pathname;
+        }
+        ajax_del(url, path);
+    }
+
+    const mIndex = (idx) => {
+        return (page - 1) * ctxt.limit + idx + 1;
+    }
 
     return (
         <>
             <div className="add">
                 <button type="button" class="btn btn-sm btn-secondary">
-                    <span class="material-symbols-outlined md-18" data-bs-toggle="modal" data-bs-target="#exampleModal">新增</span>
+                    <span class="material-symbols-outlined md-18" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => setP({})}>新增</span>
                 </button>
             </div>
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No.</th>
                         <th>Ttile</th>
                         <th>Price</th>
                         <th>Brand</th>
@@ -46,9 +57,9 @@ export default function Page() {
                 </thead>
                 <tbody>
                     {
-                        merchan.map(m => (
+                        merchan.map((m, idx) => (
                             <tr key={m.id}>
-                                <td className="id left_round">{m.id}</td>
+                                <td className="id left_round">{mIndex(idx)}</td>
                                 <td className="title">{m.title}</td>
                                 <td className="price">{m.price}</td>
                                 <td className="brand">{m.brand}</td>
@@ -56,7 +67,7 @@ export default function Page() {
                                 <td>
                                     <span class="material-symbols-outlined" data-bs-toggle="modal" data-bs-target="#exampleModal"
                                         onClick={() => setP(m)}>edit</span>
-                                    <span class="material-symbols-outlined" onClick={() => handleDelete(p.id)}>
+                                    <span class="material-symbols-outlined" onClick={() => handleDelete(m.id, lastOne)}>
                                         delete
                                     </span>
                                 </td>
@@ -65,7 +76,7 @@ export default function Page() {
                     }
                 </tbody>
             </table>
-            <Popup p={p} setP={setP} />
+            <Popup p={p} setP={setP} remain={ctxt.remain} pagesLength={ctxt.pagesLength}/>
         </>
     )
 }
