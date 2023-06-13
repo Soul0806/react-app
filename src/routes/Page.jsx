@@ -48,7 +48,7 @@ export default function Page() {
                 <thead>
                     <tr>
                         <th>No.</th>
-                        <th>Ttile</th>
+                        <th>Title</th>
                         <th>Price</th>
                         <th>Brand</th>
                         <th>Category</th>
