@@ -9,18 +9,15 @@ const limit = 15;
 export async function loader({ params }) {
     const items = await ajax_get(API_URL);
     const itemsLen = _.size(items);
-
     const pagesLen = _.ceil(itemsLen / limit);
     const pages = _.range(1, pagesLen + 1);
-
     const remain = itemsLen % limit;
-
     return { pages, remain, pagesLen };
 }
 
 export default function Table() {
     const [home, setHome] = useState(false);
-    const { pages, remain, pagesLen } = useLoaderData();
+    const {pages, remain, pagesLen} = useLoaderData();
     const isAvtive = 
         ({ isActive, isPending }) => {
             if (home && p == 1) {
@@ -33,10 +30,8 @@ export default function Table() {
             };
         }
 
-
     useEffect(() => {
         location.pathname == '/' ? setHome(true) : setHome(false);
-
     })
     return (
         <>
