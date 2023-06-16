@@ -1,3 +1,5 @@
+@import '_animation.scss';
+
 @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
 body {
   font-family: 'SF Pro Display', sans-serif;
@@ -30,7 +32,21 @@ html {
     display: grid;
     grid-auto-flow: row;
     width: 100%;
-    
+    header {
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-columns: 200px 1fr 200px;
+      margin: 1rem 1rem;
+      ul {
+        li {
+          display: inline-block;
+          width: 50px;
+        }
+      }
+      .manage {
+        text-align: right;
+      }
+    }
     main {
         display: grid;
         grid-template-columns: 200px 1fr;
@@ -56,6 +72,16 @@ html {
 
         span {
           margin: 0 .5rem;
+
+          &.prev::before {
+            content: "<<";
+            display: inline-block;
+          }
+
+          &.next::before {
+            content: ">>";
+            display: inline-block;
+          }
         }
 
       }

@@ -28,7 +28,7 @@ export default function Page() {
         let path;
         const url = `${API_URL}/${pId}`;
         if(page > 1) {
-            path = lastOne == true ? `/page/${page - 1}`: location.pathname;
+            path = lastOne == true ? `/merchandise/page/${page - 1}`: location.pathname;
         }
         ajax_del(url, path);
     }
@@ -76,7 +76,7 @@ export default function Page() {
                     }
                 </tbody>
             </table>
-            <Popup p={p} setP={setP} remain={ctxt.remain} pagesLength={ctxt.pagesLength}/>
+            <Popup p={p} setP={setP} { ...ctxt }/>
         </>
     )
 }

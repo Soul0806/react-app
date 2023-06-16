@@ -4,7 +4,7 @@ import { createRef, useEffect, useState } from 'react';
 
 const API_URL = 'https://localhost:7123/api/merchandise';
 
-function Popup({ p, setP, remain, pagesLength }) {
+function Popup({  p, setP,  remain, pagesLen }) {
     
     const location = useLocation();
     const [modify, setModify] = useState({});
@@ -23,7 +23,7 @@ function Popup({ p, setP, remain, pagesLength }) {
         let data, url, path;
         if (p.id == null) {
             data = { Title: p.title, Price: p.price, Brand: p.brand, Category: p.category, Thumbnail: p.thumbnail };
-            path = remain == 0 ? `/page/${pagesLength + 1}`: location.pathname;
+            path = remain == 0 ? `/merchandise/page/${pagesLen + 1}`: location.pathname;
             ajax_post(API_URL, data, path);
         } else {
             data = { ID: p.id, Title: p.title, Price: p.price, Brand: p.brand, Category: p.category, Thumbnail: p.thumbnail };
