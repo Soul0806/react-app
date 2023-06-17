@@ -9,12 +9,12 @@ export async function ajax_get(url, redirect = '') {
     }).then(res => res.json())
 }
 
-export async function ajax_post(url, data, redirect) {
+export async function ajax_post(url, data) {
     await fetch(url, {
         method: "POST",
         headers: contentTypeJson,
         body: JSON.stringify(data), 
-    }).then(res => window.location.replace(redirect))
+    }).then(res => console.log('OK'))
 }
 
 export async function ajax_put(url, data, redirect) {
@@ -29,7 +29,7 @@ export async function ajax_del(url, redirect = '') {
     await fetch(url, {
         method: "DELETE",
         headers: contentTypeJson,
-    }).then(() => window.location.replace(redirect))
+    }).then(() => {return})
 }
 
 export async function ajax_importJson(url) {

@@ -25,7 +25,7 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <Page />,
-            loader: pageLoader
+            loader: pageLoader,
           },
           {
             path: "page/:pageN",

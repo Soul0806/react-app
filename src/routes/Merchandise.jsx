@@ -5,6 +5,7 @@ const API_URL = 'https://localhost:7123/api/merchandise';
 
 
 export default function Merchandise() {
+
     return (
         <>
             <Filter />

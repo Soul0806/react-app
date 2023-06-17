@@ -1,4 +1,4 @@
-import { useEffect, useState, Navigate } from 'react';
+import { useEffect, useState, Navigate, createContext, useContext } from 'react';
 import { useLoaderData, NavLink, Outlet, Link } from 'react-router-dom';
 import { ajax_get } from '../lib/libs';
 import _ from 'lodash'
@@ -6,22 +6,25 @@ import _ from 'lodash'
 const API_URL = 'https://localhost:7123/api/merchandise';
 const limit = 15;
 
+// export const AppContext = createContext();
+
 export async function loader({ params }) {
     const items = await ajax_get(API_URL);
     const itemsLen = _.size(items);
-
     const pagesLen = _.ceil(itemsLen / limit);
     const pages = _.range(1, pagesLen + 1);
-
     const remain = itemsLen % limit;
-
     return { pages, remain, pagesLen };
 }
 
 export default function Table() {
+
     const [home, setHome] = useState(false);
     const { pages, remain, pagesLen } = useLoaderData();
-    const isAvtive = 
+
+    const [test, setTest] = useState('111');
+
+    const isAvtive =
         ({ isActive, isPending }) => {
             if (home && p == 1) {
                 isActive = true;
@@ -33,7 +36,6 @@ export default function Table() {
             };
         }
 
-
     useEffect(() => {
         location.pathname == '/' ? setHome(true) : setHome(false);
 
@@ -41,7 +43,7 @@ export default function Table() {
     return (
         <>
             <section>
-                <div class="pages">
+                <div className="pages">
                     <span className="prev"></span>
                     {pages.map(p => (
                         <span key={p}>

@@ -1,11 +1,12 @@
-import { useLocation  } from 'react-router-dom';
+import { useLocation, useNavigate, useMatch  } from 'react-router-dom';
 import { ajax_post, ajax_put } from '../lib/libs';
-import { createRef, useEffect, useState } from 'react';
+import { createRef, useEffect, useState, useContext } from 'react';
 
 const API_URL = 'https://localhost:7123/api/merchandise';
 
-function Popup({  p, setP,  remain, pagesLen }) {
-    
+function Popup({  p, setP, remain, pagesLen }) {
+
+    const navigate = useNavigate();
     const location = useLocation();
     const [modify, setModify] = useState({});
 
@@ -17,14 +18,15 @@ function Popup({  p, setP,  remain, pagesLen }) {
         }));
         modify[name] = value;
     };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         let data, url, path;
+    
         if (p.id == null) {
             data = { Title: p.title, Price: p.price, Brand: p.brand, Category: p.category, Thumbnail: p.thumbnail };
-            path = remain == 0 ? `/merchandise/page/${pagesLen + 1}`: location.pathname;
-            ajax_post(API_URL, data, path);
+            path = remain == 0 ? `/merchandise/page/${pagesLen + 1}`: `/merchandise/page/${pagesLen}`;
+            ajax_post(API_URL, data);
+            navigate(path);
         } else {
             data = { ID: p.id, Title: p.title, Price: p.price, Brand: p.brand, Category: p.category, Thumbnail: p.thumbnail };
             ajax_put(API_URL, data, location.pathname);
