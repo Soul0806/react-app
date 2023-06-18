@@ -1,6 +1,7 @@
 
-import { useContext, useEffect, useState, createContext } from 'react';
+import { useContext, useEffect, useState, createContext, useLayoutEffect } from 'react';
 import { useLoaderData, useLocation, useOutletContext, useParams } from "react-router-dom";
+
 import Popup from "./Popup";
 import { ajax_get, ajax_del } from '../lib/libs';
 import _ from 'lodash'
@@ -29,23 +30,26 @@ export default function Page() {
     const param = useParams();
     const location = useLocation();
 
-    useEffect(() => {
-        if (all.length != 0) {
-            const page = param.pageN;
-            const skip = (page - 1) * limit;
-            setDisplay(all.slice(skip, skip + limit));
-        } else {
-            const fetchData = async () => {
-                const data = await ajax_get(API_URL);
-                setAll(data);                
-            }
-            fetchData();
-        }
-    }, [location])
+    const showDisplay = e => {
+        const page = param.pageN;
+        const skip = (page - 1) * limit;
+        setDisplay(all.slice(skip, skip + limit));
+    }
+
+    const fetchData = e => {
+        ajax_get(API_URL).then(res => res.json())
+            .then(data => {
+                setAll(data);
+            });
+    }
 
     useEffect(() => {
-        setDisplay(all.slice(0, 15));
-    }, [all])
+        fetchData();
+    }, [])
+
+    useLayoutEffect(() => {
+        showDisplay();
+    }, [all, location])
 
     const handleDelete = (pId, lastone) => {
         let path;
@@ -53,7 +57,7 @@ export default function Page() {
         if (page > 1) {
             path = lastOne == true ? `/merchandise/page/${page - 1}` : location.pathname;
         }
-        ajax_del(url, path);
+        ajax_del(url);
         setAll((prev) => {
             return prev.filter(item => item.id !== pId);
         })
@@ -102,7 +106,7 @@ export default function Page() {
                     }
                 </tbody>
             </table>
-            <Popup p={p} setP={setP} {...ctxt} />
+            <Popup p={p} setP={setP} {...ctxt} setAll={setAll} all={all} showDisplay={showDisplay} />
         </>
     )
 }

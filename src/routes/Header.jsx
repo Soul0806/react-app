@@ -7,7 +7,7 @@ export default function Header() {
             <nav>
                 <ul>
                     <li>
-                        <NavLink to="merchandise">產品</NavLink>
+                        <NavLink to="merchandise/page/1">產品</NavLink>
                     </li>
                     <li>
                         <NavLink tp="/">訂單</NavLink>

@@ -1,9 +1,11 @@
+import { useContext } from "react"; 
+import { AppContext } from "../Table";
+
 export default function Test({...props}) {
-    console.log(props);
+
     return (
         <div>
-            111
-          
+            Test
         </div>
     )
 

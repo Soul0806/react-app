@@ -1,10 +1,12 @@
-import { useLocation, useNavigate, useMatch  } from 'react-router-dom';
+import { useLocation, useNavigate, useMatch } from 'react-router-dom';
 import { ajax_post, ajax_put } from '../lib/libs';
 import { createRef, useEffect, useState, useContext } from 'react';
 
+import { AppContext } from "./Table";
+
 const API_URL = 'https://localhost:7123/api/merchandise';
 
-function Popup({  p, setP, remain, pagesLen }) {
+function Popup({ p, setP, remain, pagesLen, all, setAll, showDisplay }) {
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -18,15 +20,41 @@ function Popup({  p, setP, remain, pagesLen }) {
         }));
         modify[name] = value;
     };
+
+
+    // lowercase keys
+    const lowerize = obj =>
+        Object.keys(obj).reduce((acc, k) => {
+            console.log(acc);
+            acc[k.toLowerCase()] = obj[k];
+            return acc;
+        }, {});
+
     const handleSubmit = (e) => {
         e.preventDefault();
         let data, url, path;
-    
+
         if (p.id == null) {
             data = { Title: p.title, Price: p.price, Brand: p.brand, Category: p.category, Thumbnail: p.thumbnail };
-            path = remain == 0 ? `/merchandise/page/${pagesLen + 1}`: `/merchandise/page/${pagesLen}`;
+
+            path = remain == 0 ? `/merchandise/page/${pagesLen + 1}` : `/merchandise/page/${pagesLen}`;
             ajax_post(API_URL, data);
+
+            // add object should be first alphabet lowercase
+            setAll((prev) => {
+                return [...prev, lowerize(data)]
+            })
+
+            if(remain == 0) {
+                setPages((prev) => {
+                    return [ ...prev, prev.length + 1]
+                })
+                console.log(pages);
+            }
+            
+
             navigate(path);
+            showDisplay();
         } else {
             data = { ID: p.id, Title: p.title, Price: p.price, Brand: p.brand, Category: p.category, Thumbnail: p.thumbnail };
             ajax_put(API_URL, data, location.pathname);
@@ -34,6 +62,7 @@ function Popup({  p, setP, remain, pagesLen }) {
     }
 
     return (
+
         <div className="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
@@ -43,10 +72,10 @@ function Popup({  p, setP, remain, pagesLen }) {
                     </div>
                     <form key={p?.id} method="post" onSubmit={handleSubmit}>
                         <div className="modal-body">
-                            {p?.id ? 
-                            (<div className="mb-3">
-                                <h5>編號 : <span>{p?.id}</span></h5>
-                            </div>) : "" }
+                            {p?.id ?
+                                (<div className="mb-3">
+                                    <h5>編號 : <span>{p?.id}</span></h5>
+                                </div>) : ""}
                             <div className="mb-3">
                                 <label className="col-form-label"></label>
                                 <input type="text" name="title" value={p?.title} onChange={handleInputChange} />
