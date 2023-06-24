@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom';
 
-import { useTire } from './useTire';
 import { AppContext } from './Tire';
 
 function Inch({ onclick }) {

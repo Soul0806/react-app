@@ -2,13 +2,8 @@ import React, { useContext, useEffect } from 'react'
 import { useParams, useOutletContext } from 'react-router-dom'
 
 import { AppContext } from './Tire';
-import { useState } from 'react';
-import { useTire } from './useTire';
-function Spec() {
-    const param = useParams();
-    const [num, setNum] = useState(0);
-    const [test, setTest] = useState({});
 
+function Spec() {
     const { specs } = useOutletContext();
     const { inches, setInches } = useContext(AppContext);
 

@@ -1,11 +1,10 @@
-import React, { useEffect, useRef, useState, createContext } from 'react'
+import React, { useEffect, useRef, useState, createContext, useCallback } from 'react'
 import { NavLink, Outlet } from 'react-router-dom';
 
 import _ from 'lodash';
-import { ajax_get, uuid } from '../../lib/helper';
-import Inch from './Inch';
 
 import { useTire } from './useTire';
+import Inch from './Inch';
 
 export const AppContext = createContext();
 
@@ -17,7 +16,7 @@ export default function Tire() {
   function onclick(specs) {
     setSpecs(specs);
   }
-
+  // console.log(222);
   return (
     <>
       <div className="tire">

@@ -16,7 +16,6 @@ import ErrorPage from "./error-page";
 
 // scss index
 import './index.scss';
-
 const router = createBrowserRouter([
   {
     path: "/",
