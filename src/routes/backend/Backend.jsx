@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { Form } from 'react-router-dom';
-import { ajax_importJson } from '../../lib/libs';
+import { ajax_importJson } from '../../lib/helper';
 const HOST_URL = 'https://localhost:7123';
 const WRITE_ACTION = `${HOST_URL}/write/`
 

@@ -1,77 +1,62 @@
-
 import { useContext, useEffect, useState, createContext, useLayoutEffect } from 'react';
-import { useLoaderData, useLocation, useOutletContext, useParams } from "react-router-dom";
+import { useLoaderData, useLocation, useOutletContext, useParams, useNavigate } from "react-router-dom";
 
-import Popup from "./Popup";
-import { ajax_get, ajax_del } from '../lib/libs';
+// Third party JS utility library
 import _ from 'lodash'
+
+// helper
+import { ajax_get, ajax_del, empty } from '../lib/helper';
+
+// use Context
+import { AppContext } from './Table';
 
 const API_URL = 'https://localhost:7123/api/merchandise';
 const PAGE_ACTION = `${API_URL}/page/`;
-const limit = 15;
-
-export async function loader({ params }) {
-    const page = params.pageN || 1;
-    const url = `${PAGE_ACTION}${page}`;
-    const merchan = await ajax_get(url);
-    const merchanLength = Object.keys(merchan).length;
-    const lastOne = (merchanLength == 1) ? true : false;
-    return { merchan, page, lastOne }
-}
 
 export default function Page() {
+    const { item, setItem, all, setAll, pages, limit, remain, lastNumOfPages, display, showDisplay } = useContext(AppContext);
 
-    const [all, setAll] = useState([]);
-    const [display, setDisplay] = useState([]);
-
-    const { merchan, page, lastOne } = useLoaderData();
-    const [p, setP] = useState();
-    const ctxt = useOutletContext();
     const param = useParams();
+    const navigate = useNavigate();
     const location = useLocation();
 
-    const showDisplay = e => {
-        const page = param.pageN;
-        const skip = (page - 1) * limit;
-        setDisplay(all.slice(skip, skip + limit));
-    }
-
-    const fetchData = e => {
-        ajax_get(API_URL).then(res => res.json())
-            .then(data => {
-                setAll(data);
-            });
-    }
-
-    useEffect(() => {
-        fetchData();
-    }, [])
+    const currentPage = param.pageN;
 
     useLayoutEffect(() => {
-        showDisplay();
+        showDisplay(param.pageN);
     }, [all, location])
 
-    const handleDelete = (pId, lastone) => {
-        let path;
+    function handleDelete(pId) {
         const url = `${API_URL}/${pId}`;
-        if (page > 1) {
-            path = lastOne == true ? `/merchandise/page/${page - 1}` : location.pathname;
-        }
         ajax_del(url);
+
         setAll((prev) => {
-            return prev.filter(item => item.id !== pId);
+            return prev.filter(i => i.id !== pId);
         })
+
+        if (remain == 1) {
+            if (param.pageN == pages[pages.length - 1]) {
+                const page = pages[pages.length - 1] - 1;
+                const path = `/merchandise/page/${page}`;
+                navigate(path);
+            }
+        }
     }
 
     const mIndex = (idx) => {
-        return (page - 1) * ctxt.limit + idx + 1;
+        // mark (limit)
+        return (currentPage - 1) * limit + idx + 1;
+    }
+
+    function onclick() {
+        setItem(empty(item));
     }
 
     return (
         <>
             <div className="add">
-                <button type="button" className="btn btn-sm btn-secondary">
-                    <span className="material-symbols-outlined md-18" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => setP({})}>新增</span>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary" onClick={onclick}>
+                    <span className="material-symbols-outlined md-18">新增</span>
                 </button>
             </div>
             <table>
@@ -89,15 +74,15 @@ export default function Page() {
                     {
                         display.map((m, idx) => (
                             <tr key={m.id}>
-                                <td className="id left_round">{mIndex(idx)}</td>
+                                <td data-id={m.id} className="id left_round">{mIndex(idx)}</td>
                                 <td className="title">{m.title}</td>
                                 <td className="price">{m.price}</td>
                                 <td className="brand">{m.brand}</td>
                                 <td className="category right_round">{m.category}</td>
                                 <td>
                                     <span className="material-symbols-outlined" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                        onClick={() => setP(m)}>edit</span>
-                                    <span className="material-symbols-outlined" onClick={() => handleDelete(m.id, lastOne)}>
+                                        onClick={() => setItem(m)}>edit</span>
+                                    <span className="material-symbols-outlined" onClick={() => handleDelete(m.id)}>
                                         delete
                                     </span>
                                 </td>
@@ -106,7 +91,6 @@ export default function Page() {
                     }
                 </tbody>
             </table>
-            <Popup p={p} setP={setP} {...ctxt} setAll={setAll} all={all} showDisplay={showDisplay} />
         </>
     )
 }

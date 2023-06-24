@@ -1,8 +1,6 @@
 const contentTypeJson = { "Content-Type": "application/json" };
 
-export const api_merchandise = 'https://localhost:7123/api/merchandise';
-
-export async function ajax_get(url, redirect = '') {
+export async function ajax_get(url) {
     return await fetch(url, {
         method: "GET",
         headers: contentTypeJson
@@ -17,12 +15,12 @@ export async function ajax_post(url, data) {
     }).then(res => console.log('OK'))
 }
 
-export async function ajax_put(url, data, redirect) {
+export async function ajax_put(url, data) {
     await fetch(url, {
         method: "PUT",
         headers: contentTypeJson,
         body: JSON.stringify(data), 
-    }).then(res => window.location.replace(redirect));
+    });
 }
 
 export async function ajax_del(url) {
@@ -38,4 +36,3 @@ export async function ajax_importJson(url) {
         headers: contentTypeJson,
     }).then(() => console.log('OK'))
 }
-

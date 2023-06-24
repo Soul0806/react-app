@@ -8,8 +8,10 @@ export default function Merchandise() {
 
     return (
         <>
-            <Filter />
-            <Table />
+            <div className="merchandise">
+                <Filter />
+                <Table />
+            </div>
         </>
     );
 }

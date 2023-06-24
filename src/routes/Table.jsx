@@ -1,8 +1,9 @@
-import { useEffect, createContext, useState } from 'react';
+import { useEffect, createContext, useState, useSyncExternalStore } from 'react';
 import { useLoaderData, NavLink, Outlet, Link } from 'react-router-dom';
-import { ajax_get } from '../lib/libs';
+import { ajax_get } from '../lib/helper';
 
 import Paging from './Paging';
+import Popup from './Popup';
 
 import _ from 'lodash'
 
@@ -11,42 +12,48 @@ const limit = 15;
 
 export const AppContext = createContext();
 
-export async function loader({ params }) {
-    const items = await ajax_get(API_URL).then(res => res.json());
-    const itemsLen = _.size(items);
-    const pagesLen = _.ceil(itemsLen / limit);
-    // const pages = _.range(1, pagesLen + 1);
-    const remain = itemsLen % limit;
-    
-    return { remain, pagesLen };
-}
-
 export default function Table() {
 
-    const [ i , setI] = useState('');
-    const [ pages, setPages ] = useState([]);
-    const { items, remain, pagesLen } = useLoaderData();
+    const [item, setItem] = useState({
+        id: '',
+        title: '',
+        price: '',
+        brand: '',
+        category: '',
+        thumbnail: ''
+    });
+    const [all, setAll] = useState([]);
+    const [display, setDisplay] = useState([]);
+
+    const pages = calcPage(all);
+    const itemsLen = _.size(all);
+    const lastNumOfPages = _.ceil(itemsLen / limit);
+    const remain = itemsLen % limit;
 
     useEffect(() => {
-        ajax_get(API_URL).then(res => res.json().then(data => setI(data)));
+        ajax_get(API_URL).then(res => res.json().then(data => setAll(data)));
     }, [])
 
-    useEffect(() => {
-        setPages(calcPage(i));
-    }, [i])
-
-    const calcPage = (items) => {
+    function calcPage(items) {
         let itemsLen = _.size(items);
-        let pagesLen = _.ceil(itemsLen / limit);
-        return _.range(1, pagesLen + 1);
+        let lastNumOfPages = _.ceil(itemsLen / limit);
+        return _.range(1, lastNumOfPages + 1);
     }
-    
+
+    const showDisplay = (numOfPage) => {
+        const skip = (numOfPage - 1) * limit;
+        setDisplay(all.slice(skip, skip + limit));
+    }
+
+    const appProvider = { item, setItem, all, setAll, pages, limit, remain, lastNumOfPages, display, showDisplay };
     return (
         <>
-            <AppContext.Provider value={{pages, i}}>
+            <AppContext.Provider value={appProvider}>
                 <section>
                     <Paging />
-                    <Outlet context={{ limit, remain, pagesLen }} />
+                    <Outlet />
+                    <Popup />
+                    {/* <Popup p={p} setP={setP} remain={remain}  pagesLen={pagesLen} setAll={setAll} all={all} showDisplay={showDisplay} /> */}
                 </section>
             </AppContext.Provider>
         </>
