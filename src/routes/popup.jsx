@@ -1,103 +1,97 @@
-import { useState, useEffect } from 'react';
-import { Form, redirect } from 'react-router-dom';
-import { Button, Modal } from 'react-bootstrap';
-const api_url = 'https://localhost:7123/api/product';
+import { createRef, useEffect, useState, useContext } from 'react';
+import { useLocation, useNavigate, useMatch } from 'react-router-dom';
 
-async function Put(id) {
-    let dep = await fetch(`${api_url}/${id}`)
-        .then(res => { return res.json() })
-        .then(data => {
-            return data[0];
-        })
-    return p;
-}
+import { ajax_post, ajax_put, lowerize } from '../lib/helper';
 
-export async function loader({ params }) {
-    return {};
-}
-export async function action({ request, param }) {
-    return {};
-}
+import { AppContext } from "./Table";
 
-function Popup({ showModal, setShowModal, p, setP }) {
+const API_URL = 'https://localhost:7123/api/merchandise';
 
-    const [modalValue, setModalValue] = useState(null);
 
-    var handleModalClose = () => {
-        setShowModal(false);
-    }
+function Popup() {
+    
+    const {item, setItem, remain, pages, all, setAll, showDisplay} = useContext(AppContext);
 
-    var handleModalSubmit = () => {
-        setShowModal(false);
-    }
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setP((prevFormData) => ({
-            ...prevFormData,
-            [name]: value
-        }));
-
+        setItem(prevFormData => {
+            return {
+                ...prevFormData,
+                [e.target.name]: e.target.value
+            }
+        });
     };
 
     const handleSubmit = (e) => {
+        var myModalEl = document.getElementById('exampleModal')
+        var modal = bootstrap.Modal.getInstance(myModalEl)
+
         e.preventDefault();
-        let data;
-        if (p.ID == null) {
-            data = { Title: p.Title, Price: p.Price, Brand: p.Brand, Category: p.Category, Thumbnail: p.Thumbnail };
-            fetch(`${api_url}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data), // body data type must match "Content-Type" header
+        let data, url, path;
+
+        if (item.id == '') {
+            data = { Title: item.title, Price: item.price, Brand: item.brand, Category: item.category, Thumbnail: item.thumbnail };
+
+            let page = (remain == 0) ? pages[pages.length -1] + 1 : pages[pages.length - 1] ;
+            let path = `/merchandise/page/${page}`;
+            ajax_post(API_URL, data);
+
+            setAll((prev) => {
+                return [...prev, lowerize({ ...data, id: all[all.length - 1].id + 1 })]
             })
-                .then(res => {return res})
-                .then(() => window.location.replace('/'));
+            navigate(path);
+            showDisplay(page);
+        
         } else {
-            data = { ID: p.ID, Title: p.Title, Price: p.Price, Brand: p.Brand, Category: p.Category, Thumbnail: p.Thumbnail };
-            fetch(`${api_url}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data), // body data type must match "Content-Type" header
-            })
-                .then(res => {return res })
-                .then(() => window.location.replace('/'));
+            data = { ID: item.id, Title: item.title, Price: item.price, Brand: item.brand, Category: item.category, Thumbnail: item.thumbnail };
+
+            setAll(
+                all.map(i => {
+                    if(i.id == item.id) 
+                        return lowerize(data)
+                    return i;
+                })
+            )
+            ajax_put(API_URL, data);
         }
+        modal.toggle();
     }
-
-
+   
     return (
         <div className="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalLabel">New message</h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h5 className="modal-title" id="exampleModalLabel">{item.id ? "編輯" : "新增"}</h5>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={onclick}></button>
                     </div>
-                    <form method="post" onSubmit={handleSubmit}>
+                    <form key={item.id} method="post" onSubmit={handleSubmit}>
                         <div className="modal-body">
+                            {item.id ?
+                                (<div className="mb-3">
+                                    <h5>編號 : <span>{item?.id}</span></h5>
+                                </div>) : ""}
                             <div className="mb-3">
                                 <label className="col-form-label"></label>
-                                <input type="text" name="Title" defaultValue={p?.Title} onChange={handleInputChange} />
+                                <input type="text" name="title" value={item.title} onChange={handleInputChange} />
                             </div>
                             <div className="mb-3">
                                 <label className="col-form-label"></label>
-                                <input type="text" name="Price" defaultValue={p?.Price} onChange={handleInputChange} />
+                                <input type="text" name="price" value={item.price} onChange={handleInputChange} />
                             </div>
                             <div className="mb-3">
                                 <label className="col-form-label"></label>
-                                <input type="text" name="Brand" defaultValue={p?.Brand} onChange={handleInputChange} />
+                                <input type="text" name="brand" value={item.brand} onChange={handleInputChange} />
                             </div>
                             <div className="mb-3">
                                 <label className="col-form-label"></label>
-                                <input type="text" name="Category" defaultValue={p?.Category} onChange={handleInputChange} />
+                                <input type="text" name="category" value={item.category} onChange={handleInputChange} />
                             </div>
                             <div className="mb-3">
                                 <label className="col-form-label"></label>
-                                <input type="text" name="Thumbnail" defaultValue={p?.Thumbnail} onChange={handleInputChange} />
+                                <input type="text" name="thumbnail" value={item.thumbnail} onChange={handleInputChange} />
                             </div>
                         </div>
                         <div className="modal-footer">

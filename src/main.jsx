@@ -1,38 +1,64 @@
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { BrowserRouter, Route, Routes, NavLink } from 'react-router-dom';
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './index.scss';
-// import Root, { loader as rootLoader, action as rootAction, }  from './routes/Root';
-// import Contact, { loader as conatactLoader} from "./routes/contact";
-// import Edit, { action as editAction }from "./routes/edit";
-// import Department, { loader as rootLoader, action as rootAction } from "./routes/Department";
-import Product, { loader as rootLoader, action as rootAction } from './routes/Product';
-import Popup, { loader as popupLoader, action as popupAction } from './routes/popup';
-import Table from './routes/Table';
+
+// component
+import Home from './routes/Home';
+import Merchandise from './routes/Merchandise';
+import Tire from './routes/tire/Tire';
+import Spec from './routes/Tire/Spec';
+import CSV from './routes/CSV/csv';
+import Page from './routes/Page';
+import Backend, { action as backendAction } from './routes/backend/Backend';
+
+// erro page
 import ErrorPage from "./error-page";
 
+// scss index
+import './index.scss';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Product />,
+    element: <Home />,
     errorElement: <ErrorPage />,
-    loader: rootLoader,
-    action: rootAction,
     children: [
       {
-        path: "/",
-        element: <Table />,
+        path: "/merchandise",
+        element: <Merchandise />,
+        errorElement: <ErrorPage />,
+        children: [
+          {
+            path: "page/:pageN",
+            element: <Page />,
+          }
+        ]
       },
       {
-        path: "/page/:pageN",
-        element: <Table />,
+        path: "/tire",
+        element: <Tire />,
+        errorElement: <ErrorPage />,
+        children: [
+          {
+            path: ":area/spec/:inch",
+            element: <Spec />,
+          }
+        ]
+      },
+      {
+        path: "/csv",
+        element: <CSV />,
+        errorElement: <ErrorPage />,
       }
     ]
-    
+  },
+  {
+    path: "/backend",
+    element: <Backend />,
+    errorElement: <ErrorPage />,
+    action: backendAction,
   }
 ]);
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
