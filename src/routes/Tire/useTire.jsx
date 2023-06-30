@@ -53,7 +53,7 @@ export const useTire = () => {
 
     useEffect(() => {
         if (ref.current == true) {
-            if (localStore.length == 0) {
+            if (localStore.length != areas.length) {
                 areas.map(area => {
                     combineTire().then(res => {
                         setInches(res);
@@ -74,7 +74,7 @@ export const useTire = () => {
         }
     }, [])
 
-    return { inches, setInches }
+    return { inches, setInches, areas, combineTire }
 }
 
 

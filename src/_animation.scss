@@ -1,3 +1,14 @@
+@keyframes moveup {
+  from {transform : translateY(0)}
+  to {transform : translateY(-10px)}
+}
+
+@keyframes fade-in {
+  from {opacity: 0}
+  50% {opacity: .5} /* ignored */
+  to {opacity: 1}
+}
+
 .fade-enter {
     opacity: 0;
   }

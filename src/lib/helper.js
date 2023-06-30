@@ -21,6 +21,12 @@ function lowerize(item) {
     }, {});
 }
 
+function createElement(obj) {
+    const div = document.createElement('div');
+    const textnode = document.createTextNode(obj.name);
+    div.appendChild(textnode);
+}
+
 // function empty(object) {
 //     Object.keys(object).forEach(function (k){
 //         if (object[k] && typeof object[k] === 'object') {
@@ -47,6 +53,6 @@ function uuid() {
     return Object.keys(objectName).length === 0
   }
 
-export { empty, lowerize, uuid, isObjectEmpty }
+export { empty, lowerize, uuid, isObjectEmpty, createElement }
 // export from ajax;
 export * from './ajax'; 

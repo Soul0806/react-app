@@ -1,5 +1,4 @@
 @import '_animation.scss';
-
 @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
 
 * {
@@ -192,14 +191,16 @@ html {
       }
 
       .tire {
-
         text-align: center;
         display: grid;
-        grid-template-columns: 150px 100px 300px;
-        justify-content: center;
-
+        grid-template-columns: 50px 150px 100px 300px 100px;
+        width: 90%;
+        margin: 0 auto;
+     
         gap: 1rem;
-
+        .reset {
+          max-height: 30px;
+        }
         .area-wrapper {
           display: flex;
           flex-direction: column;
@@ -243,7 +244,7 @@ html {
 
           .item {
             display: grid;
-            grid-template-columns: 100px 50px 50px 50px;
+            grid-template-columns: 100px 50px 50px 50px 50px;
 
             .red {
               color: red;
@@ -263,6 +264,22 @@ html {
 
             .increase {
               background-color: limegreen;
+            }
+          }
+        }
+
+        .note-wrapper {
+          margin-top: calc(1rem * 4);
+
+          .note {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .noti {
+              position: absolute;
+              // transition: 1s;
+           
             }
           }
         }
