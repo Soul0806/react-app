@@ -1,4 +1,4 @@
-import React, { useContext, useState, useImperativeHandle, useRef } from 'react'
+import React, { useContext, useState, useImperativeHandle, useRef, useEffect } from 'react'
 import { useParams, useOutletContext } from 'react-router-dom'
 
 import { AppContext } from './Tire';
@@ -10,19 +10,19 @@ import Note from './Note';
 //     console.log(btn);
 // }
 
-
 function Spec() {
     const noteRef = useRef([]);
     const param = useParams();
-    const { specs, inches, setInches, dispatch } = useContext(AppContext);
+    const { specs, inches, setInches, dispatch,  } = useContext(AppContext);
     const [target, setTarget] = useState('');
+    const [behavior, setBehavior] = useState('insert');
     const { ref } = useOutletContext();
-
+  
     useImperativeHandle(ref, () => {
         return {
             cancelTarget: () => setTarget(''),
             cleanNoteRef: () => noteRef.current = [],
-            cleanNote:    () => cleanNote()
+            cleanNote: () => cleanNote()
         }
     })
 
@@ -100,9 +100,23 @@ function Spec() {
         }
     }
 
+    function handleBehav(e) {
+        console.log(e.target.value);
+        setBehavior(e.target.value);
+    }
     return (
         <>
             <div className="spec-wrapper">
+                {specs.length != 0 &&
+                    <div className="behavior" onChange={handleBehav}>
+                        <label htmlFor="insert">
+                            <input type="radio" id="insert" value="insert" name="behavior" checked={behavior == 'insert'} />新增
+                        </label>
+                        <label htmlFor="sale">
+                            <input type="radio" id="sale" value="sale" name="behavior" />銷售
+                        </label>
+                    </div>
+                }
                 {specs.map((spec, idx) => {
                     const num = inches[spec.slice(-2)]['spec'][spec];
                     const btnStyle = (num == 0) ? { opacity: 0.7, cursor: 'not-allowed' } : { opacity: 1 };
@@ -110,8 +124,16 @@ function Spec() {
                     return <div className="item" key={idx}>
                         <div className="spec">{spec}</div>
                         <div className="num" style={active(spec)}>{num}</div>
-                        <button className="button minor" style={btnStyle} disabled={disabled} onClick={onclick(spec, 'minor')}> - </button>
-                        <button className="button increase" onClick={onclick(spec, 'add')}> + </button>
+                        <div>
+                        {behavior == 'insert' ?
+                            <>
+                                <button className="button minor" style={btnStyle} disabled={disabled} onClick={onclick(spec, 'minor')}> - </button>
+                                <button className="button increase" onClick={onclick(spec, 'add')}> + </button>
+                            </>
+                            :
+                            <button className="button minor" style={btnStyle} disabled={disabled} > 售 </button>
+                        }
+                         </div>
                     </div>
                 }
                 )}

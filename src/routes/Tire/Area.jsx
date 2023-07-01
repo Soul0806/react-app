@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState, memo  } from 'react'
 import { NavLink, Link, useParams } from 'react-router-dom'
 
 import { areas } from './useTire';
 
-function Area({onclick}) {
+const Area = memo(() => {
     const param = useParams();
     function theme(areaName) {
         return { color: param.area == areaName ? 'red' : 'rgb(202, 199, 199)' }
-
     }
+
     return (
         <div className="area-wrapper">
             {areas.map((area) => {
@@ -18,6 +18,6 @@ function Area({onclick}) {
             )}
         </div>
     )
-}
+})
 
 export default Area

@@ -1,4 +1,4 @@
-import React, { useState, createContext, useReducer, useRef, useEffect } from 'react'
+import React, { useState, createContext, useReducer, useRef, useEffect, useMemo } from 'react'
 import { Outlet, useParams } from 'react-router-dom';
 
 import _ from 'lodash';
@@ -30,18 +30,17 @@ export default function Tire() {
 
   const param = useParams();
   const ref = useRef([]);
-  const { inches, setInches, areas, combineTire } = useTire();
+  const { inches, setInches, areas, combineTire, specs, setSpecs  } =  useTire();
   // const [ state, dispatch ] = useReducer(reducer, inches); 
-  const [specs, setSpecs] = useState([]);
 
   function inchClick(specs) {
     setSpecs(specs.sort());
   }
 
   function reset() {
-   
     combineTire().then(res => areas.map(area => localStorage.setItem(area.path, JSON.stringify(res))));
     combineTire().then(res => setInches(res));
+    ref.current.cancelTarget();
     ref.current.cleanNote();
     ref.current.cleanNoteRef();
   }
@@ -49,7 +48,7 @@ export default function Tire() {
   return (
     <>
       <div className="tire">
-        <AppContext.Provider value={{ specs, inches, setInches, areas }}>
+        <AppContext.Provider value={{ specs, inches, setInches, areas, specs }}>
           <button className="reset" onClick={reset}>Reset</button>
           <Area />
           <Inch onclick={inchClick} />

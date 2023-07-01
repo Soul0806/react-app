@@ -1,7 +1,8 @@
 const contentTypeJson = { "Content-Type": "application/json" };
 
-export async function ajax_get(url) {
+export async function ajax_get(url, signal) {
     return await fetch(url, {
+        signal,
         method: "GET",
         headers: contentTypeJson
     })

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, useMemo } from 'react'
 import { NavLink, useParams } from 'react-router-dom';
 
 import { AppContext } from './Tire';
@@ -7,7 +7,7 @@ function Inch({ onclick }) {
     const [ test, setTest ] = useState(0);
     const param = useParams();
     const { inches } = useContext(AppContext);
-    
+
     return (
         <div className='inch-wrapper'>
             {Object.keys(inches).map(inch => {
