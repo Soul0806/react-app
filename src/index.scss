@@ -193,7 +193,7 @@ html {
       .tire {
         text-align: center;
         display: grid;
-        grid-template-columns: 50px 150px 100px 300px 100px;
+        grid-template-columns: 150px 150px 200px 300px;
         width: 90%;
         margin: 0 auto;
      
@@ -242,13 +242,21 @@ html {
           gap: .825rem 0;
           min-width: 260px;
 
-          .behavior {
+          .reset {            
+            text-align: right;
+            > button {
+              position: relative;
+              right: 10px;
+            }
+          }
+          .behavior { 
+            position: relative;                      
             display: flex;
             flex-direction: row;
             gap: 10px;
-            text-align: left;
-            position: relative;
+            text-align: left;          
             left: 150px;
+           
           }
 
           .item {

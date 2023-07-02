@@ -3,7 +3,8 @@ import { NavLink, Link, useParams } from 'react-router-dom'
 
 import { areas } from './useTire';
 
-const Area = memo(() => {
+
+const Area = () => {
     const param = useParams();
     function theme(areaName) {
         return { color: param.area == areaName ? 'red' : 'rgb(202, 199, 199)' }
@@ -18,6 +19,6 @@ const Area = memo(() => {
             )}
         </div>
     )
-})
+}
 
 export default Area

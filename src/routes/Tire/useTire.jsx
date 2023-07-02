@@ -4,14 +4,13 @@ import { useParams } from 'react-router';
 import { ajax_get, uuid, isObjectEmpty } from '../../lib/helper';
 import _ from 'lodash';
 
-
 export const areas = [
     { name: '隔壁 樓上', path: 'upstair' },
     { name: '隔壁 樓下', path: 'downstair' }
 ]
 
-export async function combineTire(signal) {
-    const param = useParams();
+export async function combineTire(signal = {}) {
+
     const API_TIRE = 'https://localhost:7123/api/tire';
     const [head, last] = [12, 22];
     const inchRange = _.range(head, last + 1);
@@ -27,58 +26,40 @@ export async function combineTire(signal) {
         const inch = name.slice(-2);
         inchTmplt[inch]['spec'][name] = 0;
     })
-
     return inchTmplt;
 }
 
-
 export const useTire = () => {
     const param = useParams();
-    const ref = useRef(false);
-    const [ inches, setInches ] = useState({});
-    const localStore = localStorage;
-    const localValue = localStorage.getItem(param.area);
-    const [specs, setSpecs] = useState([]);
+    const [inches, setInches] = useState({});
 
     useEffect(() => {
-        if (!isObjectEmpty(inches)) {
-            setInches(JSON.parse(localStorage.getItem(param.area)));
-        }
+        !isObjectEmpty(inches) && setInches(JSON.parse(localStorage.getItem(param.area)))
     }, [param])
 
     useEffect(() => {
-        if (!isObjectEmpty(inches)) {
-            localStorage.setItem(param.area, JSON.stringify(inches));
-        }
-        if(specs.length == 0) {
-            setSpecs(Object.keys(JSON.parse(localStore.getItem(param.area))[12]['spec']))
-        }
+        !isObjectEmpty(inches) && localStorage.setItem(param.area, JSON.stringify(inches))
     }, [inches])
 
     useEffect(() => {
         const controller = new AbortController();
         const signal = controller.signal;
-        if (ref.current == true) {
-            if (localStore.length != areas.length) {
-                areas.map(area => {
-                    combineTire(signal).then(res => {
-                        setInches(res);
-                        localStorage.setItem(area.path, JSON.stringify(res))
-                    });
-                })
-            } else {
-                setInches(prev => {
-                    return JSON.parse(localValue);
-                });                
-            }           
+        if (localStorage.length != areas.length) {
+            areas.map(area => {
+                combineTire(signal).then(res => {
+                    setInches(res);
+                    localStorage.setItem(area.path, JSON.stringify(res))
+                });
+            })
+        } else {
+            setInches(prev => {
+                return JSON.parse(localStorage.getItem(param.area));
+            });
         }
-        return () => {
-            controller.abort();
-            ref.current = true;
-        }
+        return () => controller.abort()
     }, [])
 
-    return { inches, setInches, areas, combineTire, specs, setSpecs }
+    return [ inches, setInches, areas, combineTire ] 
 }
 
 

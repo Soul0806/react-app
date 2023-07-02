@@ -6,55 +6,51 @@ import _ from 'lodash';
 import { useTire } from './useTire';
 import Inch from './Inch';
 import Area from './Area';
-
-
+import { isObjectEmpty } from '../../lib/helper';
 
 export const AppContext = createContext();
 
-// export const ACTION  = {
-//   INCREASE: 'increase',
-//   DECREASE: 'decrease',
-// }
+export const ACTION = {
+  INCREASE: 'increase',
+  DECREASE: 'decrease',
+}
 
-// const reducer = (state, action) => {
-//     switch(action.type) {
-//       case ACTION.INCREASE: 
-//         const num =  action.payload.num;
-//         const inch = action.payload.inch;
-//         const spec = action.payload.s;
-//         return { ...state, [inch]: { ...state[inch], spec: { ...state[inch]['spec'], [s]: num + 1 } } }
-//     }
-// }
+const reducer = (state, action) => {
+  switch (action.type) {
+    case ACTION.INCREASE:
+      const num = action.payload.num;
+      const inch = action.payload.inch;
+      const spec = action.payload.s;
+    // console.log({ ...state, [inch]: { ...state[inch], spec: { ...state[inch]['spec'], [s]: num + 1 } } });
+    // return { ...state, [inch]: { ...state[inch], spec: { ...state[inch]['spec'], [s]: num + 1 } } }
+  }
+}
 
 export default function Tire() {
 
   const param = useParams();
   const ref = useRef([]);
-  const { inches, setInches, areas, combineTire, specs, setSpecs  } =  useTire();
-  // const [ state, dispatch ] = useReducer(reducer, inches); 
+  // let [state, dispatch] = useReducer(reducer, {});
+  const [ specs, setSpecs] = useState([]);
+  const [ inches, setInches, areas ]  = useTire();
+
+  useEffect(() => {
+    setSpecs(Object.keys(JSON.parse(localStorage.getItem(param.area))[12]['spec']))
+  }, [])
 
   function inchClick(specs) {
     setSpecs(specs.sort());
   }
 
-  function reset() {
-    combineTire().then(res => areas.map(area => localStorage.setItem(area.path, JSON.stringify(res))));
-    combineTire().then(res => setInches(res));
-    ref.current.cancelTarget();
-    ref.current.cleanNote();
-    ref.current.cleanNoteRef();
-  }
-
-  return (
-    <>
+  return (   
       <div className="tire">
-        <AppContext.Provider value={{ specs, inches, setInches, areas, specs }}>
-          <button className="reset" onClick={reset}>Reset</button>
+        { !isObjectEmpty(inches) &&  
+        <AppContext.Provider value={{ specs, inches, setInches, areas }}>
           <Area />
           <Inch onclick={inchClick} />
-          <Outlet context={{ ref }}/>
-        </AppContext.Provider>
+          <Outlet context={{ ref }} />
+        </AppContext.Provider> 
+        }
       </div>
-    </>
   )
 }
