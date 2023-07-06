@@ -3,7 +3,6 @@ import { NavLink, Link, useParams } from 'react-router-dom'
 
 import { areas } from './useTire';
 
-
 const Area = () => {
     const param = useParams();
     function theme(areaName) {
@@ -14,7 +13,7 @@ const Area = () => {
         <div className="area-wrapper">
             {areas.map((area) => {
                 const to = `${area.path}/spec/${param.inch}`;
-                return <Link to={to} key={to} style={theme(area.path)} >{area.name}</Link>
+                return <Link to={to} key={to} style={theme(area.path)}>{area.name}</Link>
             }
             )}
         </div>

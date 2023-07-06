@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback, useReducer } from 'react';
 import { useParams } from 'react-router';
 
 import { ajax_get, uuid, isObjectEmpty } from '../../lib/helper';
@@ -8,9 +8,7 @@ export const areas = [
     { name: '隔壁 樓上', path: 'upstair' },
     { name: '隔壁 樓下', path: 'downstair' }
 ]
-
-export async function combineTire(signal = {}) {
-
+export const combineTire = async(signal = {}) => {
     const API_TIRE = 'https://localhost:7123/api/tire';
     const [head, last] = [12, 22];
     const inchRange = _.range(head, last + 1);
@@ -58,6 +56,7 @@ export const useTire = () => {
         }
         return () => controller.abort()
     }, [])
+
 
     return [ inches, setInches, areas, combineTire ] 
 }

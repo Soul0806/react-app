@@ -1,0 +1,23 @@
+.modal {
+    form {
+        text-align: left;
+        .place {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, 50px);
+        }
+        input {
+            padding: 0.1rem 0.5rem;
+            border: .1px solid rgb(216, 210, 210);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            opacity: .6;
+
+            &:focus {
+                opacity: 1;
+                outline: none;
+                box-shadow: 0 0 0 2px rgba(21, 156, 228, 0.4);
+                transform: scale(1.04);
+            }
+        }
+    }
+}
