@@ -1,7 +1,6 @@
-
-@import './assets/css/global';
-@import './assets/css/popup.scss';
-@import '_animation.scss';
+@import './global';
+@import './popup.scss';
+@import './_animation.scss';
 @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
 
 * {
@@ -196,7 +195,7 @@ html {
       .tire {
         text-align: center;
         display: grid;
-        grid-template-columns: 150px 150px 1fr 300px;
+        grid-template-columns: 150px 150px 1fr 100px 150px;
         width: 90%;
         margin: 0 auto;
 

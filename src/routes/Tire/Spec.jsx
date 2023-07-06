@@ -5,8 +5,10 @@ import _ from 'lodash';
 import { AppContext } from './Tire';
 import Note from './Note';
 import CustomSelect from '../Component/CustomSelect'
-
 import Popup from '../Component/Popup';
+
+// import { dd } from '../../lib/helper';
+
 import { combineTire } from './useTire';
 // const option = _.range(1, 11);
 
@@ -41,6 +43,8 @@ function Spec() {
 
     const { ref } = useOutletContext();
 
+    const sale = localStorage.getItem('sale') || [];
+
     // let [state, dispatch] = useReducer(reducer, inches);
     useImperativeHandle(ref, () => {
         return {
@@ -49,18 +53,6 @@ function Spec() {
             cleanNote: () => cleanNote()
         }
     })
-
-    // useEffect(() => {
-    //     console.log(MobileSelect);
-    // let mobileSelect1 = new MobileSelect({
-    //     trigger: document.querySelector("#day"),
-    //     wheels: [
-    //     { data: ["一", "二", "三", "四", "五", "六"] }
-    //     ],
-    //     title: ''
-    // });
-    // }, [behavior])
-
 
     function getOffset(el) {
         const rect = el.getBoundingClientRect();
@@ -194,6 +186,7 @@ function Spec() {
                     </div>
                 }
                 )}
+                {sale}
             </div>
             <Note />
             <Popup />

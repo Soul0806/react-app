@@ -15,7 +15,7 @@ import Backend, { action as backendAction } from './routes/backend/Backend';
 import ErrorPage from "./error-page";
 
 // scss index
-import './index.scss';
+import './assets/css/index.scss';
 const router = createBrowserRouter([
   {
     path: "/",

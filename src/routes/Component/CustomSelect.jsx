@@ -1,12 +1,13 @@
 import React from 'react'
 
-function CustomSelect({ name, option }) {
-    console.log(option);
+function CustomSelect({ name, option, selling }) {
+ 
     return (
         <div>
-            <select name={name} id="">
+            <select name={name}>
+                {!selling?.inch && <option value="">--請選擇--</option>}
                 {option.map((op, idx) => (
-                    <option key={idx} value={op} >{op}</option>
+                    <option key={idx} value={op}>{op}</option>
                 )
                 )}
             </select>

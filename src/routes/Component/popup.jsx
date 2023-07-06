@@ -1,9 +1,11 @@
-import { useEffect, useState, useContext, useInsertionEffect } from 'react';
+import { useEffect, useState, useContext, useInsertionEffect, useRef } from 'react';
 import CustomSelect from './CustomSelect';
 
 import { AppContext } from '../Tire/Tire';
 
-import _, { keysIn } from 'lodash'
+import { getDateTime, getToday } from '../../lib/helper';
+
+import _ from 'lodash'
 // import { useLocation, useNavigate, useMatch } from 'react-router-dom';
 
 // import { ajax_post, ajax_put, lowerize } from '../lib/helper';
@@ -16,29 +18,39 @@ import _, { keysIn } from 'lodash'
 function Popup() {
     var myModalEl = document.getElementById('exampleModal')
     var modal = bootstrap.Modal.getInstance(myModalEl)
+
     const optionInch = _.range(12, 23);
     const { inches } = useContext(AppContext);
+    const [specs, setSpecs] = useState([]);
 
     const [selling, setSelling] = useState({
         place: '',
-        inch: 12,
-        specs: [],
+        service: '',
+        inch: '',
         spec: '',
-        quantity: 1,
+        price: '',
+        quantity: '',
+        pay: '',
+        note: '',
+        date: getToday(), 
+        createdAt: getDateTime()
     });
+    
+    const styling = {
+        opacity: !selling.spec ? '.4' : 1,
+        cursor: !selling.spec ? 'not-allowed' : 'pointer'
+    }
 
     useEffect(() => {
-        setSelling((prev) => {
-            return {
-                ...prev,
-                specs: Object.keys(inches[selling['inch']]['spec'])
-            }
-        })
+        if (selling.inch) {
+            setSpecs((prev) => {
+                return Object.keys(inches[selling['inch']]['spec'])
+            })
+        }
     }, [selling.inch])
 
     function handleChange(e) {
         const { name, value } = e.target;
-        console.log(value);
         setSelling(prev => {
             return {
                 ...prev,
@@ -47,9 +59,31 @@ function Popup() {
         })
     }
 
-    function handleSubmit() {
-        return false;
+    function handleSubmit(e) {
+        e.preventDefault();
+        var date = (new Date()).toISOString().split('T')[0];
+        if (!localStorage.getItem('sale')) {
+            localStorage.setItem('sale', JSON.stringify({ [date]: [selling] }));
+        } else {
+            let itemSale = JSON.parse(localStorage.getItem('sale'))[date];
+            localStorage.setItem('sale', JSON.stringify({ [date]: [...itemSale, selling] }));
+        }
+        // modal.toggle();
     }
+
+    function handleClose() {
+        // setSelling({
+        //     place: '',
+        //     service: '',
+        //     inch: '',
+        //     spec: '',
+        //     price: '',
+        //     quantity: 1,
+        //     pay: '',
+        //     note: ''
+        // })
+    }
+
     return (
         <div className="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
@@ -58,47 +92,49 @@ function Popup() {
                         <h5 className="modal-title" id="exampleModalLabel">詳細銷售</h5>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form method="post" onSubmit={() => handleSubmit}>
+                    <form method="post" onSubmit={handleSubmit}>
                         <div className="modal-body">
                             <div className="mb-3 modal-place" onChange={handleChange}>
                                 <div>
                                     <label htmlFor="store">
-                                        <input type="radio" id="store" name="place" value="store" />店內</label>
+                                        <input type="radio" id="store" name="place" value="store" checked={selling.place == 'store' ? 'checked' : ''} />店內</label>
                                 </div>
                                 <div>
                                     <label htmlFor="out-service">
-                                        <input type="radio" id="out-service" name="place" value="out-service" />外出
+                                        <input type="radio" id="out-service" name="place" value="out-service" checked={selling.place == 'out-service' ? 'checked' : ''} />外出
                                     </label>
                                 </div>
                             </div>
                             <div className="mb-3 modal-service" onChange={handleChange}>
                                 <div>
                                     <label htmlFor="fix">
-                                        <input type="radio" id="fix" name="service" value="fix" />補胎</label>
+                                        <input type="radio" id="fix" name="service" value="fix" checked={selling.service == 'fix' ? 'checked' : ''} />補胎</label>
                                 </div>
                                 <div>
                                     <label htmlFor="tire-change">
-                                        <input type="radio" id="tire-change" name="service" value="tire-change" />換胎
+                                        <input type="radio" id="tire-change" name="service" value="tire-change" checked={selling.service == 'tire-change' ? 'checked' : ''} />換胎
                                     </label>
                                 </div>
                             </div>
                             <div className="mb-3 modal-tire" onChange={handleChange}>
                                 <div>規格</div>
                                 <div>
-                                    <CustomSelect name="inch" option={_.range(12, 23)} />
+                                    <CustomSelect name="inch" option={optionInch} selling={selling}/>
                                 </div>
-                                <div>
-                                    <CustomSelect name="spec" option={selling['specs']} />
-                                </div>
+                                {specs.length != 0 &&
+                                    <div>
+                                        <CustomSelect name="spec" option={specs} />
+                                    </div>
+                                }
                             </div>
                             <div className="mb-3 modal-quantity" onChange={handleChange} >
                                 <div>數量</div>
-                                 <div>
-                                     <CustomSelect name="quantity" option={_.range(1, 11)} />
-                                 </div>
+                                <div>
+                                    <CustomSelect name="quantity" option={_.range(1, 11)} />
+                                </div>
                             </div>
                             <div className="mb-3 input-icon modal-input-icon">
-                                <input className="price" name="price" type="text" placeholder="0.0" onChange={handleChange}/>
+                                <input className="price" name="price" type="text" placeholder="0.0" onChange={handleChange} />
                                 <i>$</i>
                             </div>
                             <div className="mb-3 modal-pay" onChange={handleChange}>
@@ -119,19 +155,18 @@ function Popup() {
                                 </div>
                             </div>
                             <div className="mb-3 modal-note">
-                                 <label className="note" htmlFor="note">備註 </label>
-                                 <input id="note" name="note" type="text" onChange={handleChange}/>
+                                <label className="note" htmlFor="note">備註 </label>
+                                <input id="note" name="note" type="text" onChange={handleChange} />
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit"
+                                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClose}>Close</button>
+                                <button type="submit" style={styling}
                                     className="btn btn-primary">Send message</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-            {JSON.stringify(selling)}
         </div>
     )
 }

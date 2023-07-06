@@ -1,6 +1,18 @@
 export const api_merchandise = 'https://localhost:7123/api/merchandise';
 
 
+function getToday() {
+    return (new Date()).toLocaleString().split(' ')[0];
+}
+
+function getDateTime() {
+    return (new Date()).toLocaleString();
+}
+
+function isEmpty(str) {
+    return (!str || str.length === 0);
+}
+
 function empty(item) {
     const action = {
         DEFAULT: k => k
@@ -39,20 +51,21 @@ function createElement(obj) {
 // }
 function uuid() {
     var d = Date.now();
-    if (typeof performance !== 'undefined' && typeof performance.now === 'function'){
-      d += performance.now(); //use high-precision timer if available
+    if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
+        d += performance.now(); //use high-precision timer if available
     }
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      var r = (d + Math.random() * 16) % 16 | 0;
-      d = Math.floor(d / 16);
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
         return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
-  }
+}
 
- function isObjectEmpty(objectName) {
+function isObjectEmpty(objectName) {
     return Object.keys(objectName).length === 0
-  }
+}
 
-export { empty, lowerize, uuid, isObjectEmpty, createElement }
+
+export { isEmpty, empty, lowerize, uuid, isObjectEmpty, createElement, getToday, getDateTime }
 // export from ajax;
 export * from './ajax'; 
