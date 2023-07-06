@@ -1,15 +1,12 @@
 import React from 'react'
 
-function CustomSelect({ option }) {
+function CustomSelect({ name, option }) {
     console.log(option);
-    function handleChange(e) {
-        console.log(e.target.value);
-    }
     return (
         <div>
-            <select name="aaa" id="">
-                {option.map((op) => (
-                    <option>{op}</option>
+            <select name={name} id="">
+                {option.map((op, idx) => (
+                    <option key={idx} value={op} >{op}</option>
                 )
                 )}
             </select>

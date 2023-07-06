@@ -1,5 +1,7 @@
-@import '_animation.scss';
+
+@import './assets/css/global';
 @import './assets/css/popup.scss';
+@import '_animation.scss';
 @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
 
 * {
@@ -275,32 +277,6 @@ html {
               grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
               gap: 1rem;
 
-              .input-icon {
-                position: relative;
-                .price {
-                  width: 5rem;
-                  padding-left: 25px;
-                  border: 1px solid #ccc;
-                  border-radius: 4px;
-                  
-                  &:focus {
-                    opacity: 1;
-                    outline: none;
-                    box-shadow: 0 0 0 2px rgba(21, 156, 228, 0.4);
-                    transform: scale(1.04);
-                  }
-                }
-                i {
-                  position: absolute;
-                  display: block;
-                  transform: translate(0, -50%);
-                  top: 50%;
-                  pointer-events: none;
-                  width: 25px;
-                  text-align: center;
-                  font-style: normal;
-                }
-              }
             }
 
             .red {
