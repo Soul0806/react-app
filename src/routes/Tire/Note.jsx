@@ -24,12 +24,6 @@ function Note() {
     return (
         <div className="note-wrapper">
             <div className="note">
-                {/* {note.current.map(n => {
-                    const myArray = new Uint32Array(1);
-                    const id = crypto.getRandomValues(myArray)[0];
-
-                    return <div key={`${n.name}-${id}`} className={`note-${n.name}`}>{n.name}</div>;
-                })} */}
             </div>
         </div>
 

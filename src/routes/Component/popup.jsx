@@ -6,16 +6,9 @@ import { AppContext } from '../Tire/Tire';
 import { getDateTime, getToday } from '../../lib/helper';
 
 import _ from 'lodash'
-// import { useLocation, useNavigate, useMatch } from 'react-router-dom';
 
-// import { ajax_post, ajax_put, lowerize } from '../lib/helper';
-
-// import { AppContext } from "./Table";
-
-// const API_URL = 'https://localhost:7123/api/merchandise';
-
-
-function Popup() {
+function Popup({ salesState }) {
+    console.log(salesState);
     var myModalEl = document.getElementById('exampleModal')
     var modal = bootstrap.Modal.getInstance(myModalEl)
 
@@ -28,17 +21,16 @@ function Popup() {
         service: '',
         inch: '',
         spec: '',
-        price: '',
+        price: '0',
         quantity: '',
         pay: '',
         note: '',
-        date: getToday(), 
+        date: getToday(),
         createdAt: getDateTime()
     });
-    
     const styling = {
-        opacity: !selling.spec ? '.4' : 1,
-        cursor: !selling.spec ? 'not-allowed' : 'pointer'
+        opacity: !selling.spec && selling.service != 'fix' ? '.4' : 1,
+        cursor: !selling.spec && selling.service != 'fix' ? 'not-allowed' : 'pointer'
     }
 
     useEffect(() => {
@@ -61,13 +53,16 @@ function Popup() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        var date = (new Date()).toISOString().split('T')[0];
+        var date = getToday();
         if (!localStorage.getItem('sale')) {
             localStorage.setItem('sale', JSON.stringify({ [date]: [selling] }));
         } else {
             let itemSale = JSON.parse(localStorage.getItem('sale'))[date];
             localStorage.setItem('sale', JSON.stringify({ [date]: [...itemSale, selling] }));
         }
+        salesState.setSales(prev => {
+            return [ ...prev, selling ]
+        });
         // modal.toggle();
     }
 
@@ -83,7 +78,7 @@ function Popup() {
         //     note: ''
         // })
     }
-
+    console.log(selling);
     return (
         <div className="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
@@ -108,7 +103,7 @@ function Popup() {
                             <div className="mb-3 modal-service">
                                 <div>
                                     <label htmlFor="fix">
-                                        <input type="radio" id="fix" name="service" value="fix"  onChange={handleChange} checked={selling.service == 'fix' ? 'checked' : ''} />補胎</label>
+                                        <input type="radio" id="fix" name="service" value="fix" onChange={handleChange} checked={selling.service == 'fix' ? 'checked' : ''} />補胎</label>
                                 </div>
                                 <div>
                                     <label htmlFor="tire-change">
@@ -116,17 +111,19 @@ function Popup() {
                                     </label>
                                 </div>
                             </div>
-                            <div className="mb-3 modal-tire" onChange={handleChange}>
-                                <div>規格</div>
-                                <div>
-                                    <CustomSelect name="inch" option={optionInch} selling={selling}/>
-                                </div>
-                                {specs.length != 0 &&
+                            {selling.service != 'fix' &&
+                                <div className="mb-3 modal-tire" onChange={handleChange}>
+                                    <div>規格</div>
                                     <div>
-                                        <CustomSelect name="spec" option={specs} />
+                                        <CustomSelect name="inch" option={optionInch} selling={selling} />
                                     </div>
-                                }
-                            </div>
+                                    {specs.length != 0 &&
+                                        <div>
+                                            <CustomSelect name="spec" option={specs} />
+                                        </div>
+                                    }
+                                </div>
+                            }
                             <div className="mb-3 modal-quantity" onChange={handleChange} >
                                 <div>數量</div>
                                 <div>
@@ -134,7 +131,7 @@ function Popup() {
                                 </div>
                             </div>
                             <div className="mb-3 input-icon modal-input-icon">
-                                <input className="price" name="price" type="text" placeholder="0.0" onChange={handleChange} />
+                                <input className="price" name="price" type="text" placeholder="0.0" value={selling.price} onChange={handleChange} />
                                 <i>$</i>
                             </div>
                             <div className="mb-3 modal-pay" onChange={handleChange}>

@@ -6,10 +6,12 @@ import { AppContext } from './Tire';
 import Note from './Note';
 import CustomSelect from '../Component/CustomSelect'
 import Popup from '../Component/Popup';
+import Sale from './Sale';
 
-// import { dd } from '../../lib/helper';
-
+import { getToday } from '../../lib/helper';
 import { combineTire } from './useTire';
+
+const today = getToday();
 // const option = _.range(1, 11);
 
 // import { ACTION } from './Tire';
@@ -32,18 +34,21 @@ import { combineTire } from './useTire';
 //     }
 
 // }
-
+const sale = localStorage.getItem('sale') ? JSON.parse(localStorage.getItem('sale'))[getToday()] : [];
 function Spec() {
     const noteRef = useRef([]);
     const { specs, inches, setInches, areas } = useContext(AppContext);
     const [target, setTarget] = useState('');
     const [behavior, setBehavior] = useState('insert');
     const [btnAbort, setBtnAbort] = useState(false);
-
+    const [ sales, setSales ] = useState([]);
     const { ref } = useOutletContext();
 
-    const sale = localStorage.getItem('sale') || [];
     // let [state, dispatch] = useReducer(reducer, inches);
+    useEffect(() => {
+        setSales(sale)
+    }, [])
+    
     useImperativeHandle(ref, () => {
         return {
             cancelTarget: () => setTarget(''),
@@ -134,6 +139,13 @@ function Spec() {
         ref.current.cleanNoteRef();
     }
 
+    const salesState = {
+        sales,
+        setSales
+    }
+        
+    
+    console.log(salesState);
     return (
         <>
             <div className="spec-wrapper">    
@@ -179,10 +191,10 @@ function Spec() {
                     </div>
                 }
                 )}
-                {sale}
             </div>
             <Note />
-            <Popup />
+            <Popup salesState={salesState}/>
+            <Sale salesState={salesState}/>
         </>
     )
 }
