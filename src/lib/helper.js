@@ -65,6 +65,15 @@ function isObjectEmpty(objectName) {
     return Object.keys(objectName).length === 0
 }
 
+function getOffset(el) {
+    const rect = el.getBoundingClientRect();
+    return {
+        left: rect.left + window.scrollX,
+        top: rect.top + window.scrollY
+    };
+}
+
+
 
 export { isEmpty, empty, lowerize, uuid, isObjectEmpty, createElement, getToday, getDateTime }
 // export from ajax;

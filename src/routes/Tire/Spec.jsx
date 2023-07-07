@@ -35,7 +35,6 @@ import { combineTire } from './useTire';
 
 function Spec() {
     const noteRef = useRef([]);
-    const param = useParams();
     const { specs, inches, setInches, areas } = useContext(AppContext);
     const [target, setTarget] = useState('');
     const [behavior, setBehavior] = useState('insert');
@@ -44,7 +43,6 @@ function Spec() {
     const { ref } = useOutletContext();
 
     const sale = localStorage.getItem('sale') || [];
-
     // let [state, dispatch] = useReducer(reducer, inches);
     useImperativeHandle(ref, () => {
         return {
@@ -53,14 +51,6 @@ function Spec() {
             cleanNote: () => cleanNote()
         }
     })
-
-    function getOffset(el) {
-        const rect = el.getBoundingClientRect();
-        return {
-            left: rect.left + window.scrollX,
-            top: rect.top + window.scrollY
-        };
-    }
 
     function fadeIn(el) {
         el.style.animation = 'fade-in 1s linear';
@@ -143,16 +133,17 @@ function Spec() {
         ref.current.cleanNote();
         ref.current.cleanNoteRef();
     }
+
     return (
         <>
-            <div className="spec-wrapper">
-                <div className="reset"><button onClick={reset}>Reset</button></div>
-                <div className="behavior" onChange={handleBehav}>
+            <div className="spec-wrapper">    
+                <div className="behavior">
+                    <div className="reset"><button onClick={reset}>Reset</button></div>
                     <label htmlFor="insert">
-                        <input type="radio" id="insert" value="insert" name="behavior" checked={behavior == 'insert'} />新增
+                        <input type="radio" id="insert" value="insert" name="behavior" onChange={handleBehav} checked={behavior == 'insert'} />新增
                     </label>
                     <label htmlFor="sale">
-                        <input type="radio" id="sale" value="sale" name="behavior" />銷售
+                        <input type="radio" id="sale" value="sale" name="behavior" onChange={handleBehav} />銷售
                     </label>
                     <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
                         <span>詳細銷售</span>
@@ -169,12 +160,14 @@ function Spec() {
                         <div className="mode">
                             {behavior == 'insert' ?
                                 <>
-                                    <button className="button minor" style={btnStyle} disabled={disabled} onClick={onclick(spec, 'minor')}> - </button>
-                                    <button className="button increase" onClick={onclick(spec, 'add')}> + </button>
+                                    <div>
+                                        <button className="button minor" style={btnStyle} disabled={disabled} onClick={onclick(spec, 'minor')}> - </button>
+                                        <button className="button increase" onClick={onclick(spec, 'add')}> + </button>
+                                    </div>
                                 </>
                                 :
                                 <>
-                                    <button className="button minor" style={btnStyle} disabled={disabled} > 售 </button>
+                                    <div><button className="button minor" style={btnStyle} disabled={disabled} > 售 </button></div>
                                     <CustomSelect option={_.range(0, num + 1)} />
                                     <div className="input-icon">
                                         <input className="price " type="text" placeholder="0.0" />

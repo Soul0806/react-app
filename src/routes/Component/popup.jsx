@@ -94,25 +94,25 @@ function Popup() {
                     </div>
                     <form method="post" onSubmit={handleSubmit}>
                         <div className="modal-body">
-                            <div className="mb-3 modal-place" onChange={handleChange}>
+                            <div className="mb-3 modal-place" >
                                 <div>
                                     <label htmlFor="store">
-                                        <input type="radio" id="store" name="place" value="store" checked={selling.place == 'store' ? 'checked' : ''} />店內</label>
+                                        <input type="radio" id="store" name="place" value="store" onChange={handleChange} checked={selling.place == 'store' ? 'checked' : ''} />店內</label>
                                 </div>
                                 <div>
                                     <label htmlFor="out-service">
-                                        <input type="radio" id="out-service" name="place" value="out-service" checked={selling.place == 'out-service' ? 'checked' : ''} />外出
+                                        <input type="radio" id="out-service" name="place" value="out-service" onChange={handleChange} checked={selling.place == 'out-service' ? 'checked' : ''} />外出
                                     </label>
                                 </div>
                             </div>
-                            <div className="mb-3 modal-service" onChange={handleChange}>
+                            <div className="mb-3 modal-service">
                                 <div>
                                     <label htmlFor="fix">
-                                        <input type="radio" id="fix" name="service" value="fix" checked={selling.service == 'fix' ? 'checked' : ''} />補胎</label>
+                                        <input type="radio" id="fix" name="service" value="fix"  onChange={handleChange} checked={selling.service == 'fix' ? 'checked' : ''} />補胎</label>
                                 </div>
                                 <div>
                                     <label htmlFor="tire-change">
-                                        <input type="radio" id="tire-change" name="service" value="tire-change" checked={selling.service == 'tire-change' ? 'checked' : ''} />換胎
+                                        <input type="radio" id="tire-change" name="service" value="tire-change" onChange={handleChange} checked={selling.service == 'tire-change' ? 'checked' : ''} />換胎
                                     </label>
                                 </div>
                             </div>

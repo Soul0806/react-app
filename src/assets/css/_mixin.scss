@@ -1,0 +1,7 @@
+@mixin moveup($offset){ /* wrapper mixin which accepts input parameter */
+   @keyframes moveup {
+      from {transform : translateY(0)}
+      to {transform : translateY($offset)}
+   }
+}
+

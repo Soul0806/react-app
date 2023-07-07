@@ -1,6 +1,7 @@
 @import './global';
-@import './popup.scss';
-@import './_animation.scss';
+@import './mixin';
+@import './popup';
+@import './_animation';
 @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
 
 * {
@@ -194,11 +195,11 @@ html {
 
       .tire {
         text-align: center;
-        display: grid;
-        grid-template-columns: 150px 150px 1fr 100px 150px;
+        display: flex;
+        // display: grid;
+        // grid-template-columns: repeat(5, minmax(max-content, min-content));
         width: 90%;
         margin: 0 auto;
-
         gap: 1rem;
 
         .reset {
@@ -242,42 +243,33 @@ html {
 
         .spec-wrapper {
           display: flex;
+          // display: inline-flex;
           flex-direction: column;
           gap: .825rem 0;
-          min-width: 260px;
-
-          .reset {
-            text-align: right;
-
-            >button {
-              position: relative;
-              right: 10px;
-            }
-          }
+          width: max-content;
 
           .behavior {
             position: relative;
             display: flex;
-            flex-direction: row;
+            // display: grid;
+            // grid-template-columns: repeat(4, max-content);
             gap: 10px;
             text-align: left;
-            left: 150px;
             .selling {
               font-size: 14px;
             }
           }
 
           .item {
-            display: grid;
-            grid-template-columns: 100px 50px 200px;
-
-            .mode {
-              display: grid;
-              grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
-              gap: 1rem;
-
+            display: flex;
+            gap: 10px;
+            .spec {
+              flex-grow: 1
             }
-
+            .mode {
+              display: flex;
+              gap: 1rem;
+            }
             .red {
               color: red;
             }
@@ -302,24 +294,23 @@ html {
         }
 
         .note-wrapper {
+          position: relative;
           margin-top: 12rem;
-
-          .note {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
+            // position: relative;
+            // display: flex;
+            // flex-direction: column;
+            // align-items: center;
+        
             .noti {
+              // width: 100%;
+              position: relative;
               display: grid;
-              position: absolute;
               padding: 10px;
               border: 1px solid black;
               border-radius: 10px;
               font-weight: 800;
               transition: .2s;
             }
-          }
         }
       }
     }
