@@ -34,7 +34,9 @@ const today = getToday();
 //     }
 
 // }
-const sale = localStorage.getItem('sale') ? JSON.parse(localStorage.getItem('sale'))[getToday()] : [];
+// const sale = localStorage.getItem('sale') ? JSON.parse(localStorage.getItem('sale'))[getToday()] : [];
+const sale = JSON.parse(localStorage.getItem('sale'))?.[getToday()] || [];
+
 function Spec() {
     const noteRef = useRef([]);
     const { specs, inches, setInches, areas } = useContext(AppContext);
@@ -143,9 +145,6 @@ function Spec() {
         sales,
         setSales
     }
-        
-    
-    console.log(salesState);
     return (
         <>
             <div className="spec-wrapper">    

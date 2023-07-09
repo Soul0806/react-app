@@ -8,7 +8,6 @@ import { getDateTime, getToday } from '../../lib/helper';
 import _ from 'lodash'
 
 function Popup({ salesState }) {
-    console.log(salesState);
     var myModalEl = document.getElementById('exampleModal')
     var modal = bootstrap.Modal.getInstance(myModalEl)
 
@@ -54,14 +53,14 @@ function Popup({ salesState }) {
     function handleSubmit(e) {
         e.preventDefault();
         var date = getToday();
-        if (!localStorage.getItem('sale')) {
+        if (!JSON.parse(localStorage.getItem('sale'))?.[date]) {
             localStorage.setItem('sale', JSON.stringify({ [date]: [selling] }));
         } else {
             let itemSale = JSON.parse(localStorage.getItem('sale'))[date];
             localStorage.setItem('sale', JSON.stringify({ [date]: [...itemSale, selling] }));
         }
         salesState.setSales(prev => {
-            return [ ...prev, selling ]
+            return [...prev, selling]
         });
         // modal.toggle();
     }
@@ -78,7 +77,6 @@ function Popup({ salesState }) {
         //     note: ''
         // })
     }
-    console.log(selling);
     return (
         <div className="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
@@ -133,7 +131,26 @@ function Popup({ salesState }) {
                             <div className="mb-3 input-icon modal-input-icon">
                                 <input className="price" name="price" type="text" placeholder="0.0" value={selling.price} onChange={handleChange} />
                                 <i>$</i>
+                                {selling.service == 'fix' &&
+                                    <>
+                                        <div>
+                                            <label htmlFor="twohundred">
+                                                <input type="radio" id="twohundred" name="price" value="200" onChange={handleChange} />200</label>
+                                        </div>
+                                        <div>
+                                            <label htmlFor="threehunderd">
+                                                <input type="radio" id="threehunderd" name="price" value="300" onChange={handleChange} checked="checked" />300
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label htmlFor="custom">
+                                                <input type="radio" id="custom" name="price" value="" onChange={handleChange} />自訂
+                                            </label>
+                                        </div>
+                                    </>
+                                }
                             </div>
+
                             <div className="mb-3 modal-pay" onChange={handleChange}>
                                 <div className="text-pay">付款方式</div>
                                 <div>
