@@ -1,4 +1,4 @@
-import React, { useContext, useState, useImperativeHandle, useRef, useEffect, useReducer } from 'react'
+import React, { useContext, useState, useImperativeHandle, useRef, useEffect, useReducer, useMemo } from 'react'
 import { useParams, useOutletContext } from 'react-router-dom'
 import _ from 'lodash';
 
@@ -35,7 +35,7 @@ const today = getToday();
 
 // }
 // const sale = localStorage.getItem('sale') ? JSON.parse(localStorage.getItem('sale'))[getToday()] : [];
-const sale = JSON.parse(localStorage.getItem('sale'))?.[getToday()] || [];
+const day = getToday();
 
 function Spec() {
     const noteRef = useRef([]);
@@ -43,14 +43,12 @@ function Spec() {
     const [target, setTarget] = useState('');
     const [behavior, setBehavior] = useState('insert');
     const [btnAbort, setBtnAbort] = useState(false);
-    const [ sales, setSales ] = useState([]);
+    const [ sales, setSales ] = useState(() => {
+        return JSON.parse(localStorage.getItem('sale'))?.[day] || [];
+    });
     const { ref } = useOutletContext();
-
     // let [state, dispatch] = useReducer(reducer, inches);
-    useEffect(() => {
-        setSales(sale)
-    }, [])
-    
+
     useImperativeHandle(ref, () => {
         return {
             cancelTarget: () => setTarget(''),
@@ -141,10 +139,13 @@ function Spec() {
         ref.current.cleanNoteRef();
     }
 
-    const salesState = {
-        sales,
-        setSales
-    }
+    const salesState = useMemo(() => {
+        return {
+            sales,
+            setSales
+        }
+    }, [sales, setSales])
+   
     return (
         <>
             <div className="spec-wrapper">    

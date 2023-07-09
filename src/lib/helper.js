@@ -1,6 +1,13 @@
 export const api_merchandise = 'https://localhost:7123/api/merchandise';
 
+const today = new Date()
+const yesterday=new Date()
+yesterday.setDate(today.getDate() - 1)
 
+function getYesterday() {
+    return yesterday.toLocaleString().split(' ')[0];
+}
+ 
 function getToday() {
     return (new Date()).toLocaleString().split(' ')[0];
 }
@@ -75,6 +82,6 @@ function getOffset(el) {
 
 
 
-export { isEmpty, empty, lowerize, uuid, isObjectEmpty, createElement, getToday, getDateTime }
+export { isEmpty, empty, lowerize, uuid, isObjectEmpty, createElement, getToday, getDateTime, getYesterday }
 // export from ajax;
 export * from './ajax'; 
