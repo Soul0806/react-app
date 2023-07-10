@@ -8,10 +8,9 @@ import CustomSelect from '../Component/CustomSelect'
 import Popup from '../Component/Popup';
 import Sale from './Sale';
 
-import { getToday } from '../../lib/helper';
+import { getTodayDate } from '../../lib/helper';
 import { combineTire } from './useTire';
 
-const today = getToday();
 // const option = _.range(1, 11);
 
 // import { ACTION } from './Tire';
@@ -35,7 +34,7 @@ const today = getToday();
 
 // }
 // const sale = localStorage.getItem('sale') ? JSON.parse(localStorage.getItem('sale'))[getToday()] : [];
-const day = getToday();
+const day = getTodayDate();
 
 function Spec() {
     const noteRef = useRef([]);

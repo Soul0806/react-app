@@ -1,5 +1,17 @@
 .modal {
     form {
+        position: relative;
+        .insert {
+            .btn {
+                position: absolute;
+                font-size: 14px;
+                top: 5px;
+                right: 5px;
+            }
+          }
+        dialog {
+            z-index: 999;
+        }
         .modal-body {
             text-align: left;
             >* {

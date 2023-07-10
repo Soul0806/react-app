@@ -1,15 +1,24 @@
 export const api_merchandise = 'https://localhost:7123/api/merchandise';
 
-const today = new Date()
-const yesterday=new Date()
-yesterday.setDate(today.getDate() - 1)
 
-function getYesterday() {
-    return yesterday.toLocaleString().split(' ')[0];
+function getLastday(day) {
+    const lastday = new Date()
+    lastday.setDate(day.getDate() - 1)
+    return lastday;
 }
- 
+
+function getNextday(day) {
+    const nextday = new Date()
+    nextday.setDate(day.getDate() + 1)
+    return nextday;
+}
+
 function getToday() {
-    return (new Date()).toLocaleString().split(' ')[0];
+    return new Date();
+}
+
+function getTodayDate() {
+    return (new Date()).toLocaleString().split(' ')[0];    
 }
 
 function getDateTime() {
@@ -82,6 +91,6 @@ function getOffset(el) {
 
 
 
-export { isEmpty, empty, lowerize, uuid, isObjectEmpty, createElement, getToday, getDateTime, getYesterday }
+export { isEmpty, empty, lowerize, uuid, isObjectEmpty, createElement, getTodayDate, getToday, getDateTime, getLastday, getNextday }
 // export from ajax;
 export * from './ajax'; 

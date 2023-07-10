@@ -6,7 +6,9 @@ import _ from 'lodash';
 
 export const areas = [
     { name: '隔壁 樓上', path: 'upstair' },
-    { name: '隔壁 樓下', path: 'downstair' }
+    { name: '隔壁 樓下', path: 'downstair' },
+    { name: '店外', path: 'out-store' },
+    { name: '倉庫', path: 'warehouse' }
 ]
 export const combineTire = async(signal = {}) => {
     const API_TIRE = 'https://localhost:7123/api/tire';

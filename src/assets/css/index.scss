@@ -1,4 +1,5 @@
 @import './root';
+@import './extend';
 @import './global';
 @import './mixin';
 @import './popup';
@@ -300,6 +301,15 @@ html {
               font-weight: 800;
               transition: .2s;
             }
+        }
+
+        .sale {
+          display: flex;
+          flex-direction: column;
+          @extend %g-1;
+          .arrow-back, .arrow-forward  {
+            @extend %ptr;
+          }
         }
       }
     }
