@@ -10,16 +10,7 @@ import Sale from './Sale';
 
 import { getTodayDate, ajax_post, ajax_get } from '../../lib/helper';
 import { combineTire } from './useTire';
-
-const date = getTodayDate();
-const SALE_API_URL = `https://localhost:7123/api/Sale/?d=${date}`;
-
-async function saleRecord() {
-    const data = await ajax_get(SALE_API_URL);
-    const sales = await data.json();
-    return sales
-}
-saleRecord().then((res) => console.log(res))
+import { useSale } from './useSale';
 // const option = _.range(1, 11);
 
 // import { ACTION } from './Tire';
@@ -47,8 +38,6 @@ const day = getTodayDate();
 
 function Spec() {
 
-   
-
     const noteRef = useRef([]);
     const modalRef = useRef('');
     const { specs, inches, setInches, areas } = useContext(AppContext);
@@ -60,6 +49,7 @@ function Spec() {
     });
     const navigate = useNavigate()
 
+    const [ sale ] = useSale(); 
     const { ref } = useOutletContext();
     // let [state, dispatch] = useReducer(reducer, inches);
 
