@@ -7,10 +7,13 @@ import { getDateTime, getTodayDate } from '../../lib/helper';
 
 import _ from 'lodash'
 
+
 function Popup({ salesState }) {
-    const dialog = document.querySelector("dialog")
+
     var myModalEl = document.getElementById('exampleModal')
     var modal = bootstrap.Modal.getInstance(myModalEl)
+
+
 
     const optionInch = _.range(12, 23);
     const { inches } = useContext(AppContext);
@@ -53,9 +56,10 @@ function Popup({ salesState }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        var date = getTodayDate();
+        let date = getTodayDate();
+        let localValue = JSON.parse(localStorage.getItem('sale')) || {};
         if (!JSON.parse(localStorage.getItem('sale'))?.[date]) {
-            localStorage.setItem('sale', JSON.stringify({ [date]: [selling] }));
+            localStorage.setItem('sale', JSON.stringify({ ...localValue, [date]: [selling] }));
         } else {
             let itemSale = JSON.parse(localStorage.getItem('sale'))[date];
             localStorage.setItem('sale', JSON.stringify({ [date]: [...itemSale, selling] }));
@@ -79,15 +83,6 @@ function Popup({ salesState }) {
         // })
     }
 
-    function showDialog() {
-        dialog.show() // Opens a non-modal dialog
-    }
-
-    function dialogSubmit() {
-        e.preventDefault();
-        console.log(111);
-   
-    }
     return (
         <>
             <div className="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -98,15 +93,6 @@ function Popup({ salesState }) {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form method="post" onSubmit={handleSubmit}>
-                            <div className="">
-                                <div className="btn btn-success" onClick={() => showDialog()}>新增規格</div>
-                            </div>
-                            <dialog>
-                                <form method="dialog" onSubmit={dialogSubmit}>
-                                    <input type="text" />
-                                    <button type="submit">Submit</button>
-                                </form>
-                            </dialog>
                             <div className="modal-body">
                                 <div className="mb-3 modal-place" >
                                     <div>

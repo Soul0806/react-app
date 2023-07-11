@@ -10,6 +10,7 @@ import Sale from './Sale';
 
 import { getTodayDate } from '../../lib/helper';
 import { combineTire } from './useTire';
+import { ModalDialog } from 'react-bootstrap';
 
 // const option = _.range(1, 11);
 
@@ -37,12 +38,16 @@ import { combineTire } from './useTire';
 const day = getTodayDate();
 
 function Spec() {
+
+   
+
     const noteRef = useRef([]);
+    const modalRef = useRef('');
     const { specs, inches, setInches, areas } = useContext(AppContext);
     const [target, setTarget] = useState('');
     const [behavior, setBehavior] = useState('insert');
     const [btnAbort, setBtnAbort] = useState(false);
-    const [ sales, setSales ] = useState(() => {
+    const [sales, setSales] = useState(() => {
         return JSON.parse(localStorage.getItem('sale'))?.[day] || [];
     });
     const { ref } = useOutletContext();
@@ -55,6 +60,21 @@ function Spec() {
             cleanNote: () => cleanNote()
         }
     })
+
+    useEffect(() => {
+        const openBtn = document.querySelector("[data-open-modal]");
+        // const closeBtn = document.querySelector("[data-close-modal]");
+        const modalDialog = document.querySelector("[data-modal]");
+
+        openBtn.addEventListener("click", () => {
+            modalDialog.showModal();
+        })
+
+        // closeBtn.addEventListener("click", () => {
+        //     modalDialog.close();
+        // })
+
+    }, [])
 
     function fadeIn(el) {
         el.style.animation = 'fade-in 1s linear';
@@ -144,12 +164,29 @@ function Spec() {
             setSales
         }
     }, [sales, setSales])
-   
+
+
+    function modalSubmit(e) {
+        console.log(modalRef.current.value);
+    }
+
     return (
         <>
-            <div className="spec-wrapper">    
+            <div className="spec-wrapper">
                 <div className="behavior">
                     <div className="reset"><button onClick={reset}>Reset</button></div>
+                    <div>
+                        <button data-open-modal className="btn btn-success">新增規格</button>
+                        <dialog data-modal>
+                            <form method="dialog">
+                                <label htmlFor="insert">新增</label><input type="text" id="insert" ref={modalRef} />
+                                <div>
+                                    <button>Cancel</button>
+                                    <button formmethod="dialog" onClick={modalSubmit}>Submit</button>
+                                </div>
+                            </form>
+                        </dialog>
+                    </div>
                     <label htmlFor="insert">
                         <input type="radio" id="insert" value="insert" name="behavior" onChange={handleBehav} checked={behavior == 'insert'} />新增
                     </label>
@@ -192,8 +229,8 @@ function Spec() {
                 )}
             </div>
             <Note />
-            <Popup salesState={salesState}/>
-            <Sale salesState={salesState}/>
+            <Popup salesState={salesState} />
+            <Sale salesState={salesState} />
         </>
     )
 }

@@ -2,8 +2,12 @@
 @import './extend';
 @import './global';
 @import './mixin';
-@import './popup';
-@import './_animation';
+
+@import './animation';
+
+@import './cmpt/sepc';
+@import './cmpt/popup';
+@import './cmpt/sale';
 @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
 
 body {
@@ -231,58 +235,6 @@ html {
           color: rgb(202, 199, 199);
         }
 
-        .spec-wrapper {
-          display: flex;
-          // display: inline-flex;
-          flex-direction: column;
-          gap: .825rem 0;
-          width: max-content;
-
-          .behavior {
-            position: relative;
-            display: flex;
-            // display: grid;
-            // grid-template-columns: repeat(4, max-content);
-            gap: 10px;
-            text-align: left;
-            .selling {
-              font-size: 14px;
-            }
-          }
-
-          .item {
-            display: flex;
-            gap: 10px;
-            .spec {
-              flex-grow: 1
-            }
-            .mode {
-              display: flex;
-              gap: 1rem;
-            }
-            .red {
-              color: red;
-            }
-
-            .button {
-              display: inline-block;
-              width: 25px;
-              border: 1px solid rgb(151, 151, 151);
-              margin: 0 10px;
-              border-radius: 5px;
-              transform: scale(1.1);
-            }
-
-            .minor {
-              background-color: lightcoral;
-            }
-
-            .increase {
-              background-color: limegreen;
-            }
-          }
-        }
-
         .note-wrapper {
           position: relative;
           margin-top: 12rem;
@@ -303,14 +255,7 @@ html {
             }
         }
 
-        .sale {
-          display: flex;
-          flex-direction: column;
-          @extend %g-1;
-          .arrow-back, .arrow-forward  {
-            @extend %ptr;
-          }
-        }
+      
       }
     }
   }

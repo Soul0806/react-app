@@ -1,0 +1,8 @@
+.sale-wrapper {
+    display: flex;
+    flex-direction: column;
+    @extend %g-1;
+    .arrow-back, .arrow-forward  {
+      @extend %ptr;
+    }
+  }

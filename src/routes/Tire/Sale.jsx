@@ -29,13 +29,13 @@ function Sale({ salesState }) {
     }
     
     return (
-        <div className="sale">
+        <div className="sale-wrapper">
             <div className="date flex g-1">
-                <div class="material-symbols-outlined arrow-back" onClick={() => onclick('last')}>
+                <div className="material-symbols-outlined arrow-back" onClick={() => onclick('last')}>
                     arrow_back
                 </div>
                 {day.toLocaleString().split(' ')[0]}
-                <div class="material-symbols-outlined arrow-forward" onClick={() => onclick('next')}>
+                <div className="material-symbols-outlined arrow-forward" onClick={() => onclick('next')}>
                     arrow_forward
                 </div>
             </div>

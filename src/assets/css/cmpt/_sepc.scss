@@ -1,0 +1,55 @@
+.spec-wrapper {
+    display: flex;
+    // display: inline-flex;
+    flex-direction: column;
+    gap: .825rem 0;
+    width: max-content;
+
+    [data-open-modal] {
+        font-size: 14px;
+    }
+
+    .behavior {
+      position: relative;
+      display: flex;
+      // display: grid;
+      // grid-template-columns: repeat(4, max-content);
+      gap: 10px;
+      text-align: left;
+      .selling {
+        font-size: 14px;
+      }
+    }
+
+    .item {
+      display: flex;
+      gap: 10px;
+      .spec {
+        flex-grow: 1
+      }
+      .mode {
+        display: flex;
+        gap: 1rem;
+      }
+      .red {
+        color: red;
+      }
+
+      .button {
+        display: inline-block;
+        width: 25px;
+        border: 1px solid rgb(151, 151, 151);
+        margin: 0 10px;
+        border-radius: 5px;
+        transform: scale(1.1);
+      }
+
+      .minor {
+        background-color: lightcoral;
+      }
+
+      .increase {
+        background-color: limegreen;
+      }
+    }
+  }
