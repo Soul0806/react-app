@@ -185,7 +185,7 @@ function Spec() {
                         <dialog data-modal>
                             <form method="dialog">
                                 <label htmlFor="insert">新增</label><input type="text" id="insert" ref={modalRef} />
-                                <div>
+                                <div className="act">
                                     <button>Cancel</button>
                                     <button onClick={modalSubmit}>Submit</button>
                                 </div>

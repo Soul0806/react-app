@@ -7,7 +7,6 @@ import { getDateTime, getTodayDate } from '../../lib/helper';
 
 import _ from 'lodash'
 
-
 function Popup({ salesState }) {
 
     var myModalEl = document.getElementById('exampleModal')

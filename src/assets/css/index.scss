@@ -5,7 +5,10 @@
 
 @import './animation';
 
+@import './cmpt/area';
+@import './cmpt/inch';
 @import './cmpt/sepc';
+@import './cmpt/note';
 @import './cmpt/popup';
 @import './cmpt/sale';
 @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
@@ -195,67 +198,6 @@ html {
         width: 90%;
         margin: 0 auto;
         gap: 1rem;
-
-        .reset {
-          max-height: 30px;
-        }
-
-        .area-wrapper {
-          display: flex;
-          flex-direction: column;
-          gap: .825rem 0;
-
-          a {
-            padding: .8rem 1.2rem;
-            border: 1px solid black;
-            border-radius: 10px;
-          }
-        }
-
-        .inch-wrapper {
-          display: flex;
-          flex-direction: column;
-
-          .inch {
-            padding: .3rem;
-            border: 1px solid black;
-            border-radius: 5px;
-            margin: .3rem;
-            cursor: pointer;
-          }
-        }
-
-        .active {
-          color: red;
-          transition: transform .4s;
-          transform: scale(1.3);
-        }
-
-        .inactive {
-          color: rgb(202, 199, 199);
-        }
-
-        .note-wrapper {
-          position: relative;
-          margin-top: 12rem;
-            // position: relative;
-            // display: flex;
-            // flex-direction: column;
-            // align-items: center;
-        
-            .noti {
-              // width: 100%;
-              position: relative;
-              display: grid;
-              padding: 10px;
-              border: 1px solid black;
-              border-radius: 10px;
-              font-weight: 800;
-              transition: .2s;
-            }
-        }
-
-      
       }
     }
   }

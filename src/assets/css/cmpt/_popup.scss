@@ -14,9 +14,8 @@
         }
 
         input {
-            padding: 0.1rem 0.5rem;
-            border: .1px solid rgb(216, 210, 210);
-            border-radius: 10px;
+            padding: .1rem .5rem;
+            @include border(#d8d2d2, 0.625rem);
             transition: all 0.3s ease;
             opacity: .6;
 
