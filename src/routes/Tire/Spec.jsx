@@ -1,5 +1,5 @@
 import React, { useContext, useState, useImperativeHandle, useRef, useEffect, useReducer, useMemo } from 'react'
-import { useParams, useOutletContext } from 'react-router-dom'
+import { useParams, useOutletContext, useNavigate } from 'react-router-dom'
 import _ from 'lodash';
 
 import { AppContext } from './Tire';
@@ -8,9 +8,9 @@ import CustomSelect from '../Component/CustomSelect'
 import Popup from '../Component/Popup';
 import Sale from './Sale';
 
-import { getTodayDate } from '../../lib/helper';
+import { getTodayDate, ajax_post } from '../../lib/helper';
 import { combineTire } from './useTire';
-import { ModalDialog } from 'react-bootstrap';
+
 
 // const option = _.range(1, 11);
 
@@ -50,6 +50,8 @@ function Spec() {
     const [sales, setSales] = useState(() => {
         return JSON.parse(localStorage.getItem('sale'))?.[day] || [];
     });
+    const navigate = useNavigate()
+
     const { ref } = useOutletContext();
     // let [state, dispatch] = useReducer(reducer, inches);
 
@@ -167,7 +169,10 @@ function Spec() {
 
 
     function modalSubmit(e) {
-        console.log(modalRef.current.value);
+        const url = 'https://localhost:7123/api/Tire';
+        const  data = { Name: modalRef.current.value};
+        ajax_post(url, data);
+        navigate(0);
     }
 
     return (
@@ -182,7 +187,7 @@ function Spec() {
                                 <label htmlFor="insert">新增</label><input type="text" id="insert" ref={modalRef} />
                                 <div>
                                     <button>Cancel</button>
-                                    <button formmethod="dialog" onClick={modalSubmit}>Submit</button>
+                                    <button onClick={modalSubmit}>Submit</button>
                                 </div>
                             </form>
                         </dialog>
