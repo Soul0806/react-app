@@ -8,10 +8,18 @@ import CustomSelect from '../Component/CustomSelect'
 import Popup from '../Component/Popup';
 import Sale from './Sale';
 
-import { getTodayDate, ajax_post } from '../../lib/helper';
+import { getTodayDate, ajax_post, ajax_get } from '../../lib/helper';
 import { combineTire } from './useTire';
 
+const date = getTodayDate();
+const SALE_API_URL = `https://localhost:7123/api/Sale/?d=${date}`;
 
+async function saleRecord() {
+    const data = await ajax_get(SALE_API_URL);
+    const sales = await data.json();
+    return sales
+}
+saleRecord().then((res) => console.log(res))
 // const option = _.range(1, 11);
 
 // import { ACTION } from './Tire';
@@ -65,16 +73,11 @@ function Spec() {
 
     useEffect(() => {
         const openBtn = document.querySelector("[data-open-modal]");
-        // const closeBtn = document.querySelector("[data-close-modal]");
         const modalDialog = document.querySelector("[data-modal]");
 
         openBtn.addEventListener("click", () => {
             modalDialog.showModal();
         })
-
-        // closeBtn.addEventListener("click", () => {
-        //     modalDialog.close();
-        // })
 
     }, [])
 

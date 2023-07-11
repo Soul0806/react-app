@@ -3,16 +3,16 @@ import CustomSelect from './CustomSelect';
 
 import { AppContext } from '../Tire/Tire';
 
-import { getDateTime, getTodayDate } from '../../lib/helper';
+import { getDateTime, getTodayDate, ajax_post, ajax_get } from '../../lib/helper';
 
 import _ from 'lodash'
+
+const SALE_API_URL = `https://localhost:7123/api/Sale/`;
 
 function Popup({ salesState }) {
 
     var myModalEl = document.getElementById('exampleModal')
     var modal = bootstrap.Modal.getInstance(myModalEl)
-
-
 
     const optionInch = _.range(12, 23);
     const { inches } = useContext(AppContext);
@@ -30,6 +30,8 @@ function Popup({ salesState }) {
         date: getTodayDate(),
         createdAt: getDateTime()
     });
+
+    
     const styling = {
         opacity: !selling.spec && selling.service != 'fix' ? '.4' : 1,
         cursor: !selling.spec && selling.service != 'fix' ? 'not-allowed' : 'pointer'
@@ -66,6 +68,19 @@ function Popup({ salesState }) {
         salesState.setSales(prev => {
             return [...prev, selling]
         });
+
+        const data = {
+            Area: selling.place,
+            Service: selling.service,
+            Spec: selling.spec,
+            Price: selling.price,
+            Quantity: selling.quantity,
+            Pay: selling.pay,
+            Note: selling.note,
+            Date: selling.date,
+            CreatedAt: selling.createdAt
+        }
+        ajax_post(SALE_API_URL, data);
         modal.toggle();
     }
 
