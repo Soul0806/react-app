@@ -49,7 +49,7 @@ function Spec() {
     });
     const navigate = useNavigate()
 
-    const [ sale ] = useSale(); 
+    const [ dbSale, setDbSale ] = useSale(); 
     const { ref } = useOutletContext();
     // let [state, dispatch] = useReducer(reducer, inches);
 
@@ -156,9 +156,11 @@ function Spec() {
     const salesState = useMemo(() => {
         return {
             sales,
-            setSales
+            setSales,
+            dbSale,
+            setDbSale
         }
-    }, [sales, setSales])
+    }, [sales, setSales, dbSale, setDbSale])
 
 
     function modalSubmit(e) {

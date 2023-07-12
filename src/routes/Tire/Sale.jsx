@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { getToday, getLastday, getNextday } from '../../lib/helper';
 
+import { getDbSale } from './useSale';
+
 const PAY = {
     CASH: '現金',
     CREDIT: '刷卡',
@@ -21,13 +23,14 @@ function Sale({ salesState }) {
         const nextday = getNextday(day).toLocaleString().split(' ')[0]
         if(to == 'last') {
             salesState.setSales(JSON.parse(localStorage.getItem('sale'))?.[lastday] || []);
+            getDbSale(lastday).then(res => salesState.setDbSale(res))
             setDay(prev => getLastday(day))
         } else {
             salesState.setSales(JSON.parse(localStorage.getItem('sale'))?.[nextday] || []);
+            getDbSale(nextday).then(res => salesState.setDbSale(res))
             setDay(prev => getNextday(day))
         }
     }
-    
     return (
         <div className="sale-wrapper">
             <div className="date flex g-1">
@@ -39,6 +42,7 @@ function Sale({ salesState }) {
                     arrow_forward
                 </div>
             </div>
+            <h2>Local</h2>
             { !salesState.sales ? <div>查無資料</div> 
             :
             <div>
@@ -67,7 +71,11 @@ function Sale({ salesState }) {
                 }
             </div>
             } 
-          
+            <h2>Database</h2>
+            {salesState.dbSale.map(sale => {
+                return <div>{sale.Service}</div>
+            })
+            }
         </div>
     )
 }

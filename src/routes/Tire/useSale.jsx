@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import { getTodayDate, ajax_get } from '../../lib/helper';
 
-const date = getTodayDate();
-const SALE_D_API_URL = `https://localhost:7123/api/Sale/?d=${date}`;
+const d = getTodayDate();
 
-async function getSaleRecord() {
+export async function getDbSale(date = d) {
+    const SALE_D_API_URL = `https://localhost:7123/api/Sale/?d=${date}`;
     const data = await ajax_get(SALE_D_API_URL);
     const sales = await data.json();
     return sales
 }
 
 function useSale() {
-  const [ saleRecord, setSaleRecord ]  = useState([]);
+  const [ dbSale, setDbSale ]  = useState([]);
 
   useEffect(() => {
-    getSaleRecord().then(res => setSaleRecord(res))
+    getDbSale().then(res => setDbSale(res))
   }, [])
   
-  return [ saleRecord, setSaleRecord ]
+  return [ dbSale, setDbSale ]
 }
 
 export { useSale }
