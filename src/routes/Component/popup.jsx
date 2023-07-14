@@ -6,6 +6,7 @@ import { AppContext } from '../Tire/Tire';
 import { getDateTime, getTodayDate, ajax_post, ajax_get } from '../../lib/helper';
 
 import _ from 'lodash'
+import Litepicker from 'litepicker';
 
 const SALE_API_URL = `https://localhost:7123/api/Sale/`;
 
@@ -36,6 +37,17 @@ function Popup({ salesState }) {
         opacity: !selling.spec && selling.service != 'fix' ? '.4' : 1,
         cursor: !selling.spec && selling.service != 'fix' ? 'not-allowed' : 'pointer'
     }
+
+    useEffect(() => {
+        const picker = new Litepicker({ 
+            element: document.getElementById('litepicker'),
+            setup: (picker) => {
+                picker.on('selected', (date) => {
+                  console.log(date.dateInstance.toLocaleString().split(' ')[0]);
+                });
+              },
+          });
+    },[])
 
     useEffect(() => {
         if (selling.inch) {
@@ -108,6 +120,9 @@ function Popup({ salesState }) {
                         </div>
                         <form method="post" onSubmit={handleSubmit}>
                             <div className="modal-body">
+                                <div className='mb-3'>
+                                    <input type="text" id="litepicker" />
+                                </div>
                                 <div className="mb-3 modal-place" >
                                     <div>
                                         <label htmlFor="store">

@@ -13,6 +13,7 @@
     "bootstrap": "^5.3.0",
     "browserify-fs": "^1.0.0",
     "csv-parse": "^5.4.0",
+    "litepicker": "^2.0.12",
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
     "match-sorter": "^6.3.1",
