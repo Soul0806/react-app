@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { getTodayDate, ajax_get } from '../../lib/helper';
+import { dt, ajax_get } from '../../lib/helper';
 
-const d = getTodayDate();
+const d = dt.getTodayDate();
 
 export async function getDbSale(date = d) {
     const SALE_D_API_URL = `https://localhost:7123/api/Sale/?d=${date}`;

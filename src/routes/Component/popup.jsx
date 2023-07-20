@@ -3,12 +3,26 @@ import CustomSelect from './CustomSelect';
 
 import { AppContext } from '../Tire/Tire';
 
-import { getDateTime, getTodayDate, ajax_post, ajax_get } from '../../lib/helper';
+import { dt,  ajax_post, ajax_get } from '../../lib/helper';
 
 import _ from 'lodash'
 import Litepicker from 'litepicker';
 
 const SALE_API_URL = `https://localhost:7123/api/Sale/`;
+
+const toDate = dt.getTodayDate();
+const idx = JSON.parse(localStorage.getItem('sale'))?.[toDate]?.length || '0';
+// const sale = JSON.parse(localStorage.getItem('sale'))?.[toDate];
+
+// const newSale = sale.map((s, idx) => {
+//     if(!('id' in s) || s.id != idx) {
+//         console.log( { ...s, id: idx } );
+//        return { ...s, id: idx }
+//     }
+//     return { ...s }
+// })
+
+
 
 function Popup({ salesState }) {
 
@@ -20,6 +34,7 @@ function Popup({ salesState }) {
     const [specs, setSpecs] = useState([]);
 
     const [selling, setSelling] = useState({
+        id: idx,
         place: '',
         service: '',
         inch: '',
@@ -28,11 +43,10 @@ function Popup({ salesState }) {
         quantity: '',
         pay: '',
         note: '',
-        date: getTodayDate(),
-        createdAt: getDateTime()
+        date: dt.getTodayDate(),
+        createdAt: dt.getDateTime()
     });
 
-    
     const styling = {
         opacity: !selling.spec && selling.service != 'fix' ? '.4' : 1,
         cursor: !selling.spec && selling.service != 'fix' ? 'not-allowed' : 'pointer'
@@ -66,16 +80,15 @@ function Popup({ salesState }) {
             }
         })
     }
-
     function handleSubmit(e) {
         e.preventDefault();
-        let date = getTodayDate();
+        let toDate = dt.getTodayDate();
         let localValue = JSON.parse(localStorage.getItem('sale')) || {};
-        if (!JSON.parse(localStorage.getItem('sale'))?.[date]) {
-            localStorage.setItem('sale', JSON.stringify({ ...localValue, [date]: [selling] }));
+        if (!JSON.parse(localStorage.getItem('sale'))?.[toDate]) {
+            localStorage.setItem('sale', JSON.stringify({ ...localValue, [toDate]: [selling] }));
         } else {
-            let itemSale = JSON.parse(localStorage.getItem('sale'))[date];
-            localStorage.setItem('sale', JSON.stringify({ [date]: [...itemSale, selling] }));
+            let itemSale = JSON.parse(localStorage.getItem('sale'))[toDate];
+            localStorage.setItem('sale', JSON.stringify({ [toDate]: [...itemSale, selling] }));
         }
         salesState.setSales(prev => {
             return [...prev, selling]

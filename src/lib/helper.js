@@ -1,29 +1,68 @@
 export const api_merchandise = 'https://localhost:7123/api/merchandise';
 
+// function Test() {
+//     this.a = 123;
+// }
+// Test.prototype = {
+//     toDate: function() {
+//         console.log(this.a);
+//     }
+// }
 
-function getLastday(day) {
-    const lastday = new Date()
-    lastday.setDate(day.getDate() - 1)
-    return lastday;
+// const t = new Test();
+// console.log(t.toDate());
+
+Date.prototype.toDate = function() {
+    return this.toLocaleString().split(' ')[0];   
 }
 
-function getNextday(day) {
-    const nextday = new Date()
-    nextday.setDate(day.getDate() + 1)
-    return nextday;
+class datetime {
+    constructor() {
+        this.day = new Date();
+    }
+
+    getLastday(day) {
+        this.day.setDate(day.getDate() - 1)
+        return this.day;
+    }
+
+    getNextday(day) {
+        this.day.setDate(day.getDate() + 1)
+        return this.day;
+    }
+
+    getTodayDate() {
+        return (new Date()).toLocaleString().split(' ')[0];    
+    }
+
+    getDateTime() {
+        return (new Date()).toLocaleString();
+    }
 }
 
-function getToday() {
-    return new Date();
-}
+// function getLastday(day) {
+//     const lastday = new Date()
+//     lastday.setDate(day.getDate() - 1)
+//     return lastday;
+// }
 
-function getTodayDate() {
-    return (new Date()).toLocaleString().split(' ')[0];    
-}
+// function getNextday(day) {
+//     const nextday = new Date()
+//     nextday.setDate(day.getDate() + 1)
+//     return nextday;
+// }
 
-function getDateTime() {
-    return (new Date()).toLocaleString();
-}
+// function getToday() {
+//     return new Date();
+// }
+
+// function getTodayDate() {
+//     return (new Date()).toLocaleString().split(' ')[0];    
+// }
+
+// function getDateTime() {
+//     return (new Date()).toLocaleString();
+// }
 
 function isEmpty(str) {
     return (!str || str.length === 0);
@@ -89,8 +128,7 @@ function getOffset(el) {
     };
 }
 
-
-
-export { isEmpty, empty, lowerize, uuid, isObjectEmpty, createElement, getTodayDate, getToday, getDateTime, getLastday, getNextday }
+const dt = new datetime();
+export { isEmpty, empty, lowerize, uuid, isObjectEmpty, createElement, dt }
 // export from ajax;
 export * from './ajax'; 
