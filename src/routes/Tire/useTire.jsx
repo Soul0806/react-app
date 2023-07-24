@@ -11,14 +11,22 @@ export const areas = [
     { name: '倉庫', path: 'warehouse' }
 ]
 export const combineTire = async(signal = {}) => {
-    const API_TIRE = 'https://localhost:7123/api/tire';
+    let tire_api_mssql = 'https://localhost:7123/api/tire';
+    let tire_api_mysql = 'http://localhost:9000/';
+
+    // default tire_api 
+    let api_tire = tire_api_mssql;
+
+    const res = await fetch(tire_api_mssql);
+    if(!res.ok) { api_tire = tire_api_mysql }   
+    
     const [head, last] = [12, 22];
     const inchRange = _.range(head, last + 1);
 
     let inchTmplt = {};
     inchRange.map(inch => inchTmplt[inch] = { id: uuid(), spec: {}, active: false })
 
-    const data = await ajax_get(API_TIRE, signal);
+    const data = await ajax_get(api_tire, signal);
     const specs = await data.json();
 
     specs.map(spec => {

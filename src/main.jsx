@@ -14,6 +14,12 @@ import Backend, { action as backendAction } from './routes/backend/Backend';
 // erro page
 import ErrorPage from "./error-page";
 
+const result = await fetch('https://localhost:7123/');
+if(!result.ok) {
+  fetch('http://localhost:9000/').then(res => res.json()).then(data => console.log(data));
+}
+fetch('https://localhost:7123/api/Tire').then(res => console.log(res)).catch(err => console.log(err));
+
 // scss index
 import './assets/css/index.scss';
 const router = createBrowserRouter([
@@ -27,7 +33,7 @@ const router = createBrowserRouter([
         element: <Merchandise />,
         errorElement: <ErrorPage />,
         children: [
-          {
+          {  
             path: "page/:pageN",
             element: <Page />,
           }
