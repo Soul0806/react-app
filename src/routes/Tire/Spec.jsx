@@ -1,6 +1,7 @@
 import React, { useContext, useState, useImperativeHandle, useRef, useEffect, useReducer, useMemo } from 'react'
 import { useParams, useOutletContext, useNavigate } from 'react-router-dom'
 import _ from 'lodash';
+import { axi } from '../../lib/aixos';
 
 import { AppContext } from './Tire';
 import Note from './Note';
@@ -51,7 +52,7 @@ function Spec() {
     });
     const navigate = useNavigate()
 
-    const [ dbSale, setDbSale ] = useSale(); 
+    // const [ dbSale, setDbSale ] = useSale(); 
     const { ref } = useOutletContext();
     // let [state, dispatch] = useReducer(reducer, inches);
 
@@ -155,21 +156,30 @@ function Spec() {
         ref.current.cleanNoteRef();
     }
 
+    // const salesState = useMemo(() => {
+    //     return {
+    //         sales,
+    //         setSales,
+    //         dbSale,
+    //         setDbSale
+    //     }
+    // }, [sales, setSales, dbSale, setDbSale])
     const salesState = useMemo(() => {
         return {
             sales,
             setSales,
-            dbSale,
-            setDbSale
+    
         }
-    }, [sales, setSales, dbSale, setDbSale])
+    }, [sales, setSales])
 
 
     function modalSubmit(e) {
-        const url = 'https://localhost:7123/api/Tire';
-        const  data = { Name: modalRef.current.value};
-        ajax_post(url, data);
-        navigate(0);
+        const api_tire = 'http://localhost:9000/tire';
+        const data = { format: modalRef.current.value};
+
+        axi.post(api_tire, data);
+
+        // navigate(0);
     }
 
     return (
@@ -232,7 +242,7 @@ function Spec() {
             </div>
             <Note />
             <Popup salesState={salesState} />
-            <Sale salesState={salesState} />
+            {/* <Sale salesState={salesState} /> */}
         </>
     )
 }

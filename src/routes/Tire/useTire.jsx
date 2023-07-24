@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback, useReducer } from 'react';
 import { useParams } from 'react-router';
 
 import { ajax_get, uuid, isObjectEmpty } from '../../lib/helper';
+import { axi } from '../../lib/aixos';
 import _ from 'lodash';
 
 export const areas = [
@@ -15,22 +16,30 @@ export const combineTire = async(signal = {}) => {
     let tire_api_mysql = 'http://localhost:9000/';
 
     // default tire_api 
-    let api_tire = tire_api_mssql;
+    let api_tire = tire_api_mysql;
 
-    const res = await fetch(tire_api_mssql);
-    if(!res.ok) { api_tire = tire_api_mysql }   
-    
+    // try {
+    //    await axios.get(tire_api_mssql);
+    // } catch (error) {
+    //     api_tire = tire_api_mysql;
+    // }
+ 
+    // try {
+    //     const res = await fetch(tire_api_mssql);
+    // } catch (error) {
+    //     console.log(error);
+    //     api_tire = tire_api_mysql
+    // }
+
     const [head, last] = [12, 22];
     const inchRange = _.range(head, last + 1);
 
     let inchTmplt = {};
     inchRange.map(inch => inchTmplt[inch] = { id: uuid(), spec: {}, active: false })
 
-    const data = await ajax_get(api_tire, signal);
-    const specs = await data.json();
-
-    specs.map(spec => {
-        const name = spec.name;
+    const res = await axi.get(api_tire);
+    res.data.map(spec => {
+        const name = spec.format;
         const inch = name.slice(-2);
         inchTmplt[inch]['spec'][name] = 0;
     })
