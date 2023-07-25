@@ -168,18 +168,24 @@ function Spec() {
         return {
             sales,
             setSales,
-    
+
         }
     }, [sales, setSales])
 
 
     function modalSubmit(e) {
         const api_tire = 'http://localhost:9000/tire';
-        const data = { format: modalRef.current.value};
+        const data = { format: modalRef.current.value };
+        const inch = data.format.slice(-2);
 
         axi.post(api_tire, data);
 
-        // navigate(0);
+        setInches(prev => {
+            console.log({ ...prev, [inch]: { ...prev[inch], spec: { ...prev[inch]['spec'], [data.format]: 0 } } });
+            return { ...prev, [inch]: { ...prev[inch], spec: { ...prev[inch]['spec'], [data.format]: 0 } } }
+        })
+
+        navigate(0);
     }
 
     return (

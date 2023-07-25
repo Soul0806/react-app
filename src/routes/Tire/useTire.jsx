@@ -11,7 +11,7 @@ export const areas = [
     { name: '店外', path: 'out-store' },
     { name: '倉庫', path: 'warehouse' }
 ]
-export const combineTire = async(signal = {}) => {
+export const combineTire = async (signal = {}) => {
     let tire_api_mssql = 'https://localhost:7123/api/tire';
     let tire_api_mysql = 'http://localhost:9000/';
 
@@ -23,7 +23,7 @@ export const combineTire = async(signal = {}) => {
     // } catch (error) {
     //     api_tire = tire_api_mysql;
     // }
- 
+
     // try {
     //     const res = await fetch(tire_api_mssql);
     // } catch (error) {
@@ -77,7 +77,7 @@ export const useTire = () => {
     }, [])
 
 
-    return [ inches, setInches, areas, combineTire ] 
+    return [inches, setInches, areas, combineTire]
 }
 
 
