@@ -117,7 +117,7 @@ function Popup({ salesState }) {
             CreatedAt: selling.createdAt
         }
         // console.log(__dirname, JSON.stringify(data));
-        const fileName = 'test1.txt';
+        const fileName = 'static/sale.json';
         const data = { fileName, content }
         axi.post(WRITE_API, data);
         // ajax_post(SALE_API_URL, data);

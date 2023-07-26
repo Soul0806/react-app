@@ -52,7 +52,7 @@ function Spec() {
     });
     const navigate = useNavigate()
 
-    const [dbSale, setDbSale] = useSale();
+    const [dbSale, setDbSale] = useSale([]);
     const { ref } = useOutletContext();
     // let [state, dispatch] = useReducer(reducer, inches);
 
@@ -71,7 +71,12 @@ function Spec() {
         openBtn.addEventListener("click", () => {
             modalDialog.showModal();
         })
-
+        
+        const fileName = 'static/sale.json';
+        const data = { fileName }; 
+        const url = 'http://localhost:9000/io/readFile';  
+        axi.post(url, data).then(res => console.log(res));
+        // const sale = await axi.get()
     }, [])
 
     function fadeIn(el) {
