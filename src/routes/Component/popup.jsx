@@ -1,12 +1,24 @@
 import { useEffect, useState, useContext, useInsertionEffect, useRef } from 'react';
+
 import CustomSelect from './CustomSelect';
 
 import { AppContext } from '../Tire/Tire';
 
-import { dt,  ajax_post, ajax_get } from '../../lib/helper';
+import { dt, ajax_post, ajax_get } from '../../lib/helper';
 
 import _ from 'lodash'
 import Litepicker from 'litepicker';
+
+// const fs = require('fs');
+// const jsonData = { "name": "John", "age": 30, "car": null };
+// const jsonString = JSON.stringify(jsonData);
+
+// fs.writeFile("./foo.json", jsonString, 'utf8', function (err) {
+//     if (err) {
+//         return console.log(err);
+//     }
+//     console.log("file saved!");
+// });
 
 const SALE_API_URL = `https://localhost:7123/api/Sale/`;
 
@@ -53,15 +65,15 @@ function Popup({ salesState }) {
     }
 
     useEffect(() => {
-        const picker = new Litepicker({ 
+        const picker = new Litepicker({
             element: document.getElementById('litepicker'),
             setup: (picker) => {
                 picker.on('selected', (date) => {
-                  console.log(date.dateInstance.toLocaleString().split(' ')[0]);
+                    console.log(date.dateInstance.toLocaleString().split(' ')[0]);
                 });
-              },
-          });
-    },[])
+            },
+        });
+    }, [])
 
     useEffect(() => {
         if (selling.inch) {
@@ -105,7 +117,8 @@ function Popup({ salesState }) {
             Date: selling.date,
             CreatedAt: selling.createdAt
         }
-        ajax_post(SALE_API_URL, data);
+
+        // ajax_post(SALE_API_URL, data);
         modal.toggle();
     }
 

@@ -4,20 +4,20 @@ import { dt, ajax_get } from '../../lib/helper';
 const d = dt.getTodayDate();
 
 export async function getDbSale(date = d) {
-    const SALE_D_API_URL = `https://localhost:7123/api/Sale/?d=${date}`;
-    const data = await ajax_get(SALE_D_API_URL);
-    const sales = await data.json();
-    return sales
+  const SALE_D_API_URL = `https://localhost:7123/api/Sale/?d=${date}`;
+  const data = await ajax_get(SALE_D_API_URL);
+  const sales = await data.json();
+  return sales
 }
 
 function useSale() {
-  const [ dbSale, setDbSale ]  = useState([]);
+  const [dbSale, setDbSale] = useState([]);
 
   useEffect(() => {
-    getDbSale().then(res => setDbSale(res))
+    // getDbSale().then(res => setDbSale(res))
   }, [])
-  
-  return [ dbSale, setDbSale ]
+
+  return [dbSale, setDbSale]
 }
 
 export { useSale }

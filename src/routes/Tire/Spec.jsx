@@ -52,7 +52,7 @@ function Spec() {
     });
     const navigate = useNavigate()
 
-    // const [ dbSale, setDbSale ] = useSale(); 
+    const [dbSale, setDbSale] = useSale();
     const { ref } = useOutletContext();
     // let [state, dispatch] = useReducer(reducer, inches);
 
@@ -166,11 +166,9 @@ function Spec() {
     // }, [sales, setSales, dbSale, setDbSale])
     const salesState = useMemo(() => {
         return {
-            sales,
-            setSales,
-
+            sales, setSales, dbSale, setDbSale
         }
-    }, [sales, setSales])
+    }, [sales, setSales, dbSale, setDbSale])
 
 
     function modalSubmit(e) {
@@ -181,7 +179,6 @@ function Spec() {
         axi.post(api_tire, data);
 
         setInches(prev => {
-            console.log({ ...prev, [inch]: { ...prev[inch], spec: { ...prev[inch]['spec'], [data.format]: 0 } } });
             return { ...prev, [inch]: { ...prev[inch], spec: { ...prev[inch]['spec'], [data.format]: 0 } } }
         })
 
@@ -248,7 +245,7 @@ function Spec() {
             </div>
             <Note />
             <Popup salesState={salesState} />
-            {/* <Sale salesState={salesState} /> */}
+            <Sale salesState={salesState} />
         </>
     )
 }

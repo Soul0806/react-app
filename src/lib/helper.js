@@ -12,8 +12,8 @@ export const api_merchandise = 'https://localhost:7123/api/merchandise';
 // const t = new Test();
 // console.log(t.toDate());
 
-Date.prototype.toDate = function() {
-    return this.toLocaleString().split(' ')[0];   
+Date.prototype.toDate = function () {
+    return this.toLocaleString().split(' ')[0];
 }
 
 class datetime {
@@ -22,21 +22,23 @@ class datetime {
     }
 
     getLastday(day) {
-        this.day.setDate(day.getDate() - 1)
-        return this.day;
+        const d = new Date();
+        d.setDate(day.getDate() - 1)
+        return d;
     }
 
     getNextday(day) {
-        this.day.setDate(day.getDate() + 1)
-        return this.day;
+        const d = new Date();
+        d.setDate(day.getDate() + 1)
+        return d;
     }
 
     getTodayDate() {
-        return (new Date()).toLocaleString().split(' ')[0];    
+        return this.day.toLocaleString().split(' ')[0];
     }
 
     getDateTime() {
-        return (new Date()).toLocaleString();
+        return this.day.toLocaleString();
     }
 }
 
