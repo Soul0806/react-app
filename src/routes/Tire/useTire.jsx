@@ -76,7 +76,6 @@ export const useTire = () => {
         return () => controller.abort()
     }, [])
 
-
     return [inches, setInches, areas, combineTire]
 }
 
