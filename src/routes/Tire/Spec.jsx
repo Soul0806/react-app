@@ -1,7 +1,7 @@
 import React, { useContext, useState, useImperativeHandle, useRef, useEffect, useReducer, useMemo } from 'react'
 import { useParams, useOutletContext, useNavigate } from 'react-router-dom'
 import _ from 'lodash';
-import { axi } from '../../lib/aixos';
+import { axi } from '../../lib/axios';
 
 import { AppContext } from './Tire';
 import Note from './Note';

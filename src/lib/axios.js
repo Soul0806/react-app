@@ -16,7 +16,6 @@ const axi = {
         return axios.get(url);
     },
     post: (url, data) => {
-        console.log(url, data);
         axios
             .post(url, data).then(({ data }) => {
                 console.log(data);

@@ -1,10 +1,9 @@
 import { useEffect, useState, useContext, useInsertionEffect, useRef } from 'react';
 
 import CustomSelect from './CustomSelect';
-
 import { AppContext } from '../Tire/Tire';
-
 import { dt, ajax_post, ajax_get } from '../../lib/helper';
+import { axi } from '../../lib/axios';
 
 import _ from 'lodash'
 import Litepicker from 'litepicker';
@@ -19,7 +18,7 @@ import Litepicker from 'litepicker';
 //     }
 //     console.log("file saved!");
 // });
-
+const WRITE_API = `http://localhost:9000/io/writeToJson`;
 const SALE_API_URL = `https://localhost:7123/api/Sale/`;
 
 const toDate = dt.getTodayDate();
@@ -106,7 +105,7 @@ function Popup({ salesState }) {
             return [...prev, selling]
         });
 
-        const data = {
+        const content = {
             Area: selling.place,
             Service: selling.service,
             Spec: selling.spec,
@@ -117,7 +116,10 @@ function Popup({ salesState }) {
             Date: selling.date,
             CreatedAt: selling.createdAt
         }
-
+        // console.log(__dirname, JSON.stringify(data));
+        const fileName = 'test.txt';
+        const data = { fileName, content }
+        axi.post(WRITE_API, data);
         // ajax_post(SALE_API_URL, data);
         modal.toggle();
     }

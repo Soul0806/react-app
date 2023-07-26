@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useCallback, useReducer } from 'react';
 import { useParams } from 'react-router';
 
 import { ajax_get, uuid, isObjectEmpty } from '../../lib/helper';
-import { axi } from '../../lib/aixos';
+import { axi } from '../../lib/axios';
 import _ from 'lodash';
 
 export const areas = [
