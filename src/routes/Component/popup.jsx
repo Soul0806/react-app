@@ -18,7 +18,7 @@ import Litepicker from 'litepicker';
 //     }
 //     console.log("file saved!");
 // });
-const WRITE_API = `http://localhost:9000/io/writeToJson`;
+const WRITE_API = `http://localhost:9000/io/writeFile`;
 const SALE_API_URL = `https://localhost:7123/api/Sale/`;
 
 const toDate = dt.getTodayDate();
