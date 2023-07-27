@@ -12,6 +12,8 @@ import Sale from './Sale';
 import { dt, ajax_post, ajax_get } from '../../lib/helper';
 import { combineTire } from './useTire';
 import { useSale } from './useSale';
+
+//test 
 // const option = _.range(1, 11);
 
 // import { ACTION } from './Tire';
