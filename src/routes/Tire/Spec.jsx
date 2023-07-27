@@ -71,11 +71,11 @@ function Spec() {
         openBtn.addEventListener("click", () => {
             modalDialog.showModal();
         })
-        
+
         const fileName = 'static/sale.json';
-        const data = { fileName }; 
-        const url = 'http://localhost:9000/io/readFile';  
-        axi.post(url, data).then(res => console.log(res));
+        const data = { fileName };
+        const url = 'http://localhost:9000/io/readFile';
+
         // const sale = await axi.get()
     }, [])
 
