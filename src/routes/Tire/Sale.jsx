@@ -57,7 +57,7 @@ function Sale({ salesState }) {
                 <div>
                     {salesState.sales.map(sale => {
                         return (
-                            <div className="flex g-1">{sale?.id}{sale.service == 'fix' ?
+                            <div key={sale.id} className="flex g-1">{sale?.id}{sale.service == 'fix' ?
                                 <>
                                     <div>補</div>
                                 </>
@@ -81,9 +81,7 @@ function Sale({ salesState }) {
                 </div>
             }
             <h2>Database</h2>
-            <SaleTmp />
             {salesState.dbSale.map(sale => {
-                // console.log(sale);
                 return <SaleTmp sale={sale} />
             })
             }
@@ -91,9 +89,9 @@ function Sale({ salesState }) {
     )
 }
 
-function SaleTmp(sale) {
+function SaleTmp({ sale }) {
     return (
-        <div className="flex g-1">{sale?.id}{sale.service == 'fix' ?
+        <div key={sale.id} className="flex g-1">{sale?.id}{sale.service == 'fix' ?
             <>
                 <div>補</div>
             </>

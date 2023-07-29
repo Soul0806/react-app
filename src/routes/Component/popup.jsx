@@ -108,6 +108,7 @@ function Popup({ salesState }) {
         });
 
         const content = {
+            id: salesState.id,
             area: selling.place,
             service: selling.service,
             spec: selling.spec,

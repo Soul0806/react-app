@@ -18,10 +18,15 @@ router.post('/writeFile', (req, res) => {
     fs.writeFileSync(fileName, content, { encoding: 'utf8', flag: 'w' });
 })
 
-router.post('/readFile', (req, res) => {
+router.post('/readFile', (req, res, next) => {
     const fileName = req.body.fileName;
-    const rawdata = fs.readFileSync(fileName);
-    res.send(JSON.parse(rawdata));
+    fs.readFile(fileName, (err, data) => {
+        let result = '';
+        if (!err) {
+            result = JSON.parse(data);
+        } 
+        res.send(result);
+    })
 })
 
 module.exports = router;
