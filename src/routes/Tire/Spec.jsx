@@ -13,6 +13,9 @@ import { dt, ajax_post, ajax_get } from '../../lib/helper';
 import { combineTire } from './useTire';
 import { useSale } from './useSale';
 
+
+
+
 //test 
 // const option = _.range(1, 11);
 
@@ -55,6 +58,7 @@ function Spec() {
     const navigate = useNavigate()
 
     const [dbSale, setDbSale] = useSale([]);
+
     const { ref } = useOutletContext();
     // let [state, dispatch] = useReducer(reducer, inches);
 

@@ -5,9 +5,6 @@ import { axi } from '../../lib/axios';
 const d = dt.getTodayDate();
 
 export async function getDbSale(date = d) {
-  // const SALE_D_API_URL = `https://localhost:7123/api/Sale/?d=${date}`;
-  // const data = await ajax_get(SALE_D_API_URL);
-  // const sales = await data.json();
   const url = 'http://localhost:9000/io/readFile';
   const fileName = 'static/sale.json';
   const data = { fileName };
@@ -15,10 +12,11 @@ export async function getDbSale(date = d) {
   const result = await res.data;
 
   const sale = result.map(item => {
-    if (item.Date == date) {
+    if (item.date == date) {
       return item;
     }
   })
+
   return sale
 }
 
