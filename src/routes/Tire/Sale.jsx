@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { dt } from '../../lib/helper';
 import { getDbSale } from './useSale';
 
+// console.log(getDbSale());
+
 const PAY = {
     CASH: '現金',
     CREDIT: '刷卡',

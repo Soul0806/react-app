@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext, useInsertionEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import CustomSelect from './CustomSelect';
 import { AppContext } from '../Tire/Tire';
@@ -43,6 +44,7 @@ function Popup({ salesState }) {
     const optionInch = _.range(12, 23);
     const { inches } = useContext(AppContext);
     const [specs, setSpecs] = useState([]);
+    const navigate = useNavigate();
 
     const [selling, setSelling] = useState({
         id: idx,
@@ -121,7 +123,8 @@ function Popup({ salesState }) {
         const data = { fileName, content }
         axi.post(WRITE_API, data);
         // ajax_post(SALE_API_URL, data);
-        modal.toggle();
+        // modal.toggle();
+        navigate(0);
     }
 
     function handleClose() {

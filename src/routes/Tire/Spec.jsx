@@ -74,11 +74,6 @@ function Spec() {
             modalDialog.showModal();
         })
 
-        const fileName = 'static/sale.json';
-        const data = { fileName };
-        const url = 'http://localhost:9000/io/readFile';
-
-        // const sale = await axi.get()
     }, [])
 
     function fadeIn(el) {

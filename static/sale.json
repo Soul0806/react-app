@@ -1,1 +1,24 @@
-{"Area":"store","Service":"fix","Spec":"","Price":"300","Quantity":"1","Pay":"","Note":"","Date":"2023/7/26","CreatedAt":"2023/7/26 下午10:26:40"}
+[
+    {
+        "Area": "store",
+        "Service": "fix",
+        "Spec": "",
+        "Price": "200",
+        "Quantity": "1",
+        "Pay": "",
+        "Note": "",
+        "Date": "2023/7/29",
+        "CreatedAt": "2023/7/29 上午11:27:11"
+    },
+    {
+        "Area": "store",
+        "Service": "tire-change",
+        "Spec": "205-55/16",
+        "Price": "1200",
+        "Quantity": "1",
+        "Pay": "cash",
+        "Note": "",
+        "Date": "2023/7/29",
+        "CreatedAt": "2023/7/29 上午11:27:16"
+    }
+]

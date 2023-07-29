@@ -5,7 +5,16 @@ const router = express.Router();
 
 router.post('/writeFile', (req, res) => {
     const fileName = req.body.fileName;
-    const content = JSON.stringify(req.body.content);
+    let content;
+    if (fs.existsSync(fileName)) {
+        const rawData = fs.readFileSync(fileName);
+        const sale = JSON.parse(rawData);
+        sale.push(req.body.content);
+        content = JSON.stringify(sale);
+    } else {
+        content = JSON.stringify([req.body.content]);
+    }
+    // const content = JSON.stringify(req.body.content);
     fs.writeFileSync(fileName, content, { encoding: 'utf8', flag: 'w' });
 })
 
