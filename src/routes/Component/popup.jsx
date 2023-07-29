@@ -108,15 +108,15 @@ function Popup({ salesState }) {
         });
 
         const content = {
-            Area: selling.place,
-            Service: selling.service,
-            Spec: selling.spec,
-            Price: selling.price,
-            Quantity: selling.quantity,
-            Pay: selling.pay,
-            Note: selling.note,
-            Date: selling.date,
-            CreatedAt: selling.createdAt
+            area: selling.place,
+            service: selling.service,
+            spec: selling.spec,
+            price: selling.price,
+            quantity: selling.quantity,
+            pay: selling.pay,
+            note: selling.note,
+            date: selling.date,
+            createdAt: selling.createdAt
         }
         // console.log(__dirname, JSON.stringify(data));
         const fileName = 'static/sale.json';
