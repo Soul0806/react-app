@@ -54,7 +54,7 @@ function Sale({ salesState }) {
                     arrow_forward
                 </div>
             </div>
-            <h2>Local</h2>
+            {/* <h2>Local</h2>
             {!salesState.sales ? <div>查無資料</div>
                 :
                 <div>
@@ -82,7 +82,7 @@ function Sale({ salesState }) {
                     })
                     }
                 </div>
-            }
+            } */}
             <h2>Database</h2>
             {salesState.dbSale.map(sale => {
                 if (!isEmpty(sale))

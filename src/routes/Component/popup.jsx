@@ -96,16 +96,16 @@ function Popup({ salesState }) {
     function handleSubmit(e) {
         e.preventDefault();
         let toDate = dt.getTodayDate();
-        let localValue = JSON.parse(localStorage.getItem('sale')) || {};
-        if (!JSON.parse(localStorage.getItem('sale'))?.[toDate]) {
-            localStorage.setItem('sale', JSON.stringify({ ...localValue, [toDate]: [selling] }));
-        } else {
-            let itemSale = JSON.parse(localStorage.getItem('sale'))[toDate];
-            localStorage.setItem('sale', JSON.stringify({ [toDate]: [...itemSale, selling] }));
-        }
-        salesState.setSales(prev => {
-            return [...prev, selling]
-        });
+        // let localValue = JSON.parse(localStorage.getItem('sale')) || {};
+        // if (!JSON.parse(localStorage.getItem('sale'))?.[toDate]) {
+        //     localStorage.setItem('sale', JSON.stringify({ ...localValue, [toDate]: [selling] }));
+        // } else {
+        //     let itemSale = JSON.parse(localStorage.getItem('sale'))[toDate];
+        //     localStorage.setItem('sale', JSON.stringify({ [toDate]: [...itemSale, selling] }));
+        // }
+        // salesState.setSales(prev => {
+        //     return [...prev, selling]
+        // });
 
         const content = {
             id: salesState.id,
