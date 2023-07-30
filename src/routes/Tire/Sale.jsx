@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { dt } from '../../lib/helper';
 import { getDbSale } from './useSale';
+import { isEmpty } from 'lodash';
 
 // console.log(getDbSale());
 
@@ -40,6 +41,8 @@ function Sale({ salesState }) {
             toNext();
         }
     }
+
+
     return (
         <div className="sale-wrapper">
             <div className="date flex g-1">
@@ -82,14 +85,31 @@ function Sale({ salesState }) {
             }
             <h2>Database</h2>
             {salesState.dbSale.map(sale => {
-                return <SaleTmp sale={sale} />
+                if (!isEmpty(sale))
+                    return <SaleTmp sale={sale} salesState={salesState} />
             })
             }
         </div>
     )
 }
 
-function SaleTmp({ sale }) {
+
+function handleDel(id, salesState) {
+    let del = confirm('Delete');
+    if (del) {
+
+
+        salesState.setDbSale(sale => {
+            return sale.filter(s => {
+                if (s.id != id)
+                    return s;
+            })
+        });
+    }
+}
+
+
+function SaleTmp({ sale, salesState }) {
     return (
         <div key={sale.id} className="flex g-1">{sale?.id}{sale.service == 'fix' ?
             <>
@@ -110,6 +130,9 @@ function SaleTmp({ sale }) {
                     {sale.pay == 'transfer' && 'phone_iphone'}
                 </div>
             }
+            <div className="del"><span class="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
+                delete
+            </span></div>
         </div>
     )
 }

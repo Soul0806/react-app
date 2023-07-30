@@ -10,14 +10,15 @@ export async function getDbSale(date, init) {
   const data = { fileName };
   const res = await axi.post(url, data);
   const result = await res.data;
-  
-  if(!result) {
+  if (!result) {
     return init;
   }
 
   const sale = result.map(item => {
     if (item.date == date) {
       return item;
+    } else {
+      return {};
     }
   })
 
@@ -26,18 +27,18 @@ export async function getDbSale(date, init) {
 
 function useSale(init = []) {
   const [dbSale, setDbSale] = useState([]);
-  const [ id , setId] = useState(0);
+  const [id, setId] = useState(0);
 
   useEffect(() => {
     getDbSale(d, init).then(res => {
-      if(res.length > 0) {
+      if (res.length > 0) {
         setId(res.length);
       }
       setDbSale(res)
     })
   }, [])
 
-  return [ dbSale, setDbSale, id ]
+  return [dbSale, setDbSale, id]
 }
 
 export { useSale }
