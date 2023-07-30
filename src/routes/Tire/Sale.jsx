@@ -21,16 +21,15 @@ function Sale({ salesState }) {
     }, [])
 
     function toLast() {
-        console.log(dt.getLastday(today).toDate());
         const lastDate = dt.getLastday(today).toDate();
-        salesState.setSales(JSON.parse(localStorage.getItem('sale'))?.[lastDate] || []);
+        // salesState.setSales(JSON.parse(localStorage.getItem('sale'))?.[lastDate] || []);
         getDbSale(lastDate).then(res => salesState.setDbSale(res))
         setToday(prev => dt.getLastday(today))
     }
 
     function toNext() {
         const nextDate = dt.getNextday(today).toDate();
-        salesState.setSales(JSON.parse(localStorage.getItem('sale'))?.[nextDate] || []);
+        // salesState.setSales(JSON.parse(localStorage.getItem('sale'))?.[nextDate] || []);
         getDbSale(nextDate).then(res => salesState.setDbSale(res))
         setToday(prev => dt.getNextday(today))
     }
