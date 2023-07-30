@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { dt } from '../../lib/helper';
 import { getDbSale } from './useSale';
 import { isEmpty } from 'lodash';
+import { axi } from '../../lib/axios';
 
 // console.log(getDbSale());
 
@@ -41,7 +42,6 @@ function Sale({ salesState }) {
             toNext();
         }
     }
-
 
     return (
         <div className="sale-wrapper">
@@ -94,11 +94,9 @@ function Sale({ salesState }) {
 }
 
 
-function handleDel(id, salesState) {
+async function handleDel(id, salesState) {
     let del = confirm('Delete');
     if (del) {
-
-
         salesState.setDbSale(sale => {
             return sale.filter(s => {
                 if (s.id != id)
@@ -106,6 +104,7 @@ function handleDel(id, salesState) {
             })
         });
     }
+    const res = await axi.delete(`http://localhost:9000/sale/${id}`);
 }
 
 

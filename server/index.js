@@ -4,6 +4,7 @@ const express = require("express")
 const app = express();
 const cors = require("cors")
 const db = require("./db.js");
+const fs = require('fs');
 // const bodyParser = require('body-parser');
 // const fs = require('fs');
 
@@ -34,6 +35,25 @@ app.post("/tire", (req, res) => {
 		return res.json(data)
 	})
 })
+
+app.delete('/sale/:id', (req, res) => {
+	const id = req.params.id;
+	const fileName = 'static/sale.json';
+	fs.readFile(fileName, (err, res) => {
+		let result = '';
+		if (!err) {
+			data = JSON.parse(res);
+		}
+		const filteredData = data.filter(item => {
+			if (item.id != id)
+				return item;
+		})
+		const content = JSON.stringify(filteredData);
+		console.log(filteredData);
+		fs.writeFileSync(fileName, content, { encoding: 'utf8', flag: 'w' });
+	})
+})
+
 
 app.listen(9000, () => {
 	console.log("success")

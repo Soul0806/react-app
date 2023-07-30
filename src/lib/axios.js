@@ -18,6 +18,9 @@ const axi = {
     post: (url, data) => {
         return axios.post(url, data);
         // return axios.post(url, data);
+    },
+    delete: (url) => {
+        return axios.delete(url);
     }
 }
 
