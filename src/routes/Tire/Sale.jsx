@@ -129,6 +129,9 @@ function SaleTmp({ sale, salesState }) {
                     {sale.pay == 'transfer' && 'phone_iphone'}
                 </div>
             }
+            <div className="created-at">
+                {sale.createdAt.split(' ')[1]}
+            </div>
             <div className="del"><span class="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
                 delete
             </span></div>
