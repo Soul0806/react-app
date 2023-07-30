@@ -4,8 +4,6 @@ import { getDbSale } from './useSale';
 import { isEmpty } from 'lodash';
 import { axi } from '../../lib/axios';
 
-// console.log(getDbSale());
-
 const PAY = {
     CASH: '現金',
     CREDIT: '刷卡',
@@ -41,7 +39,6 @@ function Sale({ salesState }) {
             toNext();
         }
     }
-
     return (
         <div className="sale-wrapper">
             <div className="date flex g-1">
@@ -53,41 +50,14 @@ function Sale({ salesState }) {
                     arrow_forward
                 </div>
             </div>
-            {/* <h2>Local</h2>
-            {!salesState.sales ? <div>查無資料</div>
-                :
-                <div>
-                    {salesState.sales.map(sale => {
-                        return (
-                            <div key={sale.id} className="flex g-1">{sale?.id}{sale.service == 'fix' ?
-                                <>
-                                    <div>補</div>
-                                </>
-                                :
-                                <>
-                                    <div>售</div>
-                                    <div className="f-g-1">{sale.spec}</div>
-                                    <div>{sale.quantity}</div>
-                                </>
-                            }
-                                <div className='d-sign'>{sale.price}</div>
-                                <div className="material-symbols-outlined" data-bs-toggle="tooltip" data-bs-placement="right" title={PAY[sale.pay.toUpperCase()]}>
-                                    {sale.pay == 'cash' && 'monetization_on'}
-                                    {sale.pay == 'credit' && 'credit_card'}
-                                    {sale.pay == 'transfer' && 'phone_iphone'}
-                                </div>
-                            </div>
-                        )
-                    })
-                    }
-                </div>
-            } */}
             <h2>Database</h2>
-            {salesState.dbSale.map(sale => {
-                if (!isEmpty(sale))
-                    return <SaleTmp sale={sale} salesState={salesState} />
+            { isEmpty(salesState.dbSale) ? <div>No Data</div> : 
+            <>
+             {salesState.dbSale.map(sale => {
+                return <SaleTmp sale={sale} salesState={salesState} />
             })
             }
+            </>}
         </div>
     )
 }
@@ -131,9 +101,9 @@ function SaleTmp({ sale, salesState }) {
             <div className="created-at">
                 {sale.createdAt.split(' ')[1]}
             </div>
-            <div className="del"><span class="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
+            {/* <div className="del"><span className="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
                 delete
-            </span></div>
+            </span></div> */}
         </div>
     )
 }

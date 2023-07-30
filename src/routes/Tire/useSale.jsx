@@ -14,13 +14,13 @@ export async function getDbSale(date, init) {
     return init;
   }
 
-  const sale = result.map(item => {
+  const sale = result.filter(item => {
     if (item.date == date) {
       return item;
-    } else {
-      return {};
-    }
+    } 
   })
+
+  console.log(sale);
 
   return sale
 }

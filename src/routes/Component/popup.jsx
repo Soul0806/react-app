@@ -9,32 +9,11 @@ import { axi } from '../../lib/axios';
 import _ from 'lodash'
 import Litepicker from 'litepicker';
 
-// const fs = require('fs');
-// const jsonData = { "name": "John", "age": 30, "car": null };
-// const jsonString = JSON.stringify(jsonData);
-
-// fs.writeFile("./foo.json", jsonString, 'utf8', function (err) {
-//     if (err) {
-//         return console.log(err);
-//     }
-//     console.log("file saved!");
-// });
 const WRITE_API = `http://localhost:9000/io/writeFile`;
 const SALE_API_URL = `https://localhost:7123/api/Sale/`;
 
 const toDate = dt.getTodayDate();
 const idx = JSON.parse(localStorage.getItem('sale'))?.[toDate]?.length || '0';
-// const sale = JSON.parse(localStorage.getItem('sale'))?.[toDate];
-
-// const newSale = sale.map((s, idx) => {
-//     if(!('id' in s) || s.id != idx) {
-//         console.log( { ...s, id: idx } );
-//        return { ...s, id: idx }
-//     }
-//     return { ...s }
-// })
-
-
 
 function Popup({ salesState }) {
 
@@ -95,17 +74,6 @@ function Popup({ salesState }) {
     }
     function handleSubmit(e) {
         e.preventDefault();
-        let toDate = dt.getTodayDate();
-        // let localValue = JSON.parse(localStorage.getItem('sale')) || {};
-        // if (!JSON.parse(localStorage.getItem('sale'))?.[toDate]) {
-        //     localStorage.setItem('sale', JSON.stringify({ ...localValue, [toDate]: [selling] }));
-        // } else {
-        //     let itemSale = JSON.parse(localStorage.getItem('sale'))[toDate];
-        //     localStorage.setItem('sale', JSON.stringify({ [toDate]: [...itemSale, selling] }));
-        // }
-        // salesState.setSales(prev => {
-        //     return [...prev, selling]
-        // });
 
         const content = {
             id: salesState.id,
@@ -119,11 +87,10 @@ function Popup({ salesState }) {
             date: selling.date,
             createdAt: selling.createdAt
         }
-        // console.log(__dirname, JSON.stringify(data));
+
         const fileName = 'static/sale.json';
         const data = { fileName, content }
         axi.post(WRITE_API, data);
-        // ajax_post(SALE_API_URL, data);
         // modal.toggle();
         navigate(0);
     }

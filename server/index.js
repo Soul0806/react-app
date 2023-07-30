@@ -17,8 +17,6 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/io', io);
 
-// require('./readfile.js');
-
 app.get("/", (req, res) => {
 	const q = "SELECT * FROM specification";
 	db.query(q, (err, data) => {
@@ -49,14 +47,13 @@ app.delete('/sale/:id', (req, res) => {
 				return item;
 		})
 		const content = JSON.stringify(filteredData);
-		console.log(filteredData);
 		fs.writeFileSync(fileName, content, { encoding: 'utf8', flag: 'w' });
 	})
 })
 
 
 app.listen(9000, () => {
-	console.log("success")
+	console.log("Server is running at port 9000");
 })
 
 

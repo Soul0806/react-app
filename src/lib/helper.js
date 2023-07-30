@@ -1,17 +1,5 @@
 export const api_merchandise = 'https://localhost:7123/api/merchandise';
 
-// function Test() {
-//     this.a = 123;
-// }
-// Test.prototype = {
-//     toDate: function() {
-//         console.log(this.a);
-//     }
-// }
-
-// const t = new Test();
-// console.log(t.toDate());
-
 Date.prototype.toDate = function () {
     return this.toLocaleString().split(' ')[0];
 }
@@ -20,16 +8,13 @@ class datetime {
     constructor() {
         this.day = new Date();
     }
-
     getLastday(day) {
-        const d = new Date();
-        d.setDate(day.getDate() - 1)
+        const d = new Date(day.getTime() - (24 * 60 * 60 * 1000));
         return d;
     }
 
     getNextday(day) {
-        const d = new Date();
-        d.setDate(day.getDate() + 1)
+        const d = new Date(day.getTime() + (24 * 60 * 60 * 1000));
         return d;
     }
 
@@ -40,34 +25,6 @@ class datetime {
     getDateTime() {
         return this.day.toLocaleString();
     }
-}
-
-// function getLastday(day) {
-//     const lastday = new Date()
-//     lastday.setDate(day.getDate() - 1)
-//     return lastday;
-// }
-
-// function getNextday(day) {
-//     const nextday = new Date()
-//     nextday.setDate(day.getDate() + 1)
-//     return nextday;
-// }
-
-// function getToday() {
-//     return new Date();
-// }
-
-// function getTodayDate() {
-//     return (new Date()).toLocaleString().split(' ')[0];    
-// }
-
-// function getDateTime() {
-//     return (new Date()).toLocaleString();
-// }
-
-function isEmpty(str) {
-    return (!str || str.length === 0);
 }
 
 function empty(item) {
@@ -96,16 +53,6 @@ function createElement(obj) {
     div.appendChild(textnode);
 }
 
-// function empty(object) {
-//     Object.keys(object).forEach(function (k){
-//         if (object[k] && typeof object[k] === 'object') {
-//             return empty(object[k]);
-//         }
-//         object[k] = '';
-//     });
-//     console.log(object);
-//     return object;
-// }
 function uuid() {
     var d = Date.now();
     if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
@@ -131,6 +78,6 @@ function getOffset(el) {
 }
 
 const dt = new datetime();
-export { isEmpty, empty, lowerize, uuid, isObjectEmpty, createElement, dt }
+export { empty, lowerize, uuid, isObjectEmpty, createElement, dt }
 // export from ajax;
 export * from './ajax'; 

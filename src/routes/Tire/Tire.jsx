@@ -7,7 +7,6 @@ import { useTire } from './useTire';
 import Inch from './Inch';
 import Area from './Area';
 import { isObjectEmpty } from '../../lib/helper';
-import Sale from './Sale';
 
 export const AppContext = createContext();
 

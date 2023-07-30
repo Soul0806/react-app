@@ -17,20 +17,6 @@ export const combineTire = async (signal = {}) => {
 
     // default tire_api 
     let api_tire = tire_api_mysql;
-
-    // try {
-    //    await axios.get(tire_api_mssql);
-    // } catch (error) {
-    //     api_tire = tire_api_mysql;
-    // }
-
-    // try {
-    //     const res = await fetch(tire_api_mssql);
-    // } catch (error) {
-    //     console.log(error);
-    //     api_tire = tire_api_mysql
-    // }
-
     const [head, last] = [12, 22];
     const inchRange = _.range(head, last + 1);
 
