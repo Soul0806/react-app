@@ -13,6 +13,9 @@ export default function Header() {
                         <NavLink to="tire/upstair/spec/12">庫存管理</NavLink>
                     </li>    
                     <li>
+                        <NavLink to="record">銷售</NavLink>
+                    </li>
+                    <li>
                         <NavLink to="csv">CSV</NavLink>
                     </li>               
                 </ul>

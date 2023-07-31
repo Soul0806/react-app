@@ -12,6 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "air-datepicker": "^3.4.0",
     "axios": "^1.4.0",
     "bootstrap": "^5.3.0",
     "browserify-fs": "^1.0.0",

@@ -13,7 +13,6 @@ const WRITE_API = `http://localhost:9000/io/writeFile`;
 const SALE_API_URL = `https://localhost:7123/api/Sale/`;
 
 const toDate = dt.getTodayDate();
-// const idx = JSON.parse(localStorage.getItem('sale'))?.[toDate]?.length || '0';
 
 function Popup({ salesState }) {
 

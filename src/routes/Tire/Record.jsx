@@ -1,8 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { dt } from '../../lib/helper';
+import React, { useEffect, useRef, useState, useMemo } from 'react'
+
 import { getDbSale } from './useSale';
 import { isEmpty } from 'lodash';
 import { axi } from '../../lib/axios';
+import { useSale } from './useSale';
+
+import Popup from '../Component/Popup';
 
 // Air Datepicker 
 import AirDatepicker from 'air-datepicker';
@@ -14,9 +17,10 @@ const PAY = {
     CREDIT: '刷卡',
     TRANSFER: '轉帳'
 }
-function Sale({ salesState }) {
+function Record() {
     const [today, setToday] = useState(new Date());
     const ref = useRef(false);
+    const [dbSale, setDbSale, id] = useSale([]);
 
     let button = {
         content: 'Today',
@@ -54,50 +58,59 @@ function Sale({ salesState }) {
         }
     }, [])
 
-    function toLast() {
-        const lastDate = dt.getLastday(today).toDate();
-        // salesState.setSales(JSON.parse(localStorage.getItem('sale'))?.[lastDate] || []);
-        getDbSale(lastDate).then(({ id, sale: res }) => salesState.setDbSale(res))
-        setToday(prev => dt.getLastday(today))
-    }
-
-    function toNext() {
-        const nextDate = dt.getNextday(today).toDate();
-        // salesState.setSales(JSON.parse(localStorage.getItem('sale'))?.[nextDate] || []);
-        getDbSale(nextDate).then(({ id, sale: res }) => salesState.setDbSale(res))
-        setToday(prev => dt.getNextday(today))
-    }
-
-    function onclick(to) {
-        if (to == 'last') {
-            toLast();
-        } else {
-            toNext();
+    const salesState = useMemo(() => {
+        return {
+            dbSale, setDbSale, id
         }
-    }
+    }, [dbSale, setDbSale, id])
+
+    // function toLast() {
+    //     const lastDate = dt.getLastday(today).toDate();
+    //     // salesState.setSales(JSON.parse(localStorage.getItem('sale'))?.[lastDate] || []);
+    //     getDbSale(lastDate).then(({ id, sale: res }) => salesState.setDbSale(res))
+    //     setToday(prev => dt.getLastday(today))
+    // }
+
+    // function toNext() {
+    //     const nextDate = dt.getNextday(today).toDate();
+    //     // salesState.setSales(JSON.parse(localStorage.getItem('sale'))?.[nextDate] || []);
+    //     getDbSale(nextDate).then(({ id, sale: res }) => salesState.setDbSale(res))
+    //     setToday(prev => dt.getNextday(today))
+    // }
+
+    // function onclick(to) {
+    //     if (to == 'last') {
+    //         toLast();
+    //     } else {
+    //         toNext();
+    //     }
+    // }
     return (
-        <div className="sale-wrapper">
-            <div className="date flex g-1">
-                <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
-                    <span>詳細銷售</span>
-                </button>
-                {/* <div className="material-symbols-outlined arrow-back" onClick={() => onclick('last')}>
+        <>
+            <div className="sale-wrapper">
+                <div className="date flex g-1">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
+                        <span>詳細銷售</span>
+                    </button>
+                    {/* <div className="material-symbols-outlined arrow-back" onClick={() => onclick('last')}>
                     arrow_back
                 </div> */}
-                {/* <div>Date: {today.toDate()}</div> */}
-                {/* <div className="material-symbols-outlined arrow-forward" onClick={() => onclick('next')}>
+                    {/* <div>Date: {today.toDate()}</div> */}
+                    {/* <div className="material-symbols-outlined arrow-forward" onClick={() => onclick('next')}>
                     arrow_forward
                 </div> */}
+                </div>
+                <div id="datepicker"></div>
+                {isEmpty(salesState.dbSale) ? <div>No Data</div> :
+                    <>
+                        {salesState.dbSale.map(sale => {
+                            return <SaleTmp sale={sale} salesState={salesState} />
+                        })
+                        }
+                    </>}
             </div>
-            <div id="datepicker"></div>
-            {isEmpty(salesState.dbSale) ? <div>No Data</div> :
-                <>
-                    {salesState.dbSale.map(sale => {
-                        return <SaleTmp sale={sale} salesState={salesState} />
-                    })
-                    }
-                </>}
-        </div>
+            <Popup salesState={salesState} />
+        </>
     )
 }
 
@@ -118,6 +131,7 @@ async function handleDel(id, salesState) {
 
 function SaleTmp({ sale, salesState }) {
     return (
+
         <div key={sale.id} className="flex g-1">{sale?.id}
             {sale.service == 'fix' ?
                 <>
@@ -143,7 +157,8 @@ function SaleTmp({ sale, salesState }) {
                 delete
             </span></div> */}
         </div>
+
     )
 }
 
-export default Sale
+export default Record

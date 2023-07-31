@@ -13,9 +13,6 @@ import { dt, ajax_post, ajax_get } from '../../lib/helper';
 import { combineTire } from './useTire';
 import { useSale } from './useSale';
 
-
-
-
 //test 
 // const option = _.range(1, 11);
 
@@ -52,9 +49,6 @@ function Spec() {
     const [target, setTarget] = useState('');
     const [behavior, setBehavior] = useState('insert');
     const [btnAbort, setBtnAbort] = useState(false);
-    const [sales, setSales] = useState(() => {
-        return JSON.parse(localStorage.getItem('sale'))?.[day] || [];
-    });
     const navigate = useNavigate()
 
     const [dbSale, setDbSale, id] = useSale([]);
@@ -103,14 +97,12 @@ function Spec() {
 
         if (noteRef.current.length == 1) {
             note.appendChild(div);
-            // fadeIn(noteRef.current[noteRef.current.length - 1])
         } else {
             setBtnAbort(true);
             let index = 0;
             let lastIndex = noteRef.current.length - 1;
             let offset = -50;
             while (index < lastIndex) {
-                // noteRef.current[index].style.top = getOffset(noteRef.current[index]).top + (offset) + "px";
                 let move = (lastIndex - index) * (offset) + "px"
                 noteRef.current[index].style.transform = `translateY(${move})`;
                 index++;
@@ -162,19 +154,11 @@ function Spec() {
         ref.current.cleanNoteRef();
     }
 
-    // const salesState = useMemo(() => {
-    //     return {
-    //         sales,
-    //         setSales,
-    //         dbSale,
-    //         setDbSale
-    //     }
-    // }, [sales, setSales, dbSale, setDbSale])
     const salesState = useMemo(() => {
         return {
-            sales, setSales, dbSale, setDbSale, id
+            dbSale, setDbSale, id
         }
-    }, [sales, setSales, dbSale, setDbSale, id])
+    }, [dbSale, setDbSale, id])
 
 
     function modalSubmit(e) {
@@ -214,9 +198,9 @@ function Spec() {
                     <label htmlFor="sale">
                         <input type="radio" id="sale" value="sale" name="behavior" onChange={handleBehav} />銷售
                     </label>
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
+                    {/* <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
                         <span>詳細銷售</span>
-                    </button>
+                    </button> */}
                     {/* <button onclick={() => openSellingModel}></button> */}
                 </div>
                 {specs.map((spec, idx) => {
