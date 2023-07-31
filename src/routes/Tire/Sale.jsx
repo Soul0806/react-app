@@ -16,6 +16,7 @@ const PAY = {
 }
 function Sale({ salesState }) {
     const [today, setToday] = useState(new Date());
+    const [ remove, setRemove ] = useState(false);
     const ref = useRef(false);
 
     let button = {
@@ -75,12 +76,22 @@ function Sale({ salesState }) {
             toNext();
         }
     }
+
+    function handleClick() {
+        setRemove(prev => !prev);
+    }
+
     return (
         <div className="sale-wrapper">
             <div className="date flex g-1">
                 <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
                     <span>詳細銷售</span>
                 </button>
+                <div class="action">
+                <span>操作</span>
+                <input type="checkbox" onClick={handleClick}/>
+                </div>
+                
                 {/* <div className="material-symbols-outlined arrow-back" onClick={() => onclick('last')}>
                     arrow_back
                 </div> */}
@@ -93,7 +104,7 @@ function Sale({ salesState }) {
             {isEmpty(salesState.dbSale) ? <div>No Data</div> :
                 <>
                     {salesState.dbSale.map(sale => {
-                        return <SaleTmp sale={sale} salesState={salesState} />
+                        return <SaleTmp sale={sale} salesState={salesState} remove={remove} />
                     })
                     }
                 </>}
@@ -116,7 +127,7 @@ async function handleDel(id, salesState) {
 }
 
 
-function SaleTmp({ sale, salesState }) {
+function SaleTmp({ sale, salesState, remove }) {
     return (
         <div key={sale.id} className="flex g-1">{sale?.id}
             {sale.service == 'fix' ?
@@ -139,9 +150,11 @@ function SaleTmp({ sale, salesState }) {
             <div className="created-at">
                 {sale.createdAt.split(' ')[1]}
             </div>
-            {/* <div className="del"><span className="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
+            { remove && 
+            <div className="del"><span className="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
                 delete
-            </span></div> */}
+            </span></div>
+            }
         </div>
     )
 }

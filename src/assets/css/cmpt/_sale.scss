@@ -5,4 +5,7 @@
     .arrow-back, .arrow-forward  {
       @extend %ptr;
     }
+    .action {
+      text-align: right;
+    }
   }
