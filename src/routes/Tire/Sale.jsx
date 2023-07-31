@@ -21,14 +21,14 @@ function Sale({ salesState }) {
     function toLast() {
         const lastDate = dt.getLastday(today).toDate();
         // salesState.setSales(JSON.parse(localStorage.getItem('sale'))?.[lastDate] || []);
-        getDbSale(lastDate).then(res => salesState.setDbSale(res))
+        getDbSale(lastDate).then(({ id, sale: res}) => salesState.setDbSale(res))
         setToday(prev => dt.getLastday(today))
     }
 
     function toNext() {
         const nextDate = dt.getNextday(today).toDate();
         // salesState.setSales(JSON.parse(localStorage.getItem('sale'))?.[nextDate] || []);
-        getDbSale(nextDate).then(res => salesState.setDbSale(res))
+        getDbSale(nextDate).then(({ id, sale: res}) => salesState.setDbSale(res))
         setToday(prev => dt.getNextday(today))
     }
 

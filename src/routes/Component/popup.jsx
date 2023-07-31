@@ -13,7 +13,7 @@ const WRITE_API = `http://localhost:9000/io/writeFile`;
 const SALE_API_URL = `https://localhost:7123/api/Sale/`;
 
 const toDate = dt.getTodayDate();
-const idx = JSON.parse(localStorage.getItem('sale'))?.[toDate]?.length || '0';
+// const idx = JSON.parse(localStorage.getItem('sale'))?.[toDate]?.length || '0';
 
 function Popup({ salesState }) {
 
@@ -24,14 +24,15 @@ function Popup({ salesState }) {
     const { inches } = useContext(AppContext);
     const [specs, setSpecs] = useState([]);
     const navigate = useNavigate();
+    const priceRef = useRef();
 
     const [selling, setSelling] = useState({
-        id: idx,
+        id: '',
         place: '',
         service: '',
         inch: '',
         spec: '',
-        price: '0',
+        price: '',
         quantity: '',
         pay: '',
         note: '',
@@ -63,7 +64,14 @@ function Popup({ salesState }) {
         }
     }, [selling.inch])
 
+
+    useEffect(() => {
+        selling.quantity && priceRef.current.focus();
+    }, [selling.quantity])
+
     function handleChange(e) {
+        console.log(salesState.id);
+        e.target.name == 'price' && priceRef.current.focus();
         const { name, value } = e.target;
         setSelling(prev => {
             return {
@@ -166,22 +174,23 @@ function Popup({ salesState }) {
                                     </div>
                                 </div>
                                 <div className="mb-3 input-icon modal-input-icon">
-                                    <input className="price" name="price" type="text" placeholder="0.0" value={selling.price} onChange={handleChange} />
+                                    <input ref={priceRef} className="price" name="price" type="text" placeholder="0.0" value={selling.price} onChange={handleChange} />
                                     <i>$</i>
                                     {selling.service == 'fix' &&
                                         <>
                                             <div>
-                                                <label htmlFor="twohundred">
-                                                    <input type="radio" id="twohundred" name="price" value="200" onChange={handleChange} />200</label>
-                                            </div>
-                                            <div>
-                                                <label htmlFor="threehunderd">
-                                                    <input type="radio" id="threehunderd" name="price" value="300" onChange={handleChange} checked="checked" />300
+                                                <label htmlFor="custom">
+                                                    <input type="radio" id="custom" name="price" value="" onChange={handleChange} checked={selling.price == '' ? 'checked' : ''} />自訂
                                                 </label>
                                             </div>
                                             <div>
-                                                <label htmlFor="custom">
-                                                    <input type="radio" id="custom" name="price" value="" onChange={handleChange} />自訂
+                                                <label htmlFor="twohundred">
+                                                    <input type="radio" id="twohundred" name="price" value="200" onChange={handleChange} checked={selling.price == '200' ? 'checked' : ''} />200
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label htmlFor="threehunderd">
+                                                    <input type="radio" id="threehunderd" name="price" value="300" onChange={handleChange} checked={selling.price == '300' ? 'checked' : ''} />300
                                                 </label>
                                             </div>
                                         </>

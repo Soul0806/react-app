@@ -21,7 +21,7 @@ router.post('/writeFile', (req, res) => {
 router.post('/readFile', (req, res) => {
     const fileName = req.body.fileName;
     fs.readFile(fileName, (err, data) => {
-        let result = '';
+        let result = [];
         if (!err) {
             result = JSON.parse(data);
         }
