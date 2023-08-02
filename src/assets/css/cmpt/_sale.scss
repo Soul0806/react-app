@@ -1,11 +1,19 @@
 .sale-wrapper {
-    display: flex;
-    flex-direction: column;
-    @extend %g-1;
-    .arrow-back, .arrow-forward  {
-      @extend %ptr;
-    }
-    .action {
-      text-align: right;
-    }
+  display: flex;
+  flex-direction: column;
+  @extend %g-1;
+
+  .arrow-back,
+  .arrow-forward {
+    @extend %ptr;
   }
+
+  .created-at {
+    // color: red;
+    // justify-self: flex-end;
+  }
+
+  .action {
+    text-align: right;
+  }
+}
