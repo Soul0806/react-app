@@ -36,7 +36,7 @@ function Popup({ salesState }) {
         pay: '',
         note: '',
         date: dt.getTodayDate(),
-        createdAt: dt.getDateTime()
+        createdAt: ''
     });
 
     const styling = {
@@ -92,7 +92,7 @@ function Popup({ salesState }) {
             pay: selling.pay,
             note: selling.note,
             date: selling.date,
-            createdAt: selling.createdAt
+            createdAt: dt.getDateTime()
         }
 
         const fileName = 'static/sale.json';
