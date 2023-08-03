@@ -7,7 +7,7 @@ import Home from './routes/Home';
 import Merchandise from './routes/Merchandise';
 import Tire from './routes/tire/Tire';
 import Spec from './routes/Tire/Spec';
-import Record from './routes/Tire/Record';
+import Record from './Components/Record/index';
 import CSV from './routes/CSV/csv';
 import Page from './routes/Page';
 import Backend, { action as backendAction } from './routes/backend/Backend';
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
         element: <Merchandise />,
         errorElement: <ErrorPage />,
         children: [
-          {  
+          {
             path: "page/:pageN",
             element: <Page />,
           }
