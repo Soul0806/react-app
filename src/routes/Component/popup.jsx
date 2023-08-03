@@ -7,7 +7,7 @@ import { dt, ajax_post, ajax_get } from '../../lib/helper';
 import { axi } from '../../lib/axios';
 
 // Component custom 
-import FormInput from '../../Components/custom/FormInput';
+import FormInput from '../../Components/custom/FormText';
 
 import _ from 'lodash'
 import Litepicker from 'litepicker';
@@ -149,7 +149,7 @@ function Popup({ salesState }) {
                             <h5 className="modal-title" id="exampleModalLabel">詳細銷售</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        {/* <form method="post" onSubmit={handleSubmit}>
+                        <form method="post" onSubmit={handleSubmit}>
                             <div className="modal-body">
                                 <div className='mb-3'>
                                     <input type="text" id="litepicker" />
@@ -248,13 +248,6 @@ function Popup({ salesState }) {
                                         className="btn btn-primary">Send message</button>
                                 </div>
                             </div>
-                        </form> */}
-
-                        <form method="post" onSubmit={handleSubmit}>
-                            {inputs.map(input => {
-                                return <FormInput {...input} />
-
-                            })}
                         </form>
                     </div>
                 </div>

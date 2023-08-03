@@ -4,12 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import CustomSelect from '../../routes/Component/CustomSelect';
 import { useTire } from '../../routes/Tire/useTire';
 
-// import { AppContext } from '../Tire/Tire';
 import { dt } from '../../lib/helper';
 import { axi } from '../../lib/axios';
+import FormRadio from '../custom/FormRadio';
+import FormText from '../custom/FormText';
 
 import _ from 'lodash'
 import Litepicker from 'litepicker';
+
 
 const WRITE_API = `http://localhost:9000/io/writeFile`;
 const SALE_API_URL = `https://localhost:7123/api/Sale/`;
@@ -23,7 +25,6 @@ function Popup({ salesState }) {
 
     const optionInch = _.range(12, 23);
     const [inches] = useTire();
-    // const { inches } = useContext(AppContext);
     const [specs, setSpecs] = useState([]);
     const navigate = useNavigate();
     const priceRef = useRef();
@@ -46,17 +47,6 @@ function Popup({ salesState }) {
         opacity: !selling.spec && selling.service != 'fix' ? '.4' : 1,
         cursor: !selling.spec && selling.service != 'fix' ? 'not-allowed' : 'pointer'
     }
-
-    useEffect(() => {
-        const picker = new Litepicker({
-            element: document.getElementById('litepicker'),
-            setup: (picker) => {
-                picker.on('selected', (date) => {
-                    console.log(date.dateInstance.toLocaleString().split(' ')[0]);
-                });
-            },
-        });
-    }, [])
 
     useEffect(() => {
         if (selling.inch) {
@@ -117,7 +107,44 @@ function Popup({ salesState }) {
         //     note: ''
         // })
     }
+    const inputs = [
+        {
+            id: "price",
+            type: "text",
+            name: "price",
+            defaultValue: selling.price,
+            pattern: 123,
+            label: "價格",
+            onchange: onchange,
+        }
+    ]
 
+    const inputRadioPlace = [
+        {
+            id: "store",
+            type: "radio",
+            name: "place",
+            value: "store",
+            label: "店內",
+        },
+        {
+            id: "out-service",
+            type: "radio",
+            name: "place",
+            value: "out-service",
+            label: "外出",
+        }
+    ]
+
+    function onchange(e) {
+        setSelling(prev => {
+            const { name, value } = e.target;
+            return {
+                ...prev,
+                [name]: value,
+            }
+        })
+    }
     return (
         <>
             <div className="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -127,7 +154,7 @@ function Popup({ salesState }) {
                             <h5 className="modal-title" id="exampleModalLabel">詳細銷售</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form method="post" onSubmit={handleSubmit}>
+                        {/* <form method="post" onSubmit={handleSubmit}>
                             <div className="modal-body">
                                 <div className='mb-3'>
                                     <input type="text" id="litepicker" />
@@ -226,6 +253,17 @@ function Popup({ salesState }) {
                                         className="btn btn-primary">Send message</button>
                                 </div>
                             </div>
+                        </form> */}
+                          <form className="sale_popup" method="post" onSubmit={handleSubmit}>
+                            <div>
+                                {inputRadioPlace.map(radio => {
+                                     return <FormRadio {...radio} />
+                                })}
+                                 <span>請選擇地點</span>
+                            </div>
+                            {inputs.map(input => {
+                                return <FormText {...input}/>
+                            })}
                         </form>
                     </div>
                 </div>
