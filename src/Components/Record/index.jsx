@@ -132,8 +132,8 @@ async function handleDel(id, salesState) {
                     return s;
             })
         });
+        const res = await axi.delete(`http://localhost:9000/sale/${id}`);
     }
-    const res = await axi.delete(`http://localhost:9000/sale/${id}`);
 }
 
 
