@@ -55,8 +55,11 @@ export const useTire = () => {
                 });
             })
         } else {
-            setInches(prev => {
-                return JSON.parse(localStorage.getItem(param.area));
+            // setInches(prev => {
+            //     return JSON.parse(localStorage.getItem(param.area));
+            // });
+            combineTire(signal).then(res => {
+                setInches(res);
             });
         }
         return () => controller.abort()

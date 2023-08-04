@@ -2,4 +2,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    .record {
+        display: flex;
+        flex-direction: column;
+    }
 }

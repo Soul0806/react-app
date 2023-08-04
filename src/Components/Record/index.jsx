@@ -110,10 +110,12 @@ function Record() {
             </div>
             {isEmpty(salesState.dbSale) ? <div>No Data</div> :
                 <>
-                    {salesState.dbSale.map(sale => {
-                        return <SaleTmp sale={sale} salesState={salesState} remove={remove} />
-                    })
-                    }
+                    <div className="record">
+                        {salesState.dbSale.map(sale => {
+                            return <SaleTmp sale={sale} salesState={salesState} remove={remove} />
+                        })
+                        }
+                    </div>
                 </>}
             <Popup salesState={salesState} />
         </div>
