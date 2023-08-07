@@ -140,6 +140,8 @@ function Popup({ salesState }) {
             label: "價格",
         }
     ]
+
+    console.log(selling.date);
     return (
         <>
             <div className="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -151,8 +153,16 @@ function Popup({ salesState }) {
                         </div>
                         <form method="post" onSubmit={handleSubmit}>
                             <div className="modal-body">
-                                <div className='mb-3'>
-                                    <input type="text" id="litepicker" />
+                                <div className="mb-3 modal-date" >
+                                    <div>
+                                        <label htmlFor="y-day">
+                                            <input type="radio" id="y-day" name="date" value={dt.getLastday(new Date()).toLocaleString().split(' ')[0]} onChange={handleChange} checked={selling.date == dt.getLastday(new Date()).toLocaleString().split(' ')[0] ? 'checked' : ''} />昨日</label>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="today">
+                                            <input type="radio" id="today" name="date" value={dt.getTodayDate()} onChange={handleChange} checked={selling.date == dt.getTodayDate() ? 'checked' : ''} />今日
+                                        </label>
+                                    </div>
                                 </div>
                                 <div className="mb-3 modal-place" >
                                     <div>
