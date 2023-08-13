@@ -30,6 +30,7 @@ function Popup({ salesState }) {
     const navigate = useNavigate();
     const priceRef = useRef();
 
+    const [allowed, setAllowed] = useState(false);
     const [selling, setSelling] = useState({
         id: '',
         place: '',
@@ -224,7 +225,7 @@ function Popup({ salesState }) {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
-                        <form className="sale_popup" method="post" onSubmit={handleSubmit}>
+                        <form className="sale_popup" autocomplete="off" method="post" onSubmit={handleSubmit}>
                             <div className="mb-3 modal-place">
                                 {inputRadioPlace.map(radio => {
                                     return <FormRadio {...radio} onchange={handleChange} />
@@ -276,12 +277,17 @@ function Popup({ salesState }) {
                                 {inputRadioPay.map(radio => {
                                     return <FormRadio {...radio} onchange={onchange} />
                                 })}
+                                {
+                                    !selling.pay && <span className="invalid">請選擇付款方式</span>
+                                }
                             </div>
                             <div className="mb-3 modal-note">
                                 <label className="note" htmlFor="note">備註 </label>
                                 <input id="note" name="note" type="text" onChange={handleChange} />
                             </div>
-                            <input type="submit" value="Submit" />
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Send message</button>
+                            </div>
                         </form>
                     </div>
                 </div>
