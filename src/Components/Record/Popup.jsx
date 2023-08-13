@@ -46,8 +46,14 @@ function Popup({ salesState }) {
     });
 
     const styling = {
-        opacity: !selling.spec && selling.service != 'fix' ? '.4' : 1,
-        cursor: !selling.spec && selling.service != 'fix' ? 'not-allowed' : 'pointer'
+        opacity: test() ? '.4' : 1,
+        cursor: test() ? 'not-allowed' : 'pointer',
+    }
+
+    function test() {
+        return !selling.place || !selling.price || !selling.quantity || !selling.pay || (selling.service != 'fix' && !selling.spec)
+        ? true
+        : false
     }
 
     useEffect(() => {
@@ -68,7 +74,6 @@ function Popup({ salesState }) {
     }, [selling.quantity])
 
     function handleChange(e) {
-        console.log(salesState.id);
         e.target.name == 'price' && priceRef.current.focus();
         const { name, value } = e.target;
         setSelling(prev => {
@@ -92,12 +97,12 @@ function Popup({ salesState }) {
             date: selling.date,
             createdAt: dt.getDateTime()
         }
-
-        const fileName = 'static/sale.json';
-        const data = { fileName, content }
-        axi.post(WRITE_API, data);
-        // modal.toggle();
-        navigate(0);
+        console.log(content);
+        // const fileName = 'static/sale.json';
+        // const data = { fileName, content }
+        // axi.post(WRITE_API, data);
+        // // modal.toggle();
+        // navigate(0);
     }
 
     function handleClose() {
@@ -286,7 +291,7 @@ function Popup({ salesState }) {
                                 <input id="note" name="note" type="text" onChange={handleChange} />
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Send message</button>
+                                <button type="submit" style={styling} className="btn btn-primary">Send message</button>
                             </div>
                         </form>
                     </div>
