@@ -3,6 +3,14 @@
     justify-content: center;
     align-items: center;
 
+    input:valid {
+        background-color: palegreen;
+      }
+      
+      input:invalid {
+        background-color: lightpink;
+      }
+      
     .record {
         display: flex;
         flex-direction: column;

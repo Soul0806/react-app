@@ -1,12 +1,10 @@
 function FormRadio(props) {
-    const { label, ...inputs } = props;
+    const { label, onchange, ...inputs } = props;
     return (
-        <>
-            <label htmlFor={props.id}>{label}
-                <input {...inputs}
-                />
-            </label>
-        </>
+        <label key={props.id} htmlFor={props.id}>{label}
+            <input {...inputs} onChange={onchange} required
+            />
+        </label>
     )
 }
 

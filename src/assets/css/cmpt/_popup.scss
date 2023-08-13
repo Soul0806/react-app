@@ -1,17 +1,18 @@
 .modal {
     form {
         // position: relative;
-        .modal-body {
-            text-align: left;
-            >* {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(50px, max-content));
-                gap: 5px;
-            }
-            .text-pay, .note {
-                padding: 0 5px;
-            }
+        text-align: left;
+        >* {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(50px, max-content));
+            gap: 5px;
         }
+
+        .text-pay,
+        .note {
+            padding: 0 5px;
+        }
+
 
         input {
             padding: .1rem .5rem;

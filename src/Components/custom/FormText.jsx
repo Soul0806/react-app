@@ -1,7 +1,7 @@
 function FormText(props) {
     const { label, onchange, ...inputs } = props;
     return (
-        <label htmlFor={props.id}>{label}
+        <label key={props.id} htmlFor={props.id}>{label}
             <input onChange={onchange} {...inputs}
             />
         </label>

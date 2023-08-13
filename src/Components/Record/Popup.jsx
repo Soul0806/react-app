@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
 import CustomSelect from '../../routes/Component/CustomSelect';
 import { useTire } from '../../routes/Tire/useTire';
 
@@ -49,6 +50,10 @@ function Popup({ salesState }) {
     }
 
     useEffect(() => {
+        console.log(selling);
+    }, [selling])
+
+    useEffect(() => {
         if (selling.inch) {
             setSpecs((prev) => {
                 return Object.keys(inches[selling['inch']]['spec']).sort();
@@ -74,7 +79,6 @@ function Popup({ salesState }) {
     }
     function handleSubmit(e) {
         e.preventDefault();
-
         const content = {
             id: salesState.id,
             area: selling.place,
@@ -112,8 +116,8 @@ function Popup({ salesState }) {
             id: "price",
             type: "text",
             name: "price",
-            defaultValue: selling.price,
-            pattern: 123,
+            value: selling.price,
+            pattern: '^[^0a-zA-Z]\\d{1,}',
             label: "價格",
             onchange: onchange,
         }
@@ -136,6 +140,71 @@ function Popup({ salesState }) {
         }
     ]
 
+    const inputRadioService = [
+        {
+            id: "fix",
+            type: "radio",
+            name: "service",
+            value: "fix",
+            label: "補胎",
+        },
+        {
+            id: "tire-change",
+            type: "radio",
+            name: "service",
+            value: "tire-change",
+            label: "換胎",
+        }
+    ]
+
+    const inputRadioPrice = [
+        {
+            id: "custom",
+            type: "radio",
+            name: "price",
+            value: "",
+            label: "自訂",
+        },
+        {
+            id: "twohundred",
+            type: "radio",
+            name: "price",
+            value: "200",
+            label: "200",
+        },
+        {
+            id: "threehundred",
+            type: "radio",
+            name: "price",
+            value: "300",
+            label: "300",
+        }
+    ]
+
+    const inputRadioPay = [
+        {
+            id: "cash",
+            type: "radio",
+            name: "pay",
+            value: "cash",
+            label: "現金",
+        },
+        {
+            id: "credit",
+            type: "radio",
+            name: "pay",
+            value: "credit",
+            label: "刷卡",
+        },
+        {
+            id: "transfer",
+            type: "radio",
+            name: "pay",
+            value: "transfer",
+            label: "轉帳",
+        }
+    ]
+
     function onchange(e) {
         setSelling(prev => {
             const { name, value } = e.target;
@@ -154,116 +223,65 @@ function Popup({ salesState }) {
                             <h5 className="modal-title" id="exampleModalLabel">詳細銷售</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        {/* <form method="post" onSubmit={handleSubmit}>
-                            <div className="modal-body">
-                                <div className='mb-3'>
-                                    <input type="text" id="litepicker" />
-                                </div>
-                                <div className="mb-3 modal-place" >
-                                    <div>
-                                        <label htmlFor="store">
-                                            <input type="radio" id="store" name="place" value="store" onChange={handleChange} checked={selling.place == 'store' ? 'checked' : ''} />店內</label>
-                                    </div>
-                                    <div>
-                                        <label htmlFor="out-service">
-                                            <input type="radio" id="out-service" name="place" value="out-service" onChange={handleChange} checked={selling.place == 'out-service' ? 'checked' : ''} />外出
-                                        </label>
-                                    </div>
-                                </div>
-                                <div className="mb-3 modal-service">
-                                    <div>
-                                        <label htmlFor="fix">
-                                            <input type="radio" id="fix" name="service" value="fix" onChange={handleChange} checked={selling.service == 'fix' ? 'checked' : ''} />補胎</label>
-                                    </div>
-                                    <div>
-                                        <label htmlFor="tire-change">
-                                            <input type="radio" id="tire-change" name="service" value="tire-change" onChange={handleChange} checked={selling.service == 'tire-change' ? 'checked' : ''} />換胎
-                                        </label>
-                                    </div>
-                                </div>
-                                {selling.service != 'fix' &&
-                                    <div className="mb-3 modal-tire" onChange={handleChange}>
-                                        <div>規格</div>
-                                        <div>
-                                            <CustomSelect name="inch" option={optionInch} selling={selling} />
-                                        </div>
-                                        {specs.length != 0 &&
-                                            <>
-                                                <div>
-                                                    <CustomSelect name="spec" option={specs} />
-                                                </div>
-                                            </>
-                                        }
-                                    </div>
+
+                        <form className="sale_popup" method="post" onSubmit={handleSubmit}>
+                            <div className="mb-3 modal-place">
+                                {inputRadioPlace.map(radio => {
+                                    return <FormRadio {...radio} onchange={onchange} />
+                                })}
+                                {
+                                    !selling.place && <span>請選擇地點</span>
                                 }
-                                <div className="mb-3 modal-quantity" onChange={handleChange} >
-                                    <div>數量</div>
+                            </div>
+                            <div className="mb-3 modal-service">
+                                {inputRadioService.map(radio => {
+                                    return <FormRadio {...radio} onchange={onchange} />
+                                })}
+                                {
+                                    !selling.service && <span>請選擇服務</span>
+                                }
+                            </div>
+
+                            {selling.service != 'fix' &&
+                                <div className="mb-3 modal-tire" onChange={handleChange}>
+                                    <div>規格</div>
                                     <div>
-                                        <CustomSelect name="quantity" option={_.range(1, 11)} />
+                                        <CustomSelect name="inch" option={optionInch} selling={selling} />
                                     </div>
-                                </div>
-                                <div className="mb-3 input-icon modal-input-icon">
-                                    <input ref={priceRef} className="price" name="price" type="text" placeholder="0.0" value={selling.price} onChange={handleChange} />
-                                    <i>$</i>
-                                    {selling.service == 'fix' &&
-                                        <>
-                                            <div>
-                                                <label htmlFor="custom">
-                                                    <input type="radio" id="custom" name="price" value="" onChange={handleChange} checked={selling.price == '' ? 'checked' : ''} />自訂
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label htmlFor="twohundred">
-                                                    <input type="radio" id="twohundred" name="price" value="200" onChange={handleChange} checked={selling.price == '200' ? 'checked' : ''} />200
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <label htmlFor="threehunderd">
-                                                    <input type="radio" id="threehunderd" name="price" value="300" onChange={handleChange} checked={selling.price == '300' ? 'checked' : ''} />300
-                                                </label>
-                                            </div>
-                                        </>
+                                    {specs.length != 0 &&
+                                        <div>
+                                            <CustomSelect name="spec" option={specs} />
+                                        </div>
                                     }
                                 </div>
-
-                                <div className="mb-3 modal-pay" onChange={handleChange}>
-                                    <div className="text-pay">付款方式</div>
-                                    <div>
-                                        <label htmlFor="cash">
-                                            <input type="radio" id="cash" name="pay" value="cash" />現金</label>
-                                    </div>
-                                    <div>
-                                        <label htmlFor="credit">
-                                            <input type="radio" id="credit" name="pay" value="credit" />刷卡
-                                        </label>
-                                    </div>
-                                    <div>
-                                        <label htmlFor="transfer">
-                                            <input type="radio" id="transfer" name="pay" value="transfer" />轉帳
-                                        </label>
-                                    </div>
-                                </div>
-                                <div className="mb-3 modal-note">
-                                    <label className="note" htmlFor="note">備註 </label>
-                                    <input id="note" name="note" type="text" onChange={handleChange} />
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClose}>Close</button>
-                                    <button type="submit" style={styling}
-                                        className="btn btn-primary">Send message</button>
+                            }
+                            <div className="mb-3 modal-quantity" onChange={handleChange} >
+                                <div>數量</div>
+                                <div>
+                                    <CustomSelect name="quantity" option={_.range(1, 11)} />
                                 </div>
                             </div>
-                        </form> */}
-                          <form className="sale_popup" method="post" onSubmit={handleSubmit}>
-                            <div>
-                                {inputRadioPlace.map(radio => {
-                                     return <FormRadio {...radio} />
+                            <div className="mb-3 input-icon modal-input-icon">
+                                <input ref={priceRef} className="price" name="price" type="text" placeholder="0.0" value={selling.price} onChange={handleChange} />
+                                <i>$</i>
+                                {selling.service == 'fix' &&
+                                    <>
+                                        {inputRadioPrice.map(radio => {
+                                            return <FormRadio {...radio} onchange={onchange} />
+                                        })}
+                                    </>
+                                }
+                            </div>
+                            <div className="mb-3 modal-pay">
+                                {inputRadioPay.map(radio => {
+                                    return <FormRadio {...radio} onchange={onchange} />
                                 })}
-                                 <span>請選擇地點</span>
                             </div>
-                            {inputs.map(input => {
-                                return <FormText {...input}/>
-                            })}
+                            <div className="mb-3 modal-note">
+                                <label className="note" htmlFor="note">備註 </label>
+                                <input id="note" name="note" type="text" onChange={handleChange} />
+                            </div>
+                            <input type="submit" value="Submit" />
                         </form>
                     </div>
                 </div>
