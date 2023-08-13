@@ -230,7 +230,7 @@ function Popup({ salesState }) {
                                     return <FormRadio {...radio} onchange={handleChange} />
                                 })}
                                 {
-                                    !selling.place && <span>請選擇地點</span>
+                                    !selling.place && <span className="invalid">請選擇地點</span>
                                 }
                             </div>
                             <div className="mb-3 modal-service">
@@ -238,7 +238,7 @@ function Popup({ salesState }) {
                                     return <FormRadio {...radio} onchange={onchange} />
                                 })}
                                 {
-                                    !selling.service && <span>請選擇服務</span>
+                                    !selling.service && <span className="invalid">請選擇服務</span>
                                 }
                             </div>
 
