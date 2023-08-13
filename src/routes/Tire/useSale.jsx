@@ -10,7 +10,7 @@ export async function getDbSale(date, init) {
   const data = { fileName };
   const res = await axi.post(url, data);
   const result = await res.data;
-  const id = result.length;
+  const id = parseInt(result.at(-1).id) + 1;
 
   if (!result) {
     const sale = init;

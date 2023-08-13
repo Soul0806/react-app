@@ -227,7 +227,7 @@ function Popup({ salesState }) {
                         <form className="sale_popup" method="post" onSubmit={handleSubmit}>
                             <div className="mb-3 modal-place">
                                 {inputRadioPlace.map(radio => {
-                                    return <FormRadio {...radio} onchange={onchange} />
+                                    return <FormRadio {...radio} onchange={handleChange} />
                                 })}
                                 {
                                     !selling.place && <span>請選擇地點</span>
