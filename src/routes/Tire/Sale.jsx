@@ -16,7 +16,7 @@ const PAY = {
 }
 function Sale({ salesState }) {
     const [today, setToday] = useState(new Date());
-    const [ remove, setRemove ] = useState(false);
+    const [remove, setRemove] = useState(false);
     const ref = useRef(false);
 
     let button = {
@@ -87,11 +87,11 @@ function Sale({ salesState }) {
                 <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
                     <span>詳細銷售</span>
                 </button>
-                <div class="action">
-                <span>操作</span>
-                <input type="checkbox" onClick={handleClick}/>
+                <div className="action">
+                    <span>操作</span>
+                    <input type="checkbox" onClick={handleClick} />
                 </div>
-                
+
                 {/* <div className="material-symbols-outlined arrow-back" onClick={() => onclick('last')}>
                     arrow_back
                 </div> */}
@@ -142,18 +142,21 @@ function SaleTmp({ sale, salesState, remove }) {
                 </>
             }
             <div className="d-sign">{sale.price}</div>
-            <div className="material-symbols-outlined" data-bs-toggle="tooltip" data-bs-placement="right" title={PAY[sale.pay.toUpperCase()]}>
-                {sale.pay == 'cash' && 'monetization_on'}
-                {sale.pay == 'credit' && 'credit_card'}
-                {sale.pay == 'transfer' && 'phone_iphone'}
-            </div>
-            <div className="created-at">
-                {sale.createdAt.split(' ')[1]}
-            </div>
-            { remove && 
-            <div className="del"><span className="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
-                delete
-            </span></div>
+
+            {remove &&
+                <>
+                    <div className="material-symbols-outlined" data-bs-toggle="tooltip" data-bs-placement="right" title={PAY[sale.pay.toUpperCase()]}>
+                        {sale.pay == 'cash' && 'monetization_on'}
+                        {sale.pay == 'credit' && 'credit_card'}
+                        {sale.pay == 'transfer' && 'phone_iphone'}
+                    </div>
+                    <div className="created-at">
+                        {sale.createdAt.split(' ')[1]}
+                    </div>
+                    <div className="del"><span className="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
+                        delete
+                    </span></div>
+                </>
             }
         </div>
     )

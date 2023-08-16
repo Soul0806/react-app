@@ -140,8 +140,6 @@ function Popup({ salesState }) {
             label: "價格",
         }
     ]
-
-    console.log(selling.date);
     return (
         <>
             <div className="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">

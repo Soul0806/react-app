@@ -131,7 +131,6 @@ async function handleDel(id, salesState) {
 
 function SaleTmp({ sale, salesState }) {
     return (
-
         <div key={sale.id} className="flex g-1">{sale?.id}
             {sale.service == 'fix' ?
                 <>

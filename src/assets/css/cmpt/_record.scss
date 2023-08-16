@@ -1,18 +1,26 @@
 .record-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  // justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  transform: translateX(30%);
 
-    input:valid {
-        background-color: palegreen;
-      }
-      
-      input:invalid {
-        background-color: lightpink;
-      }
-      
-    .record {
-        display: flex;
-        flex-direction: column;
-    }
+
+  .task-bar {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  input:valid {
+    background-color: palegreen;
+  }
+
+  input:invalid {
+    background-color: lightpink;
+  }
+
+  .record {
+    display: flex;
+    flex-direction: column;
+  }
 }

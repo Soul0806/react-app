@@ -97,12 +97,11 @@ function Popup({ salesState }) {
             date: selling.date,
             createdAt: dt.getDateTime()
         }
-        console.log(content);
-        // const fileName = 'static/sale.json';
-        // const data = { fileName, content }
-        // axi.post(WRITE_API, data);
-        // // modal.toggle();
-        // navigate(0);
+        const fileName = 'static/sale.json';
+        const data = { fileName, content }
+        axi.post(WRITE_API, data);
+        // modal.toggle();
+        navigate(0);
     }
 
     function handleClose() {
@@ -230,7 +229,7 @@ function Popup({ salesState }) {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
-                        <form className="sale_popup" autocomplete="off" method="post" onSubmit={handleSubmit}>
+                        <form className="sale_popup" autoComplete="off" method="post" onSubmit={handleSubmit}>
                             <div className="mb-3 modal-place">
                                 {inputRadioPlace.map(radio => {
                                     return <FormRadio {...radio} onchange={handleChange} />
@@ -290,7 +289,7 @@ function Popup({ salesState }) {
                                 <label className="note" htmlFor="note">備註 </label>
                                 <input id="note" name="note" type="text" onChange={handleChange} />
                             </div>
-                            <div class="modal-footer">
+                            <div className="modal-footer">
                                 <button type="submit" style={styling} className="btn btn-primary">Send message</button>
                             </div>
                         </form>

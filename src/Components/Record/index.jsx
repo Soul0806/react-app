@@ -97,14 +97,17 @@ function Record() {
     }
 
     return (
+        <>
         <div className="record-wrapper">
-            <div>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
-                    <span>詳細銷售</span>
-                </button>
-                <div class="action">
-                    <span>操作</span>
-                    <input type="checkbox" onClick={handleClick} />
+            <div className="operate-col">
+                <div className="task-bar">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
+                        <span>詳細銷售</span>
+                    </button>
+                    <div className="action">
+                        <span>操作</span>
+                        <input type="checkbox" onClick={handleClick} />
+                    </div>
                 </div>
                 <div id="datepicker"></div>
             </div>
@@ -117,8 +120,9 @@ function Record() {
                         }
                     </div>
                 </>}
-            <Popup salesState={salesState} />
         </div>
+        <Popup salesState={salesState} />
+        </>
     )
 }
 
@@ -138,7 +142,7 @@ async function handleDel(id, salesState) {
 
 
 function SaleTmp({ sale, salesState, remove }) {
-    return (
+    return ( 
         <div key={sale.id} className="flex g-1">{sale?.id}
             {sale.service == 'fix' ?
                 <>
@@ -152,18 +156,21 @@ function SaleTmp({ sale, salesState, remove }) {
                 </>
             }
             <div className="d-sign">{sale.price}</div>
-            <div className="material-symbols-outlined" data-bs-toggle="tooltip" data-bs-placement="right" title={PAY[sale.pay.toUpperCase()]}>
-                {sale.pay == 'cash' && 'monetization_on'}
-                {sale.pay == 'credit' && 'credit_card'}
-                {sale.pay == 'transfer' && 'phone_iphone'}
-            </div>
-            <div className="created-at">
-                {sale.createdAt.split(' ')[1]}
-            </div>
             {remove &&
-                <div className="del"><span className="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
-                    delete
-                </span></div>
+                <>
+                    <div className="material-symbols-outlined" data-bs-toggle="tooltip" data-bs-placement="right" title={PAY[sale.pay.toUpperCase()]}>
+                        {sale.pay == 'cash' && 'monetization_on'}
+                        {sale.pay == 'credit' && 'credit_card'}
+                        {sale.pay == 'transfer' && 'phone_iphone'}
+                    </div>
+                    <div className="created-at">
+                        {sale.createdAt.split(' ')[1]}
+                    </div>
+
+                    <div className="del"><span className="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
+                        delete
+                    </span></div>
+                </>
             }
         </div>
     )
