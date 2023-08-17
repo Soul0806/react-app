@@ -7,7 +7,7 @@ import { dt, ajax_post, ajax_get } from '../../lib/helper';
 import { axi } from '../../lib/axios';
 
 // Component custom 
-import FormInput from '../../Components/custom/FormText';
+import FormInput from '../../Components/Custom/FormText';
 
 import _ from 'lodash'
 import Litepicker from 'litepicker';

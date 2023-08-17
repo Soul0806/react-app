@@ -1,31 +1,23 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react'
-
-import { getDbSale } from '../../routes/Tire/useSale';
-import { useSale } from '../../routes/Tire/useSale';
+import React, { useEffect, useRef, useState } from 'react'
+import { dt } from '../../lib/helper';
+import { getDbSale } from './useSale';
 import { isEmpty } from 'lodash';
 import { axi } from '../../lib/axios';
-
-// Components 
-import Popup from './Popup';
 
 // Air Datepicker 
 import AirDatepicker from 'air-datepicker';
 import localeEn from 'air-datepicker/locale/en';
 import 'air-datepicker/air-datepicker.css';
 
-
 const PAY = {
     CASH: '現金',
     CREDIT: '刷卡',
     TRANSFER: '轉帳'
 }
-function Record() {
-    const [dbSale, setDbSale, id] = useSale([]);
+function Sale({ salesState }) {
     const [today, setToday] = useState(new Date());
     const [remove, setRemove] = useState(false);
     const ref = useRef(false);
-
-
 
     let button = {
         content: 'Today',
@@ -36,13 +28,6 @@ function Record() {
             dp.setViewDate(date);
         }
     }
-
-    const salesState = useMemo(() => {
-        return {
-            dbSale, setDbSale, id
-        }
-    }, [dbSale, setDbSale, id])
-
     useEffect(() => {
         if (ref.current) {
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -70,59 +55,60 @@ function Record() {
         }
     }, [])
 
-    // function toLast() {
-    //     const lastDate = dt.getLastday(today).toDate();
-    //     // salesState.setSales(JSON.parse(localStorage.getItem('sale'))?.[lastDate] || []);
-    //     getDbSale(lastDate).then(({ id, sale: res }) => salesState.setDbSale(res))
-    //     setToday(prev => dt.getLastday(today))
-    // }
+    function toLast() {
+        const lastDate = dt.getLastday(today).toDate();
+        // salesState.setSales(JSON.parse(localStorage.getItem('sale'))?.[lastDate] || []);
+        getDbSale(lastDate).then(({ id, sale: res }) => salesState.setDbSale(res))
+        setToday(prev => dt.getLastday(today))
+    }
 
-    // function toNext() {
-    //     const nextDate = dt.getNextday(today).toDate();
-    //     // salesState.setSales(JSON.parse(localStorage.getItem('sale'))?.[nextDate] || []);
-    //     getDbSale(nextDate).then(({ id, sale: res }) => salesState.setDbSale(res))
-    //     setToday(prev => dt.getNextday(today))
-    // }
+    function toNext() {
+        const nextDate = dt.getNextday(today).toDate();
+        // salesState.setSales(JSON.parse(localStorage.getItem('sale'))?.[nextDate] || []);
+        getDbSale(nextDate).then(({ id, sale: res }) => salesState.setDbSale(res))
+        setToday(prev => dt.getNextday(today))
+    }
 
-    // function onclick(to) {
-    //     if (to == 'last') {
-    //         toLast();
-    //     } else {
-    //         toNext();
-    //     }
-    // }
+    function onclick(to) {
+        if (to == 'last') {
+            toLast();
+        } else {
+            toNext();
+        }
+    }
 
     function handleClick() {
         setRemove(prev => !prev);
     }
 
     return (
-        <>
-        <div className="record-wrapper">
-            <div className="operate-col">
-                <div className="task-bar">
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
-                        <span>詳細銷售</span>
-                    </button>
-                    <div className="action">
-                        <span>操作</span>
-                        <input type="checkbox" onClick={handleClick} />
-                    </div>
+        <div className="sale-wrapper">
+            <div className="date flex g-1">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
+                    <span>詳細銷售</span>
+                </button>
+                <div className="action">
+                    <span>操作</span>
+                    <input type="checkbox" onClick={handleClick} />
                 </div>
-                <div id="datepicker"></div>
+
+                {/* <div className="material-symbols-outlined arrow-back" onClick={() => onclick('last')}>
+                    arrow_back
+                </div> */}
+                {/* <div>Date: {today.toDate()}</div> */}
+                {/* <div className="material-symbols-outlined arrow-forward" onClick={() => onclick('next')}>
+                    arrow_forward
+                </div> */}
             </div>
+            <div id="datepicker"></div>
             {isEmpty(salesState.dbSale) ? <div>No Data</div> :
                 <>
-                    <div className="record">
-                        {salesState.dbSale.map(sale => {
-                            return <SaleTmp key={sale.id} sale={sale} salesState={salesState} remove={remove} />
-                        })
-                        }
-                    </div>
+                    {salesState.dbSale.map(sale => {
+                        return <SaleTmp sale={sale} salesState={salesState} remove={remove} />
+                    })
+                    }
                 </>}
         </div>
-        <Popup salesState={salesState} />
-        </>
     )
 }
 
@@ -136,14 +122,14 @@ async function handleDel(id, salesState) {
                     return s;
             })
         });
-        const res = await axi.delete(`http://localhost:9000/sale/${id}`);
     }
+    const res = await axi.delete(`http://localhost:9000/sale/${id}`);
 }
 
 
 function SaleTmp({ sale, salesState, remove }) {
-    return ( 
-        <div className="flex g-1">{sale?.id}
+    return (
+        <div key={sale.id} className="flex g-1">{sale?.id}
             {sale.service == 'fix' ?
                 <>
                     <div>補</div>
@@ -156,6 +142,7 @@ function SaleTmp({ sale, salesState, remove }) {
                 </>
             }
             <div className="d-sign">{sale.price}</div>
+
             {remove &&
                 <>
                     <div className="material-symbols-outlined" data-bs-toggle="tooltip" data-bs-placement="right" title={PAY[sale.pay.toUpperCase()]}>
@@ -166,7 +153,6 @@ function SaleTmp({ sale, salesState, remove }) {
                     <div className="created-at">
                         {sale.createdAt.split(' ')[1]}
                     </div>
-
                     <div className="del"><span className="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
                         delete
                     </span></div>
@@ -176,4 +162,4 @@ function SaleTmp({ sale, salesState, remove }) {
     )
 }
 
-export default Record
+export default Sale

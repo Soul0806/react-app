@@ -1,18 +1,13 @@
 import { useEffect, useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-
-import CustomSelect from '../../routes/Component/CustomSelect';
-import { useTire } from '../../routes/Tire/useTire';
-
+import FormSelect from '../Custom/FormSelect';
+import { useTire } from '../Tire/useTire';
 import { dt } from '../../lib/helper';
 import { axi } from '../../lib/axios';
-import FormRadio from '../custom/FormRadio';
-import FormText from '../custom/FormText';
+import FormRadio from '../Custom/FormRadio';
 
 import _ from 'lodash'
-import Litepicker from 'litepicker';
-
 
 const WRITE_API = `http://localhost:9000/io/writeFile`;
 const SALE_API_URL = `https://localhost:7123/api/Sale/`;
@@ -232,7 +227,7 @@ function Popup({ salesState }) {
                         <form className="sale_popup" autoComplete="off" method="post" onSubmit={handleSubmit}>
                             <div className="mb-3 modal-place">
                                 {inputRadioPlace.map(radio => {
-                                    return <FormRadio {...radio} onchange={handleChange} />
+                                    return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
                                 })}
                                 {
                                     !selling.place && <span className="invalid">請選擇地點</span>
@@ -240,7 +235,7 @@ function Popup({ salesState }) {
                             </div>
                             <div className="mb-3 modal-service">
                                 {inputRadioService.map(radio => {
-                                    return <FormRadio {...radio} onchange={onchange} />
+                                    return <FormRadio key={radio.id} {...radio} onchange={onchange} />
                                 })}
                                 {
                                     !selling.service && <span className="invalid">請選擇服務</span>
@@ -251,11 +246,11 @@ function Popup({ salesState }) {
                                 <div className="mb-3 modal-tire" onChange={handleChange}>
                                     <div>規格</div>
                                     <div>
-                                        <CustomSelect name="inch" option={optionInch} selling={selling} />
+                                        <FormSelect name="inch" option={optionInch} selling={selling} />
                                     </div>
                                     {specs.length != 0 &&
                                         <div>
-                                            <CustomSelect name="spec" option={specs} />
+                                            <FormSelect name="spec" option={specs} />
                                         </div>
                                     }
                                 </div>
@@ -263,7 +258,7 @@ function Popup({ salesState }) {
                             <div className="mb-3 modal-quantity" onChange={handleChange} >
                                 <div>數量</div>
                                 <div>
-                                    <CustomSelect name="quantity" option={_.range(1, 11)} />
+                                    <FormSelect name="quantity" option={_.range(1, 11)} />
                                 </div>
                             </div>
                             <div className="mb-3 input-icon modal-input-icon">
@@ -272,14 +267,14 @@ function Popup({ salesState }) {
                                 {selling.service == 'fix' &&
                                     <>
                                         {inputRadioPrice.map(radio => {
-                                            return <FormRadio {...radio} onchange={onchange} />
+                                            return <FormRadio key={radio.id} {...radio} onchange={onchange} />
                                         })}
                                     </>
                                 }
                             </div>
                             <div className="mb-3 modal-pay">
                                 {inputRadioPay.map(radio => {
-                                    return <FormRadio {...radio} onchange={onchange} />
+                                    return <FormRadio key={radio.id} {...radio} onchange={onchange} />
                                 })}
                                 {
                                     !selling.pay && <span className="invalid">請選擇付款方式</span>

@@ -11,7 +11,6 @@ import Popup from '../Component/Popup';
 import AirDatepicker from 'air-datepicker';
 import localeEn from 'air-datepicker/locale/en';
 import 'air-datepicker/air-datepicker.css';
-import Home from '../Home';
 
 const PAY = {
     CASH: '現金',

@@ -3,20 +3,21 @@ import * as ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // component
-import Home from './routes/Home';
-import Merchandise from './routes/Merchandise';
-import Tire from './routes/tire/Tire';
-import Spec from './routes/Tire/Spec';
+// import Merchandise from './Components/Merchandise';
+// import Page from './Components/Tire/Page';
+import Home from './Components/Home';
+import Tire from './Components/Tire/index';
+import Spec from './Components/Tire/Spec';
 import Record from './Components/Record/index';
-import CSV from './routes/CSV/csv';
-import Page from './routes/Page';
-import Backend, { action as backendAction } from './routes/backend/Backend';
+import Csv from './Components/Csv/index';
+import Backend, { action as backendAction } from './Components/Backend/index';
 
 // erro page
 import ErrorPage from "./error-page";
 
 // scss index
 import './assets/css/index.scss';
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,15 +25,15 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/merchandise",
-        element: <Merchandise />,
-        errorElement: <ErrorPage />,
-        children: [
-          {
-            path: "page/:pageN",
-            element: <Page />,
-          }
-        ]
+        // path: "/merchandise",
+        // element: <Merchandise />,
+        // errorElement: <ErrorPage />,
+        // children: [
+        //   {
+        //     path: "page/:pageN",
+        //     element: <Page />,
+        //   }
+        // ]
       },
       {
         path: "/tire",
@@ -58,7 +59,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/csv",
-        element: <CSV />,
+        element: <Csv />,
         errorElement: <ErrorPage />,
       }
     ]
