@@ -98,30 +98,29 @@ function Record() {
 
     return (
         <>
-        <div className="record-wrapper">
-            <div className="operate-col">
-                <div className="task-bar">
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
-                        <span>詳細銷售</span>
-                    </button>
-                    <div className="action">
-                        <span>操作</span>
-                        <input type="checkbox" onClick={handleClick} />
+            <div className="record-wrapper">
+                <div className="operate-col">
+                    <div className="task-bar">
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
+                            <span>詳細銷售</span>
+                        </button>
+                        <div className="action">
+                            <span>操作</span>
+                            <input type="checkbox" onClick={handleClick} />
+                        </div>
                     </div>
+                    <div id="datepicker"></div>
                 </div>
-                <div id="datepicker"></div>
-            </div>
-            {isEmpty(salesState.dbSale) ? <div>No Data</div> :
-                <>
+                {isEmpty(salesState.dbSale) ? <div>No Data</div> :
                     <div className="record">
                         {salesState.dbSale.map(sale => {
                             return <SaleTmp key={sale.id} sale={sale} salesState={salesState} remove={remove} />
                         })
                         }
                     </div>
-                </>}
-        </div>
-        <Popup salesState={salesState} />
+                }
+            </div>
+            <Popup salesState={salesState} />
         </>
     )
 }
@@ -142,12 +141,9 @@ async function handleDel(id, salesState) {
 
 
 function SaleTmp({ sale, salesState, remove }) {
-    return ( 
+    return (
         <div className="flex g-1">{sale?.id}
-            {sale.service == 'fix' ?
-                <>
-                    <div>補</div>
-                </>
+            {sale.service == 'fix' ? <div>補</div>
                 :
                 <>
                     <div>售</div>
@@ -166,7 +162,6 @@ function SaleTmp({ sale, salesState, remove }) {
                     <div className="created-at">
                         {sale.createdAt.split(' ')[1]}
                     </div>
-
                     <div className="del"><span className="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
                         delete
                     </span></div>
