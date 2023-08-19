@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react'
+// import { useQuery } from 'react-query';
+import useSWR from 'swr'
 
 import { getDbSale } from '../../routes/Tire/useSale';
 import { useSale } from '../../routes/Tire/useSale';
@@ -19,13 +21,24 @@ const PAY = {
     CREDIT: '刷卡',
     TRANSFER: '轉帳'
 }
+
+// const options = {
+//     method: "POST",
+//     body: JSON.stringify({ fileName: 'static/sale.json'}),
+//     headers: {
+//         "Content-type": "application/json; charset=UTF-8"
+//     }
+// }
+
+// const fetcher = (...args) => fetch(...args, options).then(res => res.json()); 
+
 function Record() {
     const [dbSale, setDbSale, id] = useSale([]);
     const [today, setToday] = useState(new Date());
     const [remove, setRemove] = useState(false);
     const ref = useRef(false);
 
-
+    // const {data}  = useSWR('http://localhost:9000/io/readFile', fetcher);
 
     let button = {
         content: 'Today',
@@ -95,7 +108,6 @@ function Record() {
     function handleClick() {
         setRemove(prev => !prev);
     }
-
     return (
         <>
             <div className="record-wrapper">

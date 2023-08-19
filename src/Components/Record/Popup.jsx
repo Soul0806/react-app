@@ -25,7 +25,6 @@ function Popup({ salesState }) {
     const navigate = useNavigate();
     const priceRef = useRef();
 
-    const [allowed, setAllowed] = useState(false);
     const [selling, setSelling] = useState({
         id: '',
         place: '',
