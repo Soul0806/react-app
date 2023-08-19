@@ -8,7 +8,7 @@ class datetime {
     constructor() {
         this.day = new Date();
     }
-    getLastday(day) {
+    getLastday(day = this.day) {
         const d = new Date(day.getTime() - (24 * 60 * 60 * 1000));
         return d;
     }
@@ -24,6 +24,10 @@ class datetime {
 
     getDateTime() {
         return this.day.toLocaleString();
+    }
+
+    getLastDate() {
+        return this.getLastday().toLocaleString().split(' ')[0];
     }
 }
 

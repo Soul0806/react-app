@@ -205,6 +205,23 @@ function Popup({ salesState }) {
         }
     ]
 
+    const inputRadioDay = [
+        {
+            id: "yesterday",
+            type: "radio",
+            name: "date",
+            value: dt.getLastDate(),
+            label: "昨天",
+        },
+        {
+            id: "today",
+            type: "radio",
+            name: "date",
+            value: dt.getTodayDate(),
+            label: "今天",
+        }
+    ]
+
     function onchange(e) {
         setSelling(prev => {
             const { name, value } = e.target;
@@ -225,6 +242,11 @@ function Popup({ salesState }) {
                         </div>
 
                         <form className="sale_popup" autoComplete="off" method="post" onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                                {inputRadioDay.map(radio => {
+                                    return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
+                                })}
+                            </div>
                             <div className="mb-3 modal-place">
                                 {inputRadioPlace.map(radio => {
                                     return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
