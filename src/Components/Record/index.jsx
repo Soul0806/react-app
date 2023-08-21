@@ -1,20 +1,20 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react'
-// import { useQuery } from 'react-query';
-import useSWR from 'swr'
 
-import { getDbSale } from '../../routes/Tire/useSale';
-import { useSale } from '../../routes/Tire/useSale';
-import { isEmpty } from 'lodash';
-import { axi } from '../../lib/axios';
-
-// Components 
+// Comps
 import Popup from './Popup';
+
+import { getDbSale } from '../Tire/useSale';
+import { useSale } from '../Tire/useSale';
+import { axi } from '../../lib/axios';
+import { dt } from '../../lib/helper';
+
+// Third party lib
+import { isEmpty } from 'lodash';
 
 // Air Datepicker 
 import AirDatepicker from 'air-datepicker';
 import localeEn from 'air-datepicker/locale/en';
 import 'air-datepicker/air-datepicker.css';
-
 
 const PAY = {
     CASH: '現金',
@@ -22,23 +22,12 @@ const PAY = {
     TRANSFER: '轉帳'
 }
 
-// const options = {
-//     method: "POST",
-//     body: JSON.stringify({ fileName: 'static/sale.json'}),
-//     headers: {
-//         "Content-type": "application/json; charset=UTF-8"
-//     }
-// }
-
-// const fetcher = (...args) => fetch(...args, options).then(res => res.json()); 
-
 function Record() {
     const [dbSale, setDbSale, id] = useSale([]);
     const [today, setToday] = useState(new Date());
+    const [t, tt] = useState(0);
     const [remove, setRemove] = useState(false);
     const ref = useRef(false);
-
-    // const {data}  = useSWR('http://localhost:9000/io/readFile', fetcher);
 
     let button = {
         content: 'Today',
@@ -47,6 +36,19 @@ function Record() {
             let date = new Date();
             dp.selectDate(date);
             dp.setViewDate(date);
+        }
+    }
+
+    let prevBtn = {
+        content: 'Prev',
+        className: 'custom-button-classname',
+        onClick: (dp) => {
+            // console.log(today, dt.getLastday(today));
+
+            // const date = dt.getLastday(today);
+            // setToday(date);
+            // dp.selectDate(date);
+            // dp.setViewDate(date);
         }
     }
 
@@ -69,7 +71,7 @@ function Record() {
                 },
                 locale: localeEn,
                 inline: true,
-                buttons: [button],
+                buttons: [prevBtn, button],
                 onSelect: function ({ date, datepicker }) {
                     datepicker.nav.$title.innerHTML = date.toDate();
                     // this.navTitles.days = date.toDate();
@@ -83,35 +85,12 @@ function Record() {
         }
     }, [])
 
-    // function toLast() {
-    //     const lastDate = dt.getLastday(today).toDate();
-    //     // salesState.setSales(JSON.parse(localStorage.getItem('sale'))?.[lastDate] || []);
-    //     getDbSale(lastDate).then(({ id, sale: res }) => salesState.setDbSale(res))
-    //     setToday(prev => dt.getLastday(today))
-    // }
-
-    // function toNext() {
-    //     const nextDate = dt.getNextday(today).toDate();
-    //     // salesState.setSales(JSON.parse(localStorage.getItem('sale'))?.[nextDate] || []);
-    //     getDbSale(nextDate).then(({ id, sale: res }) => salesState.setDbSale(res))
-    //     setToday(prev => dt.getNextday(today))
-    // }
-
-    // function onclick(to) {
-    //     if (to == 'last') {
-    //         toLast();
-    //     } else {
-    //         toNext();
-    //     }
-    // }
-
     function handleClick() {
         setRemove(prev => !prev);
     }
     return (
         <>
             <div className="record-wrapper">
-                test1
                 <div className="operate-col">
                     <div className="task-bar">
                         <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">

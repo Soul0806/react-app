@@ -26,8 +26,8 @@ class datetime {
         return this.day.toLocaleString();
     }
 
-    getLastDate() {
-        return this.getLastday().toLocaleString().split(' ')[0];
+    getLastDate(day = this.day) {
+        return this.getLastday(day).toLocaleString().split(' ')[0];
     }
 }
 
