@@ -142,24 +142,26 @@ function Sale(props) {
                 :
                 <>
                     <div>售</div>
-                    <div className="f-g-1">{sale.spec}</div>
+                    <div>{sale.spec}</div>
                     <div>{sale.quantity}</div>
                 </>
             }
-            <div className="d-sign">{sale.price}</div>
-                    <div className="flex f-1 j-c-end" style={invisible}>
-                        <div className="material-symbols-outlined" data-bs-toggle="tooltip" data-bs-placement="right" title={PAY[sale.pay.toUpperCase()]}>
-                            {sale.pay == 'cash' && 'monetization_on'}
-                            {sale.pay == 'credit' && 'credit_card'}
-                            {sale.pay == 'transfer' && 'phone_iphone'}
-                        </div>
-                        <div className="f-1">
-                            {sale.createdAt.split(' ')[1]}
-                        </div>
-                        <div className="del"><span className="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
-                            delete
-                        </span></div>
+            <div className="flex f-1">
+                <div className="d-sign">{sale.price}</div>
+                <div className="flex f-1 j-c-end" style={invisible}>
+                    <div className="material-symbols-outlined" data-bs-toggle="tooltip" data-bs-placement="right" title={PAY[sale.pay.toUpperCase()]}>
+                        {sale.pay == 'cash' && 'monetization_on'}
+                        {sale.pay == 'credit' && 'credit_card'}
+                        {sale.pay == 'transfer' && 'phone_iphone'}
                     </div>
+                    <div className="">
+                        {sale.createdAt.split(' ')[1]}
+                    </div>
+                    <div className="del"><span className="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
+                        delete
+                    </span></div>
+                </div>
+            </div>
         </div>
     )
 }
