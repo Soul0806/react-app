@@ -111,6 +111,7 @@ function Record() {
     return (
         <>
             <div className="record-wrapper">
+                test
                 <div className="operate-col">
                     <div className="task-bar">
                         <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
