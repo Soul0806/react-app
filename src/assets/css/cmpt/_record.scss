@@ -5,10 +5,15 @@
   gap: 2rem;
   transform: translateX(30%);
 
-
+  .operate-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
   .task-bar {
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
   }
 
   input:valid {
@@ -21,6 +26,6 @@
 
   .record {
     display: flex;
-    flex-direction: column;
+    flex-direction: column;    
   }
 }

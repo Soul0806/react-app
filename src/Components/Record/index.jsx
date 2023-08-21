@@ -22,12 +22,13 @@ const PAY = {
     TRANSFER: '轉帳'
 }
 
+
 function Record() {
     const [dbSale, setDbSale, id] = useSale([]);
-    const [today, setToday] = useState(new Date());
-    const [t, tt] = useState(0);
     const [remove, setRemove] = useState(false);
     const ref = useRef(false);
+    const refDate = useRef(new Date());
+
 
     let button = {
         content: 'Today',
@@ -36,19 +37,16 @@ function Record() {
             let date = new Date();
             dp.selectDate(date);
             dp.setViewDate(date);
+            refDate.current = date;
         }
     }
-
     let prevBtn = {
         content: 'Prev',
         className: 'custom-button-classname',
         onClick: (dp) => {
-            // console.log(today, dt.getLastday(today));
-
-            // const date = dt.getLastday(today);
-            // setToday(date);
-            // dp.selectDate(date);
-            // dp.setViewDate(date);
+            refDate.current = dt.getLastday(refDate.current);
+            dp.selectDate(refDate.current);
+            dp.setViewDate(refDate.current);
         }
     }
 
@@ -67,16 +65,15 @@ function Record() {
 
             const picker = new AirDatepicker('#datepicker', {
                 navTitles: {
-                    days: today.toDate()
+                    days: dt.getTodayDate()
                 },
                 locale: localeEn,
                 inline: true,
                 buttons: [prevBtn, button],
                 onSelect: function ({ date, datepicker }) {
+                    if(!date) return;
                     datepicker.nav.$title.innerHTML = date.toDate();
-                    // this.navTitles.days = date.toDate();
                     getDbSale(date.toDate()).then(({ id, sale: res }) => salesState.setDbSale(res))
-                    setToday(date);
                 },
             });
         }
@@ -85,12 +82,14 @@ function Record() {
         }
     }, [])
 
-    function handleClick() {
-        setRemove(prev => !prev);
+    function handleToggle() {
+        setRemove(prev => !prev);        
     }
+
     return (
         <>
             <div className="record-wrapper">
+                {/* <button onClick={test}></button> */}
                 <div className="operate-col">
                     <div className="task-bar">
                         <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
@@ -98,7 +97,7 @@ function Record() {
                         </button>
                         <div className="action">
                             <span>操作</span>
-                            <input type="checkbox" onClick={handleClick} />
+                            <input type="checkbox" onClick={handleToggle} />
                         </div>
                     </div>
                     <div id="datepicker"></div>
@@ -106,7 +105,7 @@ function Record() {
                 {isEmpty(salesState.dbSale) ? <div>No Data</div> :
                     <div className="record">
                         {salesState.dbSale.map(sale => {
-                            return <SaleTmp key={sale.id} sale={sale} salesState={salesState} remove={remove} />
+                            return <Sale key={sale.id} sale={sale} salesState={salesState} remove={remove} />
                         })
                         }
                     </div>
@@ -119,8 +118,7 @@ function Record() {
 
 
 async function handleDel(id, salesState) {
-    let del = confirm('Delete');
-    if (del) {
+    if (confirm('Delete')) {
         salesState.setDbSale(sale => {
             return sale.filter(s => {
                 if (s.id != id)
@@ -132,7 +130,12 @@ async function handleDel(id, salesState) {
 }
 
 
-function SaleTmp({ sale, salesState, remove }) {
+function Sale(props) {
+    const { sale, salesState, remove } = props;  
+    console.log(remove);
+    const invisible = {
+        visibility: remove ? 'visible' : 'hidden'
+    }
     return (
         <div className="flex g-1">{sale?.id}
             {sale.service == 'fix' ? <div>補</div>
@@ -144,21 +147,19 @@ function SaleTmp({ sale, salesState, remove }) {
                 </>
             }
             <div className="d-sign">{sale.price}</div>
-            {remove &&
-                <>
-                    <div className="material-symbols-outlined" data-bs-toggle="tooltip" data-bs-placement="right" title={PAY[sale.pay.toUpperCase()]}>
-                        {sale.pay == 'cash' && 'monetization_on'}
-                        {sale.pay == 'credit' && 'credit_card'}
-                        {sale.pay == 'transfer' && 'phone_iphone'}
+                    <div className="flex f-1 j-c-end" style={invisible}>
+                        <div className="material-symbols-outlined" data-bs-toggle="tooltip" data-bs-placement="right" title={PAY[sale.pay.toUpperCase()]}>
+                            {sale.pay == 'cash' && 'monetization_on'}
+                            {sale.pay == 'credit' && 'credit_card'}
+                            {sale.pay == 'transfer' && 'phone_iphone'}
+                        </div>
+                        <div className="f-1">
+                            {sale.createdAt.split(' ')[1]}
+                        </div>
+                        <div className="del"><span className="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
+                            delete
+                        </span></div>
                     </div>
-                    <div className="created-at">
-                        {sale.createdAt.split(' ')[1]}
-                    </div>
-                    <div className="del"><span className="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
-                        delete
-                    </span></div>
-                </>
-            }
         </div>
     )
 }

@@ -33,6 +33,14 @@
   flex-grow: 1;
 }
 
+.f-1 {
+  flex: 1;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
 .g-1 {
   gap: 10px;
 }
@@ -43,10 +51,10 @@
   }
 }
 
-.flex-1 {
-  flex: 1;
-}
-
 .invalid {
    color: var(--invalid);
+}
+
+.j-c-end {
+  justify-content: flex-end;
 }
