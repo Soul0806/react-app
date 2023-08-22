@@ -71,7 +71,7 @@ function Record() {
                 inline: true,
                 buttons: [prevBtn, button],
                 onSelect: function ({ date, datepicker }) {
-                    if(!date) return;
+                    if (!date) return;
                     datepicker.nav.$title.innerHTML = date.toDate();
                     getDbSale(date.toDate()).then(({ id, sale: res }) => salesState.setDbSale(res))
                 },
@@ -83,7 +83,7 @@ function Record() {
     }, [])
 
     function handleToggle() {
-        setRemove(prev => !prev);        
+        setRemove(prev => !prev);
     }
 
     return (
@@ -131,7 +131,7 @@ async function handleDel(id, salesState) {
 
 
 function Sale(props) {
-    const { sale, salesState, remove } = props;  
+    const { sale, salesState, remove } = props;
     console.log(remove);
     const invisible = {
         visibility: remove ? 'visible' : 'hidden'
@@ -146,15 +146,16 @@ function Sale(props) {
                     <div>{sale.quantity}</div>
                 </>
             }
-            <div className="flex f-1">
-                <div className="d-sign">{sale.price}</div>
-                <div className="flex f-1 j-c-end" style={invisible}>
+
+            <div className="d-sign">{sale.price}</div>
+            <div className="flex f-1 j-c-end red" style={invisible}>
+                <div className="flex">
                     <div className="material-symbols-outlined" data-bs-toggle="tooltip" data-bs-placement="right" title={PAY[sale.pay.toUpperCase()]}>
                         {sale.pay == 'cash' && 'monetization_on'}
                         {sale.pay == 'credit' && 'credit_card'}
                         {sale.pay == 'transfer' && 'phone_iphone'}
                     </div>
-                    <div className="">
+                    <div className="f-1">
                         {sale.createdAt.split(' ')[1]}
                     </div>
                     <div className="del"><span className="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>

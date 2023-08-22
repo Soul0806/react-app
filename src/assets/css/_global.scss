@@ -1,11 +1,12 @@
 .input-icon {
   position: relative;
+
   .price {
     width: 5rem;
     padding-left: 25px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    
+
     &:focus {
       opacity: 1;
       outline: none;
@@ -13,6 +14,7 @@
       transform: scale(1.04);
     }
   }
+
   i {
     position: absolute;
     display: block;
@@ -52,9 +54,13 @@
 }
 
 .invalid {
-   color: var(--invalid);
+  color: var(--invalid);
 }
 
 .j-c-end {
   justify-content: flex-end;
+}
+
+.red {
+  background-color: rgb(243, 156, 156);
 }
