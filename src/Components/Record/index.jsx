@@ -85,11 +85,9 @@ function Record() {
     function handleToggle() {
         setRemove(prev => !prev);
     }
-
     return (
         <>
             <div className="record-wrapper">
-                {/* <button onClick={test}></button> */}
                 <div className="operate-col">
                     <div className="task-bar">
                         <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
@@ -132,12 +130,16 @@ async function handleDel(id, salesState) {
 
 function Sale(props) {
     const { sale, salesState, remove } = props;
-    console.log(remove);
     const invisible = {
         visibility: remove ? 'visible' : 'hidden'
     }
+    
+    function handleTitle(id) {
+        const result = salesState.dbSale.filter(sale => sale.id == id);
+        return result[0].note;
+    }
     return (
-        <div className="flex g-1">{sale?.id}
+        <div className="flex g-1" data-bs-toggle="tooltip" data-bs-placement="right" title={handleTitle(sale?.id)}>{sale?.id}
             {sale.service == 'fix' ? <div>補</div>
                 :
                 <>
