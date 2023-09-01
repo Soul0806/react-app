@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react'
 
-// Comps
+// Comps 
 import Popup from './Popup';
 
 import { getDbSale } from '../Tire/useSale';
