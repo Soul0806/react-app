@@ -50,6 +50,16 @@ function Record() {
         }
     }
 
+    let nextBtn = {
+        content: 'Next',
+        className: 'custom-button-classname',
+        onClick: (dp) => {
+            refDate.current = dt.getNextday(refDate.current);
+            dp.selectDate(refDate.current);
+            dp.setViewDate(refDate.current);
+        }
+    }
+
     const salesState = useMemo(() => {
         return {
             dbSale, setDbSale, id
@@ -69,7 +79,7 @@ function Record() {
                 },
                 locale: localeEn,
                 inline: true,
-                buttons: [prevBtn, button],
+                buttons: [prevBtn, button, nextBtn],
                 onSelect: function ({ date, datepicker }) {
                     if (!date) return;
                     datepicker.nav.$title.innerHTML = date.toDate();
