@@ -31,9 +31,6 @@
   display: flex;
 }
 
-.f-g-1 {
-  flex-grow: 1;
-}
 
 .f-1 {
   flex: 1;
@@ -42,6 +39,19 @@
 .flex-1 {
   flex: 1;
 }
+
+.f-g-1 {
+  flex-grow: 1;
+}
+
+.j-c-end {
+  justify-content: flex-end;
+}
+
+.j-c-between {
+  justify-content: space-between;
+}
+
 
 .g-1 {
   gap: 10px;
@@ -57,9 +67,6 @@
   color: var(--invalid);
 }
 
-.j-c-end {
-  justify-content: flex-end;
-}
 
 .red {
   background-color: rgb(243, 156, 156);

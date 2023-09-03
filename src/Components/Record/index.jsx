@@ -101,7 +101,7 @@ function Record() {
                     <div id="datepicker"></div>
                 </div>
                 {isEmpty(salesState.dbSale) ? <div>No Data</div> :
-                    <div className="record">
+                    <div className="records">
                         {salesState.dbSale.map(sale => {
                             return <Sale key={sale.id} sale={sale} salesState={salesState} remove={remove} />
                         })
@@ -133,24 +133,43 @@ function Sale(props) {
     const invisible = {
         visibility: remove ? 'visible' : 'hidden'
     }
-    
+
     function handleTitle(id) {
         const result = salesState.dbSale.filter(sale => sale.id == id);
         return result[0].note;
     }
+
+    function handleEnter(e) {
+        console.log(e.target);
+    }
     return (
-        <div className="flex g-1" data-bs-toggle="tooltip" data-bs-placement="right" title={handleTitle(sale?.id)}>{sale?.id}
-            {sale.service == 'fix' ? <div>補</div>
+        <div className="record" onMouseEnter={handleEnter}>
+            {sale.service == 'fix' ? <div className="fix_pseudo">補</div>
                 :
                 <>
-                    <div>售</div>
+                    <div className="sale_pseudo">售</div>
                     <div>{sale.spec}</div>
                     <div>{sale.quantity}</div>
                 </>
             }
 
             <div className="d-sign">{sale.price}</div>
-            <div className="flex f-1 j-c-end red" style={invisible}>
+
+            {sale.note &&
+                <>
+                    <div className="star_pseudo"></div>
+                    <div className="note">
+                        <div className="title flex j-c-between">
+                            <sapn>ID: {sale.id}</sapn>
+                            <span className="del"><span className="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
+                                delete
+                            </span></span>
+                        </div>
+                        <div className="">{sale.note}</div>
+                    </div>
+                </>
+            }
+            {/* <div className="flex f-1 j-c-end red" style={invisible}>
                 <div className="flex">
                     <div className="material-symbols-outlined" data-bs-toggle="tooltip" data-bs-placement="right" title={PAY[sale.pay.toUpperCase()]}>
                         {sale.pay == 'cash' && 'monetization_on'}
@@ -164,7 +183,7 @@ function Sale(props) {
                         delete
                     </span></div>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }

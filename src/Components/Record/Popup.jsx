@@ -46,12 +46,12 @@ function Popup({ salesState }) {
 
     function test() {
         return !selling.place || !selling.price || !selling.quantity || !selling.pay || (selling.service != 'fix' && !selling.spec)
-        ? true
-        : false
+            ? true
+            : false
     }
 
     useEffect(() => {
-        console.log(selling);
+        // console.log(selling);
     }, [selling])
 
     useEffect(() => {
@@ -241,7 +241,7 @@ function Popup({ salesState }) {
                         </div>
 
                         <form className="sale_popup" autoComplete="off" method="post" onSubmit={handleSubmit}>
-                        <div className="mb-3">
+                            <div className="mb-3">
                                 {inputRadioDay.map(radio => {
                                     return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
                                 })}
