@@ -37,7 +37,7 @@
 
     .record {
       display: flex;
-      padding: .5rem;
+      // padding: .5rem;
       align-items: center;
       gap: 10px;
 
@@ -69,6 +69,7 @@
 
       .note {
         visibility: hidden;
+        position: absolute;
       }
 
       &:hover {
