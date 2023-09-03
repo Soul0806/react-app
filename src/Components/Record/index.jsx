@@ -9,7 +9,7 @@ import { axi } from '../../lib/axios';
 import { dt } from '../../lib/helper';
 
 // Third party lib
-import { isEmpty } from 'lodash';
+import { isEmpty, pick } from 'lodash';
 
 // Air Datepicker 
 import AirDatepicker from 'air-datepicker';
@@ -67,6 +67,8 @@ function Record() {
     }, [dbSale, setDbSale, id])
 
     useEffect(() => {
+        document.getElementById('datepicker').innerHTML = "";
+
         if (ref.current) {
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
             var tooltipList = tooltipTriggerList.map((tooltipTriggerEl) => {
@@ -86,6 +88,7 @@ function Record() {
                     getDbSale(date.toDate()).then(({ id, sale: res }) => salesState.setDbSale(res))
                 },
             });
+
         }
         return () => {
             ref.current = true;
@@ -143,17 +146,8 @@ function Sale(props) {
     const invisible = {
         visibility: remove ? 'visible' : 'hidden'
     }
-
-    function handleTitle(id) {
-        const result = salesState.dbSale.filter(sale => sale.id == id);
-        return result[0].note;
-    }
-
-    function handleEnter(e) {
-        console.log(e.target);
-    }
     return (
-        <div className="record" onMouseEnter={handleEnter}>
+        <div className="record">
             {sale.service == 'fix' ? <div className="fix_pseudo">補</div>
                 :
                 <>
@@ -162,27 +156,27 @@ function Sale(props) {
                     <div>{sale.quantity}</div>
                 </>
             }
-
             <div className="d-sign">{sale.price}</div>
-
             {sale.note &&
                 <>
                     <div className="star_pseudo"></div>
                     <div className="note">
                         <div className="title flex j-c-between">
-                            <sapn>ID: {sale.id}</sapn>
+                            <span>ID: {sale.id}</span>
                             <span className="del"><span className="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
                                 delete
                             </span></span>
                         </div>
-                        <div className="">{sale.note}</div>
+                        <div className="desc">{sale.note}</div>
                     </div>
+
                 </>
             }
             {/* <div className="flex f-1 j-c-end red" style={invisible}>
                 <div className="flex">
                     <div className="material-symbols-outlined" data-bs-toggle="tooltip" data-bs-placement="right" title={PAY[sale.pay.toUpperCase()]}>
-                        {sale.pay == 'cash' && 'monetization_on'}
+                        {sale.pay == 'cash' && 'monetizaoutlined" data-bs-toggle="tooltip" data-bs-placement="right" title={PAY[sale.pay.toUpperCase()]}>
+                        {sale.pay == 'cash' && 'monettion_on'}
                         {sale.pay == 'credit' && 'credit_card'}
                         {sale.pay == 'transfer' && 'phone_iphone'}
                     </div>
