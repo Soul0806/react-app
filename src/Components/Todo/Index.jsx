@@ -3,27 +3,28 @@ import { axi } from "../../lib/axios";
 import { get, isEmpty } from "lodash";
 import { useNavigate } from "react-router-dom";
 
+import getTodos from "./getTodos";
+
 const WRITE_API = `http://localhost:9000/io/writeFile`;
 
 
-const getId = async() => {
-    const url = 'http://localhost:9000/io/readFile';
-    const fileName = 'static/todo.json';
-    const data = { fileName };
-    const res = await axi.post(url, data);
-    const result = await res.data;
-    const id = isEmpty(result) ? 0 :  parseInt(result.at(-1).id) + 1
-    return id;
-}
+// const getId = async() => {
+//     const url = 'http://localhost:9000/io/readFile';
+//     const fileName = 'static/todo.json';
+//     const data = { fileName };
+//     const res = await axi.post(url, data);
+//     const result = await res.data;
+//     const id = isEmpty(result) ? 0 :  parseInt(result.at(-1).id) + 1
+//     return id;
+// }
 
 const Todo = () => {
     const [id , setId ] = useState(0);
     const [invalid, setInvalid] = useState(false);
     const navigate = useNavigate();
+    var [i] = getTodos();
 
-    useEffect(() => {
-        getId().then(id => setId(id));
-    }, [])
+    console.log(i);
 
     const checkValid = {
         color: invalid ? 'red' : ''
@@ -34,6 +35,7 @@ const Todo = () => {
     }
 
     const handelSubmit = (e) => {
+        
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const todo = formData.get('todo');
@@ -43,15 +45,14 @@ const Todo = () => {
             return;
         }
         const content = { 
-            id, 
+            id: i, 
             todo, 
         }   
-
-        console.log(content);
+        // console.log(content);
         const fileName = 'static/todo.json';
         const data = { fileName, content }
         axi.post(WRITE_API, data);
-        navigate(0);
+        i += 1;
     }
 
     return (
