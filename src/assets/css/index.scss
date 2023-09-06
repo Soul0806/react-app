@@ -61,6 +61,10 @@ html {
     }
 
     main {
+      width: 90%;
+      padding: 1rem;
+      margin: 0 auto;
+
       .merchandise {
         display: grid;
         grid-template-columns: 200px 1fr;

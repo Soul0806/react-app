@@ -67,14 +67,16 @@
         }
       }
 
-      .note {        
+      .note {
         visibility: hidden;
+
         .desc {
           padding: 1rem 0;
         }
       }
 
       &:hover {
+
         .fix_pseudo,
         .sale_pseudo {
           &::before {

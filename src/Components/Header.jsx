@@ -11,13 +11,16 @@ export default function Header() {
                     </li> */}
                     <li>
                         <NavLink to="tire/upstair/spec/12">庫存管理</NavLink>
-                    </li>    
+                    </li>
                     <li>
                         <NavLink to="record">銷售</NavLink>
                     </li>
                     <li>
+                        <NavLink to="todo">代辦清單</NavLink>
+                    </li>
+                    <li>
                         <NavLink to="csv">CSV</NavLink>
-                    </li>               
+                    </li>
                 </ul>
             </nav>
             <h5 className="manage"><Link to="/backend">後台管理</Link></h5>
