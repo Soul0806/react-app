@@ -1,6 +1,10 @@
 import { useState } from "react";
+import { prisma } from "@prisma/client";
+
 
 const Todo = () => {
+
+    // const todos = await prisma.todo.findMany();
     const [invalid, setInvalid] = useState(false);
 
     const checkValid = {
