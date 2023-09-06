@@ -1,0 +1,12 @@
+.todo-wrapper {
+    form {
+        [name=todo] {            
+            margin: 0 .5rem;
+        }
+    }
+
+    .todo-list {
+        display: flex;
+        gap: 1rem;
+    }
+}

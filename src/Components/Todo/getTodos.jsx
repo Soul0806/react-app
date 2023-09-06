@@ -7,19 +7,21 @@ const getId = async() => {
     const fileName = 'static/todo.json';
     const data = { fileName };
     const res = await axi.post(url, data);
-    const result = await res.data;
-    const id = isEmpty(result) ? 0 :  parseInt(result.at(-1).id) + 1
-    return id;
+    const todos = await res.data;
+    const id = isEmpty(todos) ? 0 :  parseInt(todos.at(-1).id) + 1
+    return [id, todos];
 }
 
 const getTodos = () => {
     const [ i, setId ] = useState(null);
+    const [ todos, setTodos ] = useState([]);
     
     useEffect(() => {
-        getId().then(id => setId(id));
+        getId().then(([id, todos]) => setId(id));
+        getId().then(([id, todos]) => setTodos(todos));
     }, [])
 
-    return [i]
+    return [i, todos]
 }
  
 export default getTodos;
