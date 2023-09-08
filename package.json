@@ -33,7 +33,7 @@
     "react-transition-group": "^4.4.5",
     "sass": "^1.62.1",
     "sort-by": "^1.2.0",
-    "swr": "^2.2.1"
+    "swr": "^2.2.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",

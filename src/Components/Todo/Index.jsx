@@ -1,32 +1,32 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+// Fetch Data
 import getTodos from "./getTodos";
 
+// lib 
 import { axi } from "../../lib/axios";
 import { dt } from "../../lib/helper";
+import API from "../../api";
 
-import { get, isEmpty } from "lodash";
+// Third party
+import { isEmpty } from "lodash";
 
-const WRITE_API = `http://localhost:9000/io/writeFile`;
 
-// const getId = async() => {
-//     const url = 'http://localhost:9000/io/readFile';
-//     const fileName = 'static/todo.json';
-//     const data = { fileName };
-//     const res = await axi.post(url, data);
-//     const result = await res.data;
-//     const id = isEmpty(result) ? 0 :  parseInt(result.at(-1).id) + 1
-//     return id;
-// }
 const Todo = () => {
-    const [id , setId ] = useState(0);
+
     const [invalid, setInvalid] = useState(false);
     const navigate = useNavigate();
 
-    var [i, todos] = getTodos();
+    const { id, setId, todos, setTodos } = getTodos();
 
-    console.log(todos);
-    
+    // console.log(todos.data);
+    // return (123)
+
+    useEffect(() => {
+        console.log(todos);
+    }, [todos])
+
     const checkValid = {
         color: invalid ? 'red' : ''
     }
@@ -44,36 +44,54 @@ const Todo = () => {
             setInvalid(true);
             return;
         }
-        const content = { 
-            id: i, 
-            todo, 
+        const content = {
+            id,
+            todo,
             createdAt: dt.getTodayDate(),
-        }   
-        // console.log(content);
+        }
+
         const fileName = 'static/todo.json';
         const data = { fileName, content }
-        axi.post(WRITE_API, data);
-        i += 1;
-        navigate(0);
+        axi.post(API.WRITE_JSONFILE, data);
+
+        setTodos(prev => {
+            return [...prev, content]
+        })
+        setId(prev => prev + 1);
+
     }
 
+    const handelDelete = (id) => {
+        setTodos(todos => {
+            return todos.filter(todo => {
+                if (todo.id !== id)
+                    return todo;
+            })
+        })
+    }
+
+    // console.log(todos.alldata);
+    // // return (123)
     return (
         <>
             <div className="todo-wrapper">
                 <h1 style={{ margin: '1rem 0' }}>Todo</h1 >
                 <form onSubmit={handelSubmit}>
                     <label style={checkValid} htmlFor="todo">請輸入</label>
-                    <input type="text" name="todo" id="todo" size="50" onChange={handleChange} autoComplete="off"/>
+                    <input type="text" name="todo" id="todo" size="50" onChange={handleChange} autoComplete="off" />
                     <button type="submit">Submit</button>
                 </form>
-                {todos && 
-                <>{todos.map(todo => (
-                    <div key={todo.id} className="todo-list">
-                        <div>{todo.id}</div>
-                        <div>{todo.todo}</div>
-                        <div>{todo.createdAt}</div>
-                    </div>
-                ))}</>
+                {!isEmpty(todos.alldata) &&
+                    <>{todos.alldata.map(todo => (
+                        <div key={todo.id} className="todo-list">
+                            <div>{todo.id}</div>
+                            <div>{todo.todo}</div>
+                            <div>{todo.createdAt}</div>
+                            <span className="material-symbols-outlined" onClick={() => handelDelete(todo.id)}>
+                                delete
+                            </span>
+                        </div>
+                    ))}</>
                 }
             </div>
         </>

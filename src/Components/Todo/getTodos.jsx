@@ -1,27 +1,49 @@
 import { useEffect, useState } from "react";
 import { axi } from "../../lib/axios";
-import { isEmpty } from "lodash";
+import { get, isEmpty } from "lodash";
+import API from "../../api";
 
-const getId = async() => {
-    const url = 'http://localhost:9000/io/readFile';
+const getGroupData = (data) => {
+    const groupData = {}
+
+    data.map(item => {
+        const date = item.createdAt;
+
+        if (!groupData[date]) {
+            return groupData[date] = []
+        }
+
+        return groupData[date].push(item);
+    })
+    return groupData;
+}
+
+const getTodo = async () => {
+    const url = API.READ_JSONFILE;
     const fileName = 'static/todo.json';
-    const data = { fileName };
-    const res = await axi.post(url, data);
-    const todos = await res.data;
-    const id = isEmpty(todos) ? 0 :  parseInt(todos.at(-1).id) + 1
+    const payload = { fileName };
+    const res = await axi.post(url, payload);
+    const data = await res.data;
+    const id = isEmpty(data) ? 0 : parseInt(data.at(-1).id) + 1
+    const groupData = getGroupData(data);
+
+    const todos = { alldata: data, groupData };
+    console.log(todos);
     return [id, todos];
 }
 
 const getTodos = () => {
-    const [ i, setId ] = useState(null);
-    const [ todos, setTodos ] = useState([]);
-    
+    const [todos, setTodos] = useState([]);
+    const [id, setId] = useState(null);
+
     useEffect(() => {
-        getId().then(([id, todos]) => setId(id));
-        getId().then(([id, todos]) => setTodos(todos));
+        getTodo().then(([id, todos]) => {
+            setTodos(todos);
+            setId(id);
+        })
     }, [])
 
-    return [i, todos]
+    return { id, setId, todos, setTodos }
 }
- 
+
 export default getTodos;
