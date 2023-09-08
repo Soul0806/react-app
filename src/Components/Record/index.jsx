@@ -138,17 +138,19 @@ function Record() {
     return (
         <>
             <div className="record-wrapper">
-                <div className="flex">
-                    <input className="search" type="text" ref={refSearch} onChange={handleSearch} />
-                    <span style={toggleSearchClose} class="material-symbols-outlined search-close" onClick={searchDelete}>Close</span>
-                </div>
-                <div>
-                    {filteredSale.map(item => (
-                        <div className="flex g-1">
-                            <div>{item.spec}</div>
-                            <div>{item.createdAt}</div>
-                        </div>
-                    ))}
+                <div className="flex-col">
+                    <div className="flex">
+                        <input className="search" type="text" ref={refSearch} onChange={handleSearch} />
+                        <span style={toggleSearchClose} class="material-symbols-outlined search-close" onClick={searchDelete}>Close</span>
+                    </div>
+                    <div>
+                        {filteredSale.map(item => (
+                            <div className="flex g-1">
+                                <div>{item.spec}</div>
+                                <div>{item.createdAt}</div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
                 <div className="operate-col">
                     <div className="task-bar">

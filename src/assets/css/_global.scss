@@ -31,6 +31,11 @@
   display: flex;
 }
 
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
 .f-1 {
   flex: 1;
@@ -51,7 +56,6 @@
 .j-c-between {
   justify-content: space-between;
 }
-
 
 .g-1 {
   gap: 10px;
