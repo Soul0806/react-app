@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { dt, ajax_get } from '../../lib/helper';
 import { axi } from '../../lib/axios';
+import API from '../../api';
 
 const d = dt.getTodayDate();
 
 export async function getDbSale(date, init) {
-  const url = 'http://localhost:9000/io/readFile';
+  const url = API.READ_JSONFILE;
   const fileName = 'static/sale.json';
   const data = { fileName };
   const res = await axi.post(url, data);
