@@ -28,7 +28,7 @@ const getTodo = async () => {
     const groupData = getGroupData(data);
 
     const todos = { alldata: data, groupData };
-    console.log(todos);
+    // console.log(todos);
     return [id, todos];
 }
 

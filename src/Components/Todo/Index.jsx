@@ -62,11 +62,14 @@ const Todo = () => {
     }
 
     const handelDelete = (id) => {
-        setTodos(todo => {
-            return todos.filter(todo => {
-                if (todo.id !== id)
-                    return todo;
-            })
+
+        const alldata = todos.alldata.filter(todo => {
+            if (todo.id !== id)
+                return todo;
+        })
+
+        setTodos(todos => {
+            return { ...todos, alldata }
         })
     }
 
