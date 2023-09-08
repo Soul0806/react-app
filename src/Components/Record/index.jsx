@@ -27,7 +27,7 @@ function Record() {
     const { allSale, setAllsale, dbSale, setDbSale, id } = useSale([]);
     const [remove, setRemove] = useState(false);
     const [filteredSale, setFilteredSale] = useState([]);
-    // const [q, setQ] = useState('');
+    const [q, setQ] = useState('');
 
     const refSearch = useRef('');
     const ref = useRef(false);
@@ -103,6 +103,7 @@ function Record() {
     }
 
     const handleSearch = (e) => {
+        // setQ(e.target.value);
         const search = refSearch.current.value;
         const result = [];
         allSale.map(item => {
@@ -110,19 +111,24 @@ function Record() {
             const match = item.spec.match(regex);
 
             if (match) {
-                result.push(item.spec);
+                result.push(item);
             }
         })
         setFilteredSale(result);
-
-
     }
+
     return (
         <>
             <div className="record-wrapper">
-                <input ref={refSearch} onChange={handleSearch} />
-                {/* {filteredSale.forEach(item => <p>{item}</p>)} */}
-                {/* {filteredSale.forEach(item => <div>{item}</div>)} */}
+                <input type="text" ref={refSearch} onChange={handleSearch} />
+                <div>
+                    {filteredSale.map(item => (
+                        <div className="flex g-1">
+                            <div>{item.spec}</div>
+                            <div>{item.createdAt}</div>
+                        </div>
+                    ))}
+                </div>
                 <div className="operate-col">
                     <div className="task-bar">
                         <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
