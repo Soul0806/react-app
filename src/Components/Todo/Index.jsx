@@ -16,12 +16,7 @@ import { isEmpty } from "lodash";
 const Todo = () => {
 
     const [invalid, setInvalid] = useState(false);
-    const navigate = useNavigate();
-
     const { id, setId, todos, setTodos } = getTodos();
-
-    // console.log(todos.data);
-    // return (123)
 
     useEffect(() => {
         console.log(todos);
@@ -76,8 +71,6 @@ const Todo = () => {
         const del = axi.post(API.HOST + `/todo/del`, payload);
     }
 
-    // console.log(todos.alldata);
-    // // return (123)
     return (
         <>
             <div className="todo-wrapper">

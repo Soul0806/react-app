@@ -26,6 +26,9 @@ const PAY = {
 function Record() {
     const [dbSale, setDbSale, id] = useSale([]);
     const [remove, setRemove] = useState(false);
+    // const [q, setQ] = useState('');
+
+    const refSearch = useRef('');
     const ref = useRef(false);
     const refDate = useRef(new Date());
 
@@ -98,9 +101,14 @@ function Record() {
     function handleToggle() {
         setRemove(prev => !prev);
     }
+
+    const handleSearch = (e) => {
+
+    }
     return (
         <>
             <div className="record-wrapper">
+                <input ref={refSearch} onChange={handleSearch} />
                 <div className="operate-col">
                     <div className="task-bar">
                         <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">

@@ -15,6 +15,7 @@ const getGroupData = (data) => {
 
         return groupData[date].push(item);
     })
+
     return groupData;
 }
 
