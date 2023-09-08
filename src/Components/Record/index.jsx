@@ -111,6 +111,7 @@ function Record() {
         // setQ(e.target.value);
         const search = refSearch.current.value;
         const result = [];
+        const groupSale = {};
         
         if(search.length !== 0) {
             setSearchClose(true);
@@ -120,13 +121,19 @@ function Record() {
     
                 if (match) {
                     result.push(item);
-                }
+                    if(!groupSale[item.date]) {
+                        groupSale[item.date] = [item];
+                    } else {
+                        groupSale[item.date].push(item);
+                    }
+                }                
             })
+           console.log(groupSale);
         } else {
             setSearchClose(false);
         }
         
-        setFilteredSale(result);
+        setFilteredSale(groupSale);
     }
 
     const searchDelete = () => {
@@ -141,15 +148,35 @@ function Record() {
                 <div className="flex-col">
                     <div className="flex">
                         <input className="search" type="text" ref={refSearch} onChange={handleSearch} />
-                        <span style={toggleSearchClose} class="material-symbols-outlined search-close" onClick={searchDelete}>Close</span>
+                        <span style={toggleSearchClose} className="material-symbols-outlined search-close" onClick={searchDelete}>Close</span>
                     </div>
                     <div>
-                        {filteredSale.map(item => (
-                            <div className="flex g-1">
+                        {/* {filteredSale.map(item => (
+                            <div key={item.id} className="flex g-1">
                                 <div>{item.spec}</div>
                                 <div>{item.createdAt}</div>
                             </div>
-                        ))}
+                        ))} */}
+                          {Object.keys(filteredSale).map(key => {
+                            return (
+                                <ul>
+                                    <li>{key}</li>
+                                    <ul>
+                                        {filteredSale[key].map(item => (
+                                           <li>{item.spec}</li>
+                                        ))}
+                                    </ul>
+                                </ul>
+                            )
+                          }
+                            // <>
+                            //     <div>{key}</div>
+                            //     <div key={filteredSale[key].id} className="flex g-1">
+                            //         <div>{filteredSale[key].spec}</div>
+                            //         <div>{filteredSale[key].createdAt}</div>
+                            //     </div>
+                            // </>
+                        )}
                     </div>
                 </div>
                 <div className="operate-col">
