@@ -24,14 +24,14 @@ const PAY = {
 
 
 function Record() {
-    const [dbSale, setDbSale, id] = useSale([]);
+    const { allSale, setAllsale, dbSale, setDbSale, id } = useSale([]);
     const [remove, setRemove] = useState(false);
+    const [filteredSale, setFilteredSale] = useState([]);
     // const [q, setQ] = useState('');
 
     const refSearch = useRef('');
     const ref = useRef(false);
     const refDate = useRef(new Date());
-
 
     let button = {
         content: 'Today',
@@ -103,12 +103,26 @@ function Record() {
     }
 
     const handleSearch = (e) => {
+        const search = refSearch.current.value;
+        const result = [];
+        allSale.map(item => {
+            const regex = new RegExp(search, 'i');
+            const match = item.spec.match(regex);
+
+            if (match) {
+                result.push(item.spec);
+            }
+        })
+        setFilteredSale(result);
+
 
     }
     return (
         <>
             <div className="record-wrapper">
                 <input ref={refSearch} onChange={handleSearch} />
+                {/* {filteredSale.forEach(item => <p>{item}</p>)} */}
+                {/* {filteredSale.forEach(item => <div>{item}</div>)} */}
                 <div className="operate-col">
                     <div className="task-bar">
                         <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
