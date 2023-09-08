@@ -27,9 +27,9 @@ const getTodo = async () => {
     const id = isEmpty(data) ? 0 : parseInt(data.at(-1).id) + 1
     const groupData = getGroupData(data);
 
-    const todos = { alldata: data, groupData };
+    // const todos = { alldata: data, groupData };
     // console.log(todos);
-    return [id, todos];
+    return [id, data];
 }
 
 const getTodos = () => {
@@ -37,8 +37,8 @@ const getTodos = () => {
     const [id, setId] = useState(null);
 
     useEffect(() => {
-        getTodo().then(([id, todos]) => {
-            setTodos(todos);
+        getTodo().then(([id, data]) => {
+            setTodos(data);
             setId(id);
         })
     }, [])

@@ -10,12 +10,14 @@ const fs = require('fs');
 
 // routers 
 const io = require('./routes/IO');
+const todo = require('./routes/todo');
 
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/io', io);
+app.use('/todo', todo);
 
 app.get("/", (req, res) => {
 	const q = "SELECT * FROM specification";

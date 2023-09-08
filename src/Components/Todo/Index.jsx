@@ -63,14 +63,17 @@ const Todo = () => {
 
     const handelDelete = (id) => {
 
-        const alldata = todos.alldata.filter(todo => {
-            if (todo.id !== id)
-                return todo;
-        })
 
         setTodos(todos => {
-            return { ...todos, alldata }
+            return todos.filter(todo => {
+                if (todo.id !== id)
+                    return todo;
+            })
         })
+
+        const fileName = 'static/todo.json';
+        const payload = { fileName, id }
+        const del = axi.post(API.HOST + `/todo/del`, payload);
     }
 
     // console.log(todos.alldata);
@@ -85,7 +88,7 @@ const Todo = () => {
                     <button type="submit">Submit</button>
                 </form>
                 {!isEmpty(todos) &&
-                    <>{todos.alldata.map(todo => (
+                    <>{todos.map(todo => (
                         <div key={todo.id} className="todo-list">
                             <div>{todo.id}</div>
                             <div>{todo.todo}</div>

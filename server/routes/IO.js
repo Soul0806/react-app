@@ -5,11 +5,11 @@ const router = express.Router();
 
 router.post('/writeFile', (req, res) => {
     const fileName = req.body.fileName;
-    const rawData = fs.readFileSync(fileName, { encoding: 'utf8'});
+    const rawData = fs.readFileSync(fileName, { encoding: 'utf8' });
     let content;
     if (fs.existsSync(fileName)) {
-        const rawData = fs.readFileSync(fileName, { encoding: 'utf8'});
-        if(rawData !== '') {
+        const rawData = fs.readFileSync(fileName, { encoding: 'utf8' });
+        if (rawData !== '') {
             const sale = JSON.parse(rawData);
             sale.push(req.body.content);
             content = JSON.stringify(sale);
@@ -28,12 +28,26 @@ router.post('/readFile', (req, res) => {
     fs.readFile(fileName, (err, data) => {
         let result = [];
         // console.log(data);
-        if (!err) {        
-            if (data.length !== 0) 
+        if (!err) {
+            if (data.length !== 0)
                 result = JSON.parse(data);
         }
         res.send(result);
     })
+})
+
+router.post('/todo/del/:id', (req, res) => {
+    const fileName = req.body.fileName;
+    let content;
+    if (fs.existsSync(fileName)) {
+        const rawData = fs.readFileSync(fileName, { encoding: 'utf8' });
+        if (rawData !== '') {
+            const sale = JSON.parse(rawData);
+            sale.push(req.body.content);
+            content = JSON.stringify(sale);
+            fs.writeFileSync(fileName, content, { encoding: 'utf8', flag: 'w' });
+        }
+    }
 })
 
 module.exports = router;
