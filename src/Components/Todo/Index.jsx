@@ -62,7 +62,7 @@ const Todo = () => {
     }
 
     const handelDelete = (id) => {
-        setTodos(todos => {
+        setTodos(todo => {
             return todos.filter(todo => {
                 if (todo.id !== id)
                     return todo;
@@ -81,7 +81,7 @@ const Todo = () => {
                     <input type="text" name="todo" id="todo" size="50" onChange={handleChange} autoComplete="off" />
                     <button type="submit">Submit</button>
                 </form>
-                {!isEmpty(todos.alldata) &&
+                {!isEmpty(todos) &&
                     <>{todos.alldata.map(todo => (
                         <div key={todo.id} className="todo-list">
                             <div>{todo.id}</div>
