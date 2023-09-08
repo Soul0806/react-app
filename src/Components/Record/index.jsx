@@ -25,13 +25,18 @@ const PAY = {
 
 function Record() {
     const { allSale, setAllsale, dbSale, setDbSale, id } = useSale([]);
-    const [remove, setRemove] = useState(false);
     const [filteredSale, setFilteredSale] = useState([]);
+    const [remove, setRemove] = useState(false);
+    const [searchClose,setSearchClose] = useState(false);
     const [q, setQ] = useState('');
 
     const refSearch = useRef('');
     const ref = useRef(false);
     const refDate = useRef(new Date());
+
+    const toggleSearchClose = {
+        display: searchClose ? 'block' : 'none'
+    }
 
     let button = {
         content: 'Today',
@@ -106,21 +111,37 @@ function Record() {
         // setQ(e.target.value);
         const search = refSearch.current.value;
         const result = [];
-        allSale.map(item => {
-            const regex = new RegExp(search, 'i');
-            const match = item.spec.match(regex);
-
-            if (match) {
-                result.push(item);
-            }
-        })
+        
+        if(search.length !== 0) {
+            setSearchClose(true);
+            allSale.map(item => {
+                const regex = new RegExp(search, 'i');
+                const match = item.spec.match(regex);
+    
+                if (match) {
+                    result.push(item);
+                }
+            })
+        } else {
+            setSearchClose(false);
+        }
+        
         setFilteredSale(result);
+    }
+
+    const searchDelete = () => {
+        refSearch.current.value = '';
+        setSearchClose(false);
+        setFilteredSale([]);
     }
 
     return (
         <>
             <div className="record-wrapper">
-                <input type="text" ref={refSearch} onChange={handleSearch} />
+                <div className="flex">
+                    <input className="search" type="text" ref={refSearch} onChange={handleSearch} />
+                    <span style={toggleSearchClose} class="material-symbols-outlined search-close" onClick={searchDelete}>Close</span>
+                </div>
                 <div>
                     {filteredSale.map(item => (
                         <div className="flex g-1">

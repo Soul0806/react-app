@@ -4,6 +4,13 @@
   align-items: center;
   gap: 2rem;
   // transform: translateX(30%);
+  .search-close {
+    display: none;
+    position: relative;
+    top: .125rem;
+    left: -1.5rem;
+    cursor: pointer;
+  }
 
   .operate-col {
     display: flex;
