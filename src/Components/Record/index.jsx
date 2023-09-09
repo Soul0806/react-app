@@ -129,7 +129,6 @@ function Record() {
                     }
                 }
             })
-            console.log(groupSale);
         } else {
             setSearchClose(false);
         }
@@ -152,12 +151,6 @@ function Record() {
 
     return (
         <>
-
-            {/* <div className="form__group">
-                <input className="form__input" type="text" />
-                <label for="">123</label>
-            </div> */}
-
             <div className="record-wrapper">
                 <div className="flex-col">
                     <div className="flex g-1 a-i-center">
@@ -172,31 +165,18 @@ function Record() {
                         <span style={toggleSearchClose} className="material-symbols-outlined search-close" onClick={searchDelete}>Close</span>
                     </div>
                     <div>
-                        {/* {filteredSale.map(item => (
-                            <div key={item.id} className="flex g-1">
-                                <div>{item.spec}</div>
-                                <div>{item.createdAt}</div>
-                            </div>
-                        ))} */}
-                        {Object.keys(filteredSale).map(key => {
+                        {Object.keys(filteredSale).map((key, index) => {
                             return (
-                                <ul>
+                                <ul key={index}>
                                     <li>{key}</li>
                                     <ul>
                                         {filteredSale[key].map(item => (
-                                            <li>{item.spec}</li>
+                                            <li key={item.id}>{item.spec}</li>
                                         ))}
                                     </ul>
                                 </ul>
                             )
                         }
-                            // <>
-                            //     <div>{key}</div>
-                            //     <div key={filteredSale[key].id} className="flex g-1">
-                            //         <div>{filteredSale[key].spec}</div>
-                            //         <div>{filteredSale[key].createdAt}</div>
-                            //     </div>
-                            // </>
                         )}
                     </div>
                 </div>

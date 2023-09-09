@@ -9,6 +9,11 @@ import FormRadio from '../Custom/FormRadio';
 
 import _ from 'lodash'
 
+// Air Datepicker 
+import AirDatepicker from 'air-datepicker';
+import localeEn from 'air-datepicker/locale/en';
+import 'air-datepicker/air-datepicker.css';
+
 const WRITE_API = `http://localhost:9000/io/writeFile`;
 const SALE_API_URL = `https://localhost:7123/api/Sale/`;
 
@@ -16,15 +21,17 @@ const toDate = dt.getTodayDate();
 
 function Popup({ salesState }) {
 
-    var myModalEl = document.getElementById('exampleModal')
-    var modal = bootstrap.Modal.getInstance(myModalEl)
-
-    const optionInch = _.range(12, 23);
     const [inches] = useTire();
-    const [specs, setSpecs] = useState([]);
-    const navigate = useNavigate();
-    const priceRef = useRef();
+    const optionInch = _.range(12, 23);
 
+    const [specs, setSpecs] = useState([]);
+
+    const ref = useRef(false);
+    const refPrice = useRef();
+    const refDate = useRef(new Date());
+    
+    const navigate = useNavigate();
+    
     const [selling, setSelling] = useState({
         id: '',
         place: '',
@@ -44,6 +51,17 @@ function Popup({ salesState }) {
         cursor: test() ? 'not-allowed' : 'pointer',
     }
 
+    let button = {
+        content: 'Today',
+        className: 'custom-button-classname',
+        onClick: (dp) => {
+            let date = new Date();
+            dp.selectDate(date);
+            dp.setViewDate(date);
+            refDate.current = date;
+        }
+    }
+
     function test() {
         return !selling.place || !selling.price || !selling.quantity || !selling.pay || (selling.service != 'fix' && !selling.spec)
             ? true
@@ -51,7 +69,34 @@ function Popup({ salesState }) {
     }
 
     useEffect(() => {
-        // console.log(selling);
+        if (ref.current) {
+            const picker = new AirDatepicker('#datepicker__insert', {
+                navTitles: {
+                    days: dt.getTodayDate()
+                },
+                locale: localeEn,
+                inline: true,
+                buttons: [button],
+                onSelect: function ({ date, datepicker }) {
+                    if (!date) return;
+                    datepicker.nav.$title.innerHTML = date.toDate();
+                    setSelling(prev => {
+                        return {
+                            ...prev,
+                            date: date.toDate(),
+                        }
+                    })
+                },
+            });
+
+        }
+        return () => {
+            ref.current = true;
+        }
+    }, [])
+
+    useEffect(() => {
+        console.log(selling);
     }, [selling])
 
     useEffect(() => {
@@ -64,11 +109,11 @@ function Popup({ salesState }) {
 
 
     useEffect(() => {
-        selling.quantity && priceRef.current.focus();
+        selling.quantity && refPrice.current.focus();
     }, [selling.quantity])
 
     function handleChange(e) {
-        e.target.name == 'price' && priceRef.current.focus();
+        e.target.name == 'price' && refPrice.current.focus();
         const { name, value } = e.target;
         setSelling(prev => {
             return {
@@ -94,7 +139,6 @@ function Popup({ salesState }) {
         const fileName = 'static/sale.json';
         const data = { fileName, content }
         axi.post(WRITE_API, data);
-        // modal.toggle();
         navigate(0);
     }
 
@@ -245,6 +289,7 @@ function Popup({ salesState }) {
                                 {inputRadioDay.map(radio => {
                                     return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
                                 })}
+                                <div id="datepicker__insert"></div>
                             </div>
                             <div className="mb-3 modal-place">
                                 {inputRadioPlace.map(radio => {
@@ -283,7 +328,7 @@ function Popup({ salesState }) {
                                 </div>
                             </div>
                             <div className="mb-3 input-icon modal-input-icon">
-                                <input ref={priceRef} className="price" name="price" type="text" placeholder="0.0" value={selling.price} onChange={handleChange} />
+                                <input ref={refPrice} className="price" name="price" type="text" placeholder="0.0" value={selling.price} onChange={handleChange} />
                                 <i>$</i>
                                 {selling.service == 'fix' &&
                                     <>

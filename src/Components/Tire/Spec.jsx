@@ -51,7 +51,7 @@ function Spec() {
     const [btnAbort, setBtnAbort] = useState(false);
     const navigate = useNavigate()
 
-    const [dbSale, setDbSale, id] = useSale([]);
+    const { allSale, setAllsale, dbSale, setDbSale, id } = useSale([]);
 
     const { ref } = useOutletContext();
     // let [state, dispatch] = useReducer(reducer, inches);
