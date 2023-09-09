@@ -1,10 +1,12 @@
 function FormText(props) {
     const { label, onchange, ...inputs } = props;
     return (
-        <label key={props.id} htmlFor={props.id}>{label}
+        <div className="form__group">
             <input onChange={onchange} {...inputs}
             />
-        </label>
+            <label key={props.id} htmlFor={props.id}>{label}
+            </label>
+        </div>
     )
 }
 

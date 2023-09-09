@@ -1,6 +1,7 @@
 .record-wrapper {
   display: flex;
   gap: 2rem;
+
   // transform: translateX(30%);
   .search-close {
     display: none;
@@ -22,13 +23,13 @@
     align-items: flex-end;
   }
 
-  input:valid {
-    background-color: palegreen;
-  }
+  // input:valid {
+  //   background-color: palegreen;
+  // }
 
-  input:invalid {
-    background-color: lightpink;
-  }
+  // input:invalid {
+  //   background-color: lightpink;
+  // }
 
   .records {
     display: flex;

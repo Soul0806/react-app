@@ -8,9 +8,11 @@ import getTodos from "./getTodos";
 import { axi } from "../../lib/axios";
 import { dt } from "../../lib/helper";
 import API from "../../api";
+import FormText from "../custom/FormText";
 
 // Third party
 import { isEmpty } from "lodash";
+
 
 
 const Todo = () => {
@@ -57,7 +59,6 @@ const Todo = () => {
     }
 
     const handelDelete = (id) => {
-
 
         setTodos(todos => {
             return todos.filter(todo => {

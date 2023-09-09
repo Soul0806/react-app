@@ -7,6 +7,7 @@ import { getDbSale } from '../Tire/useSale';
 import { useSale } from '../Tire/useSale';
 import { axi } from '../../lib/axios';
 import { dt } from '../../lib/helper';
+import FormText from '../custom/FormText';
 
 // Third party lib
 import { isEmpty, pick } from 'lodash';
@@ -27,7 +28,7 @@ function Record() {
     const { allSale, setAllsale, dbSale, setDbSale, id } = useSale([]);
     const [filteredSale, setFilteredSale] = useState([]);
     const [remove, setRemove] = useState(false);
-    const [searchClose,setSearchClose] = useState(false);
+    const [searchClose, setSearchClose] = useState(false);
     const [q, setQ] = useState('');
 
     const refSearch = useRef('');
@@ -112,27 +113,27 @@ function Record() {
         const search = refSearch.current.value;
         const result = [];
         const groupSale = {};
-        
-        if(search.length !== 0) {
+
+        if (search.length !== 0) {
             setSearchClose(true);
             allSale.map(item => {
                 const regex = new RegExp(search, 'i');
                 const match = item.spec.match(regex);
-    
+
                 if (match) {
                     result.push(item);
-                    if(!groupSale[item.date]) {
+                    if (!groupSale[item.date]) {
                         groupSale[item.date] = [item];
                     } else {
                         groupSale[item.date].push(item);
                     }
-                }                
+                }
             })
-           console.log(groupSale);
+            console.log(groupSale);
         } else {
             setSearchClose(false);
         }
-        
+
         setFilteredSale(groupSale);
     }
 
@@ -142,14 +143,28 @@ function Record() {
         setFilteredSale([]);
     }
 
+    const inputSpecWidth = {
+        id: 'width',
+        className: 'spec_width form__input',
+        label: '寬度',
+        placeholder: '寬度',
+    }
+
     return (
         <>
+
+            {/* <div className="form__group">
+                <input className="form__input" type="text" />
+                <label for="">123</label>
+            </div> */}
+
             <div className="record-wrapper">
                 <div className="flex-col">
-                    <div className="flex">
+                    <FormText {...inputSpecWidth} />
+                    {/* <div className="flex">
                         <input className="search" type="text" ref={refSearch} onChange={handleSearch} />
                         <span style={toggleSearchClose} className="material-symbols-outlined search-close" onClick={searchDelete}>Close</span>
-                    </div>
+                    </div> */}
                     <div>
                         {/* {filteredSale.map(item => (
                             <div key={item.id} className="flex g-1">
@@ -157,18 +172,18 @@ function Record() {
                                 <div>{item.createdAt}</div>
                             </div>
                         ))} */}
-                          {Object.keys(filteredSale).map(key => {
+                        {Object.keys(filteredSale).map(key => {
                             return (
                                 <ul>
                                     <li>{key}</li>
                                     <ul>
                                         {filteredSale[key].map(item => (
-                                           <li>{item.spec}</li>
+                                            <li>{item.spec}</li>
                                         ))}
                                     </ul>
                                 </ul>
                             )
-                          }
+                        }
                             // <>
                             //     <div>{key}</div>
                             //     <div key={filteredSale[key].id} className="flex g-1">

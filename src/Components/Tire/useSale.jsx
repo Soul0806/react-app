@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { dt, ajax_get } from '../../lib/helper';
+import { dt } from '../../lib/helper';
 import { axi } from '../../lib/axios';
 import API from '../../api';
 
