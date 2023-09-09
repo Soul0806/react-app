@@ -160,11 +160,17 @@ function Record() {
 
             <div className="record-wrapper">
                 <div className="flex-col">
-                    <FormText {...inputSpecWidth} />
-                    {/* <div className="flex">
+                    <div className="flex g-1 a-i-center">
+                        <FormText {...inputSpecWidth} />
+                        <span>/</span>
+                        <FormText {...inputSpecWidth} />
+                        <span>-</span>
+                        <FormText {...inputSpecWidth} />
+                    </div>
+                    <div className="flex">
                         <input className="search" type="text" ref={refSearch} onChange={handleSearch} />
                         <span style={toggleSearchClose} className="material-symbols-outlined search-close" onClick={searchDelete}>Close</span>
-                    </div> */}
+                    </div>
                     <div>
                         {/* {filteredSale.map(item => (
                             <div key={item.id} className="flex g-1">
