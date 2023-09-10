@@ -28,8 +28,7 @@
 }
 
 .form__group {
-  width: 10%;
-  // width: max-content;
+  // width: 10%;
   position: relative;
   padding: 15px 0 0;
 
@@ -124,6 +123,10 @@
   align-items: center;
 }
 
+.a-i-start {
+  align-items: flex-start;
+}
+
 
 .j-c-end {
   justify-content: flex-end;
@@ -141,6 +144,18 @@
   &:before {
     content: '$',
   }
+}
+
+.abs {
+  position: absolute;
+}
+
+.rel {
+  position: relative;
+}
+
+.r-0 {
+  right: 0;
 }
 
 .invalid {

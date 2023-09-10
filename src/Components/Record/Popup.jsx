@@ -29,9 +29,9 @@ function Popup({ salesState }) {
     const ref = useRef(false);
     const refPrice = useRef();
     const refDate = useRef(new Date());
-    
+
     const navigate = useNavigate();
-    
+
     const [selling, setSelling] = useState({
         id: '',
         place: '',

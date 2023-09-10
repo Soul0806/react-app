@@ -160,24 +160,29 @@ function Record() {
                         <span>-</span>
                         <FormText {...inputSpecWidth} />
                     </div>
-                    <div className="flex">
+                    <div className="flex a-i-start rel">
                         <input className="search" type="text" ref={refSearch} onChange={handleSearch} />
                         <span style={toggleSearchClose} className="material-symbols-outlined search-close" onClick={searchDelete}>Close</span>
-                    </div>
-                    <div>
-                        {Object.keys(filteredSale).map((key, index) => {
-                            return (
-                                <ul key={index}>
-                                    <li>{key}</li>
-                                    <ul>
-                                        {filteredSale[key].map(item => (
-                                            <li key={item.id}>{item.spec}</li>
-                                        ))}
+                        <div className="">
+                            {Object.keys(filteredSale).map((key, index) => {
+                                return (
+                                    <ul key={index}>
+                                        <li>{key}</li>
+                                        <ul>
+                                            {filteredSale[key].map(item => (
+                                                <>
+                                                    <li className="flex g-1">
+                                                        <span>{item.spec}</span>
+                                                        <span>{item.note}</span>
+                                                    </li>
+                                                </>
+                                            ))}
+                                        </ul>
                                     </ul>
-                                </ul>
-                            )
-                        }
-                        )}
+                                )
+                            }
+                            )}
+                        </div>
                     </div>
                 </div>
                 <div className="operate-col">
