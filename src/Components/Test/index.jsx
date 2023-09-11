@@ -6,7 +6,7 @@ const getSale = async () => {
     const fileName = 'static/sale.json';
     const data = { fileName };
     const { data: result } = await axi.post(API.READ_JSONFILE, data);
-    console.log(result);
+    // console.log(result);
 }
 
 const Test = () => {

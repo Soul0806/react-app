@@ -96,10 +96,6 @@ function Popup({ salesState }) {
     }, [])
 
     useEffect(() => {
-        console.log(selling);
-    }, [selling])
-
-    useEffect(() => {
         if (selling.inch) {
             setSpecs((prev) => {
                 return Object.keys(inches[selling['inch']]['spec']).sort();
