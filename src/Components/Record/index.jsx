@@ -16,13 +16,13 @@ import { isEmpty } from 'lodash';
 import AirDatepicker from 'air-datepicker';
 import localeEn from 'air-datepicker/locale/en';
 import 'air-datepicker/air-datepicker.css';
+import Test from '../Test';
 
 const PAY = {
     CASH: '現金',
     CREDIT: '刷卡',
     TRANSFER: '轉帳'
 }
-
 
 function Record() {
     const { allSale, setAllsale, dbSale, setDbSale, id } = useSale([]);
@@ -79,11 +79,6 @@ function Record() {
         document.getElementById('datepicker').innerHTML = "";
 
         if (ref.current) {
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-            var tooltipList = tooltipTriggerList.map((tooltipTriggerEl) => {
-                return new bootstrap.Tooltip(tooltipTriggerEl)
-            })
-
             const picker = new AirDatepicker('#datepicker', {
                 navTitles: {
                     days: dt.getTodayDate()
@@ -207,10 +202,10 @@ function Record() {
                 }
             </div>
             <Popup salesState={salesState} />
+            <Test />
         </>
     )
 }
-
 
 async function handleDel(id, salesState) {
     if (confirm('Delete')) {
@@ -224,12 +219,13 @@ async function handleDel(id, salesState) {
     }
 }
 
-
 function Sale(props) {
     const { sale, salesState, remove } = props;
     const invisible = {
         visibility: remove ? 'visible' : 'hidden'
     }
+
+
     return (
         <div className="record">
             {sale.service == 'fix' ? <div className="fix_pseudo">補</div>

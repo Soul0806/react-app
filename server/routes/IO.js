@@ -27,10 +27,8 @@ router.post('/readFile', (req, res) => {
     const fileName = req.body.fileName;
     fs.readFile(fileName, (err, data) => {
         let result = [];
-        // console.log(data);
         if (!err) {
-            if (data.length !== 0)
-                result = JSON.parse(data);
+            result = data;
         }
         res.send(result);
     })
