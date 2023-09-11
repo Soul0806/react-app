@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useMemo } from 'react'
 
 // Comps 
 import Popup from './Popup';
+import GroupView from '../Custom/GroupView';
 
 import { getDbSale } from '../Tire/useSale';
 import { useSale } from '../Tire/useSale';
@@ -67,6 +68,10 @@ function Record() {
             dp.selectDate(refDate.current);
             dp.setViewDate(refDate.current);
         }
+    }
+
+    const groupViewProps = {
+        props: ['spec', 'note']
     }
 
     const salesState = useMemo(() => {
@@ -143,7 +148,6 @@ function Record() {
         label: '寬度',
         placeholder: '寬度',
     }
-
     return (
         <>
             <div className="record-wrapper">
@@ -157,26 +161,9 @@ function Record() {
                     </div>
                     <div className="flex a-i-start rel">
                         <input className="search" type="text" ref={refSearch} onChange={handleSearch} />
-                        <span style={toggleSearchClose} className="material-symbols-outlined search-close" onClick={searchDelete}>Close</span>
+                        <span className="material-symbols-outlined search-close" style={toggleSearchClose} onClick={searchDelete}>Close</span>
                         <div className="">
-                            {Object.keys(filteredSale).map((key, index) => {
-                                return (
-                                    <ul key={index}>
-                                        <li>{key}</li>
-                                        <ul>
-                                            {filteredSale[key].map(item => (
-                                                <>
-                                                    <li className="flex g-1">
-                                                        <span>{item.spec}</span>
-                                                        <span>{item.note}</span>
-                                                    </li>
-                                                </>
-                                            ))}
-                                        </ul>
-                                    </ul>
-                                )
-                            }
-                            )}
+                            <GroupView filteredSale={filteredSale} groupViewProps={groupViewProps}  />
                         </div>
                     </div>
                 </div>
@@ -202,7 +189,6 @@ function Record() {
                 }
             </div>
             <Popup salesState={salesState} />
-            <Test />
         </>
     )
 }

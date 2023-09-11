@@ -46,9 +46,9 @@ function Popup({ salesState }) {
         createdAt: ''
     });
 
-    const styling = {
-        opacity: test() ? '.4' : 1,
-        cursor: test() ? 'not-allowed' : 'pointer',
+    const formValidate = {
+        opacity: validate() ? '.4' : 1,
+        cursor: validate() ? 'not-allowed' : 'pointer',
     }
 
     let button = {
@@ -62,7 +62,7 @@ function Popup({ salesState }) {
         }
     }
 
-    function test() {
+    function validate() {
         return !selling.place || !selling.price || !selling.quantity || !selling.pay || (selling.service != 'fix' && !selling.spec)
             ? true
             : false
@@ -347,7 +347,7 @@ function Popup({ salesState }) {
                                 <input id="note" name="note" type="text" onChange={handleChange} />
                             </div>
                             <div className="modal-footer">
-                                <button type="submit" style={styling} className="btn btn-primary">Send message</button>
+                                <button type="submit" style={formValidate} className="btn btn-primary">Send message</button>
                             </div>
                         </form>
                     </div>
