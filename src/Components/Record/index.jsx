@@ -10,7 +10,7 @@ import { dt } from '../../lib/helper';
 import FormText from '../custom/FormText';
 
 // Third party lib
-import { isEmpty, pick } from 'lodash';
+import { isEmpty } from 'lodash';
 
 // Air Datepicker 
 import AirDatepicker from 'air-datepicker';
