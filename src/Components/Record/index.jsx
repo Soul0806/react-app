@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useMemo } from 'react'
+import React, { useEffect, useRef, useState, useMemo, useInsertionEffect } from 'react'
 
 // Comps 
 import Popup from './Popup';
@@ -26,10 +26,12 @@ const PAY = {
 }
 
 function Record() {
+
     const { allSale, setAllsale, dbSale, setDbSale, id } = useSale([]);
     const [filteredSale, setFilteredSale] = useState([]);
     const [remove, setRemove] = useState(false);
     const [searchClose, setSearchClose] = useState(false);
+    const [groupViewShow, setGroupViewShow] = useState(false);
     const [q, setQ] = useState('');
 
     const refSearch = useRef('');
@@ -38,6 +40,11 @@ function Record() {
 
     const toggleSearchClose = {
         display: searchClose ? 'block' : 'none'
+    }
+
+    const toggleGroupViewShow = {
+        visibility: groupViewShow ? 'visible' : 'hidden',
+        opacity: groupViewShow ? '.9' : '0'
     }
 
     let button = {
@@ -81,9 +88,21 @@ function Record() {
     }, [dbSale, setDbSale, id])
 
     useEffect(() => {
+        const modal = document.querySelector('.groupview');
+        const modelDimensions = modal.getBoundingClientRect();
+
+    }, [filteredSale])
+
+    useEffect(() => {
         document.getElementById('datepicker').innerHTML = "";
 
         if (ref.current) {
+            const overlap = document.querySelector('.overlap');
+            overlap.addEventListener('click', (e) => {
+                refSearch.current.value = '';
+                setSearchClose(false);
+                setGroupViewShow(false);
+            })
             const picker = new AirDatepicker('#datepicker', {
                 navTitles: {
                     days: dt.getTodayDate()
@@ -103,6 +122,10 @@ function Record() {
             ref.current = true;
         }
     }, [])
+
+    useEffect(() => {
+        console.log(groupViewShow);
+    }, [groupViewShow])
 
     function handleToggle() {
         setRemove(prev => !prev);
@@ -129,7 +152,9 @@ function Record() {
                     }
                 }
             })
+            setGroupViewShow(true);
         } else {
+            setGroupViewShow(false);
             setSearchClose(false);
         }
 
@@ -139,6 +164,7 @@ function Record() {
     const searchDelete = () => {
         refSearch.current.value = '';
         setSearchClose(false);
+        setGroupViewShow(false);
         setFilteredSale([]);
     }
 
@@ -151,24 +177,25 @@ function Record() {
     return (
         <>
             <div className="record-wrapper">
+                <div className="overlap"></div>
                 <div className="flex-col">
-                    <div className="flex g-1 a-i-center">
+                    {/* <div className="flex g-1 a-i-center">
                         <FormText {...inputSpecWidth} />
                         <span>/</span>
                         <FormText {...inputSpecWidth} />
                         <span>-</span>
                         <FormText {...inputSpecWidth} />
-                    </div>
+                    </div> */}
                     <div className="flex a-i-start rel">
                         <input className="search" type="text" ref={refSearch} onChange={handleSearch} />
                         <span className="material-symbols-outlined search-close" style={toggleSearchClose} onClick={searchDelete}>Close</span>
-                        {!isEmpty(filteredSale) &&
-                            <div className="rel">
-                                <div className="flex abs groupview">
-                                    <GroupView filteredSale={filteredSale} groupViewProps={groupViewProps} />
-                                </div>
+
+                        <div className="rel">
+                            <div className={`flex abs groupview`} style={toggleGroupViewShow}>
+                                <GroupView filteredSale={filteredSale} groupViewProps={groupViewProps} />
                             </div>
-                        }
+                        </div>
+
                     </div>
                 </div>
                 <div className="operate-col">
@@ -176,10 +203,6 @@ function Record() {
                         <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
                             <span>詳細銷售</span>
                         </button>
-                        <div className="action">
-                            <span>操作</span>
-                            <input type="checkbox" onClick={handleToggle} />
-                        </div>
                     </div>
                     <div id="datepicker"></div>
                 </div>

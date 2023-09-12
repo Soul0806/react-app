@@ -3,12 +3,9 @@
   gap: 2rem;
 
   // transform: translateX(30%);
-  .search-close {
-    display: none;
-    position: relative;
-    top: .125rem;
-    left: -1.5rem;
-    cursor: pointer;
+  .overlap {
+    position: fixed;
+    inset: 0;
   }
 
   .operate-col {
@@ -23,7 +20,23 @@
     align-items: flex-end;
   }
 
+  .search {
+    font-size: 1.25rem;
+    padding: .5rem;
+    border-radius: .5rem;
+
+    &~.search-close {
+      display: none;
+      position: relative;
+      top: .3rem;
+      left: -2.5rem;
+      padding: .5rem;
+      cursor: pointer;
+    }
+  }
+
   .groupview {
+    width: 35rem;
     // visibility: hidden;
     position: absolute;
     display: flex;
@@ -32,13 +45,15 @@
     color: white;
 
     opacity: .9;
-    padding: .5rem;
+    padding: 1rem;
     border-radius: .5rem;
     border: 2px solid gray;
 
-    height: 20rem;
+    height: 30rem;
     overflow: scroll;
     z-index: 9;
+
+    transition: .4s;
 
     &::-webkit-scrollbar {
       -webkit-appearance: none;
@@ -55,6 +70,10 @@
       width: max-content;
     }
   }
+
+  // dialog::backdrop {
+  //   background-color: red;
+  // }
 
   .records {
     display: flex;
