@@ -3,12 +3,16 @@ import React, { useEffect, useRef, useState, useMemo, useInsertionEffect } from 
 // Comps 
 import Popup from './Popup';
 import GroupView from '../Custom/GroupView';
+import FormText from '../custom/FormText';
 
 import { getDbSale } from '../Tire/useSale';
 import { useSale } from '../Tire/useSale';
+
+// lib 
 import { axi } from '../../lib/axios';
 import { dt } from '../../lib/helper';
-import FormText from '../custom/FormText';
+import { Dom } from '../../lib/helper';
+
 
 // Third party lib
 import { isEmpty } from 'lodash';
@@ -97,12 +101,11 @@ function Record() {
         document.getElementById('datepicker').innerHTML = "";
 
         if (ref.current) {
-            const overlap = document.querySelector('.overlap');
-            overlap.addEventListener('click', (e) => {
+            Dom('.overlap').event('click', (e) => {
                 refSearch.current.value = '';
                 setSearchClose(false);
                 setGroupViewShow(false);
-            })
+            });
             const picker = new AirDatepicker('#datepicker', {
                 navTitles: {
                     days: dt.getTodayDate()

@@ -31,6 +31,16 @@ class datetime {
     }
 }
 
+const Dom = (cls) => {
+    // const dom = document.querySelector(cls);
+    return {
+        dom: document.querySelector(cls),
+        event: function (event, callback) {
+            this.dom.addEventListener(event, callback);
+        }
+    }
+}
+
 function empty(item) {
     const action = {
         DEFAULT: k => k
@@ -82,6 +92,6 @@ function getOffset(el) {
 }
 
 const dt = new datetime();
-export { empty, lowerize, uuid, isObjectEmpty, createElement, dt }
+export { empty, lowerize, uuid, isObjectEmpty, createElement, dt, Dom }
 // export from ajax;
 export * from './ajax'; 
