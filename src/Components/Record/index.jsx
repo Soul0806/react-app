@@ -118,7 +118,7 @@ function Record() {
             setSearchClose(true);
             allSale.map(item => {
                 const regex = new RegExp(search, 'i');
-                const match = item.spec.match(regex);
+                const match = item.spec.match(regex) || item.note.match(regex);
 
                 if (match) {
                     result.push(item);
@@ -162,9 +162,13 @@ function Record() {
                     <div className="flex a-i-start rel">
                         <input className="search" type="text" ref={refSearch} onChange={handleSearch} />
                         <span className="material-symbols-outlined search-close" style={toggleSearchClose} onClick={searchDelete}>Close</span>
-                        <div className="">
-                            <GroupView filteredSale={filteredSale} groupViewProps={groupViewProps}  />
-                        </div>
+                        {!isEmpty(filteredSale) &&
+                            <div className="rel">
+                                <div className="flex abs groupview">
+                                    <GroupView filteredSale={filteredSale} groupViewProps={groupViewProps} />
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
                 <div className="operate-col">

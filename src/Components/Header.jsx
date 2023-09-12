@@ -5,25 +5,29 @@ export default function Header() {
         <header>
             <h1 className="title"><Link to="/">Product</Link></h1>
             <nav>
-                <ul>
-                    {/* <li>
+                {/* <li>
                         <NavLink to="merchandise/page/1">產品</NavLink>
                     </li> */}
-                    <li>
+                <div className="navigate">
+                    <div>
                         <NavLink to="tire/upstair/spec/12">庫存管理</NavLink>
-                    </li>
-                    <li>
+                    </div>
+                    <div>
                         <NavLink to="record">銷售</NavLink>
-                    </li>
-                    <li>
+                    </div>
+                    <div>
                         <NavLink to="todo">代辦清單</NavLink>
-                    </li>
-                    <li>
+                    </div>
+                    <div>
                         <NavLink to="csv">CSV</NavLink>
-                    </li>
-                </ul>
+                    </div>
+
+                </div>
+
+                <h5 className="manage"><Link to="/backend">後台管理</Link></h5>
+
             </nav>
-            <h5 className="manage"><Link to="/backend">後台管理</Link></h5>
+
         </header>
     )
 }

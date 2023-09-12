@@ -13,6 +13,7 @@
 @import './cmpt/sale';
 @import './cmpt/record';
 @import './cmpt/todo';
+@import './cmpt/modal';
 @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
 
 body {
@@ -22,43 +23,52 @@ body {
 }
 
 html {
-  .header {
-    display: flex;
-    justify-content: space-between;
+  // .header {
+  //   display: flex;
+  //   justify-content: space-between;
 
-    .title {
-      margin: 1rem 2rem;
-    }
 
-    .manage {
-      font-style: italic;
-      margin: 1rem;
-    }
-  }
 
-  box-sizing: border-box;
+
 
   #container {
-    display: grid;
-    grid-auto-flow: row;
-    width: 100%;
 
     header {
-      display: grid;
-      grid-auto-flow: column;
-      grid-template-columns: 200px 1fr 200px;
-      margin: 1rem 1rem;
+      display: flex;
 
-      ul {
-        li {
-          display: inline-block;
-          width: 100px;
+      // display: grid;
+      // grid-auto-flow: column;
+      // grid-template-columns: 200px 1fr 200px;
+      // margin: 1rem 1rem;
+      .title {
+        margin: 1rem 2rem;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        flex: 1;
+        align-items: center;
+        margin: 1rem;
+
+        // gap: 1rem;
+        // flex: 1;
+        .navigate {
+          display: flex;
+          gap: 1rem;
+          align-items: center;
+
+          div {
+            padding: .5rem;
+          }
+        }
+
+        .manage {
+          font-style: italic;
+
         }
       }
 
-      .manage {
-        text-align: right;
-      }
     }
 
     main {
@@ -105,7 +115,6 @@ html {
                 display: inline-block;
               }
             }
-
           }
 
           .add {

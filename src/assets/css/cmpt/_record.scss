@@ -23,13 +23,38 @@
     align-items: flex-end;
   }
 
-  // input:valid {
-  //   background-color: palegreen;
-  // }
+  .groupview {
+    // visibility: hidden;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: gray;
+    color: white;
 
-  // input:invalid {
-  //   background-color: lightpink;
-  // }
+    opacity: .9;
+    padding: .5rem;
+    border-radius: .5rem;
+    border: 2px solid gray;
+
+    height: 20rem;
+    overflow: scroll;
+    z-index: 9;
+
+    &::-webkit-scrollbar {
+      -webkit-appearance: none;
+      width: 7px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: rgba(0, 0, 0, .5);
+      box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+    }
+
+    li {
+      width: max-content;
+    }
+  }
 
   .records {
     display: flex;

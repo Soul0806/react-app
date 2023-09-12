@@ -3,6 +3,7 @@ const GroupView = (props) => {
     return <>
         {Object.keys(filteredSale).map((key, index) => (
             <ul key={index}>
+                <li>{key}</li>
                 <ul>
                     {filteredSale[key].map((item, index) => (
                         <>
