@@ -23,18 +23,11 @@ body {
 }
 
 html {
-  // .header {
-  //   display: flex;
-  //   justify-content: space-between;
-
-
-
-
-
   #container {
 
     header {
       display: flex;
+
 
       // display: grid;
       // grid-auto-flow: column;
@@ -44,12 +37,15 @@ html {
         margin: 1rem 2rem;
       }
 
+
+
       nav {
         display: flex;
         justify-content: space-between;
         flex: 1;
         align-items: center;
         margin: 1rem;
+        z-index: 1;
 
         // gap: 1rem;
         // flex: 1;
