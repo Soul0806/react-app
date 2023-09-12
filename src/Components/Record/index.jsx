@@ -126,14 +126,6 @@ function Record() {
         }
     }, [])
 
-    useEffect(() => {
-        console.log(groupViewShow);
-    }, [groupViewShow])
-
-    function handleToggle() {
-        setRemove(prev => !prev);
-    }
-
     const handleSearch = (e) => {
         // setQ(e.target.value);
         const search = refSearch.current.value;
