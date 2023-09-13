@@ -11,6 +11,10 @@ body,
   --invalid: #ff0000;
 }
 
+input {
+  outline: 0;
+}
+
 * {
   font-family: 'SF Pro Display', sans-serif;
 }

@@ -1,4 +1,14 @@
 .todo-wrapper {
+    .tag {
+        .menu, .action {
+            text-align: right;
+        }
+
+        .action {
+            margin-top: 1rem;
+        }
+    }
+
     form {
         [name=todo] {            
             margin: 0 .5rem;

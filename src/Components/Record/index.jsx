@@ -174,13 +174,13 @@ function Record() {
             <div className="record-wrapper">
                 <div className="overlap"></div>
                 <div className="flex-col">
-                    {/* <div className="flex g-1 a-i-center">
-                        <FormText {...inputSpecWidth} />
+                    <div className="flex g-1 a-i-center">
+                        {/* <FormText {...inputSpecWidth} />
                         <span>/</span>
                         <FormText {...inputSpecWidth} />
                         <span>-</span>
-                        <FormText {...inputSpecWidth} />
-                    </div> */}
+                        <FormText {...inputSpecWidth} />  */}
+                    </div>
                     <div className="flex a-i-start rel">
                         <input className="search" type="text" ref={refSearch} onChange={handleSearch} />
                         <span className="material-symbols-outlined search-close" style={toggleSearchClose} onClick={searchDelete}>Close</span>
