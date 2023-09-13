@@ -81,7 +81,7 @@ const Todo = () => {
                     <input type="text" name="todo" id="todo" size="50" onChange={handleChange} autoComplete="off" />
                     <button type="submit">Submit</button>
                 </form>
-                {!isEmpty(todos) &&
+                {/* {!isEmpty(todos) &&
                     <>{todos.map(todo => (
                         <div key={todo.id} className="todo-list">
                             <div>{todo.id}</div>
@@ -92,7 +92,7 @@ const Todo = () => {
                             </span>
                         </div>
                     ))}</>
-                }
+                } */}
             </div>
         </>
     );

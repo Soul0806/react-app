@@ -185,8 +185,8 @@ function Record() {
                         <input className="search" type="text" ref={refSearch} onChange={handleSearch} />
                         <span className="material-symbols-outlined search-close" style={toggleSearchClose} onClick={searchDelete}>Close</span>
 
-                        <div className="rel">
-                            <div className={`flex abs groupview`} style={toggleGroupViewShow}>
+                        <div className="rel groupview">
+                            <div className={`flex abs `} style={toggleGroupViewShow}>
                                 <GroupView filteredSale={filteredSale} groupViewProps={groupViewProps} />
                             </div>
                         </div>
