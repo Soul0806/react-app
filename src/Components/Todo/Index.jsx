@@ -14,34 +14,38 @@ import FormText from "../custom/FormText";
 import { isEmpty } from "lodash";
 
 
+const getTag = async() => {
+    const payload = { fileName: 'static/test.json' };
+    const { data } = await axi.post(API.READ_JSONFILE, payload);
+    return data.tag;
+}
 
 const Todo = () => {
+  
 
     const [invalid, setInvalid] = useState(false);
     const { id, setId, todos, setTodos } = getTodos();
+    const [tags, setTags] = useState([]);
 
     const ref = useRef(false);
-    const tagRef = useRef(123);
+    const refTag = useRef('');
+    const refDialog = useRef(null);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         // console.log(todos);
-    }, [todos])
+    }, [todos]) 
 
     useEffect(() => {
-        if (ref.current) {
-            const modalTag = Dom('.tag').dom;
-            Dom('.modal__tag__open').event('click', () => {
-                modalTag.showModal();
-            })
-            Dom('.modal__tag__close').event('click', () => {
-                modalTag.close();
-            })
-
-            // Dom('.tag').event('click', );
-        }
-        return () => {
-            ref.current = true;
-        }
+        Dom('.modal__tag__open').event('click', () => {
+            refDialog.current.showModal();
+        })
+        Dom('.modal__tag__close').event('click', () => {
+            refDialog.current.close();
+        })
+        getTag().then(tags => setTags(tags));
+        // Dom('.tag').event('click', );
     }, [])
 
     const checkValid = {
@@ -100,31 +104,54 @@ const Todo = () => {
         label: "標籤",
         className: "tag form__input",
         placeholder: '標籤',
-        ref: tagRef,
+        ref: refTag,
+        autoComplete: 'off',
         onchange: () => {
-            console.log(tagRef.current.value);
+            console.log(refTag.current.value);
         },
        
+    }
+
+    const tagCreate = () => {
+        if(!tags.includes(refTag.current.value)) {
+            const fileName = 'static/test.json';
+            const data = { 
+                key: 'tag',
+                value: refTag.current.value,
+            };
+            const payload = { fileName, data };
+            axi.post(API.WRITE_JSON_PROP, payload);
+
+            setTags(prev => [...prev, refTag.current.value]);
+        } 
+        refDialog.current.close();
     }
 
     return (
         <>
             <div className="todo-wrapper">
-                <dialog data-modal-tag className="tag">
+                <dialog data-modal-tag className="tag" ref={refDialog}>
                     <div className="menu">
                         <span className="material-symbols-outlined modal__tag__close">
                             Close
                         </span>
                     </div>
-                    <FormText {...tagProps} ref={tagRef}/>
+                    <FormText {...tagProps} ref={refTag}/>
                     <div className="action">
-                        <button className="">新增</button>
+                        <button onClick={tagCreate}>新增</button>
                     </div>
                 </dialog>
                 <div className="flex">
                     <div className="flex flex-col">
                         <h1 style={{ margin: '1rem 0' }}>Todo</h1 >
                         <button className="modal__tag__open" onClick={modalShow}>新增標籤</button>
+                        <div>
+                            {!isEmpty(tags) && 
+                                tags.map(tag => (
+                                    <div>{tag}</div>
+                                ))
+                            }
+                        </div>
                     </div>
                     <form onSubmit={handelSubmit}>
                         <label style={checkValid} htmlFor="todo">請輸入</label>

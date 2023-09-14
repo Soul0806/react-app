@@ -3,9 +3,31 @@ const express = require("express");
 const { raw } = require('body-parser');
 const router = express.Router();
 
+router.post('/write_json_prop', (req, res) => {
+    const fileName = req.body.fileName;
+    const key = req.body.data.key;
+    const value = req.body.data.value;
+    let content;
+    if (fs.existsSync(fileName)) {
+        const rawData = fs.readFileSync(fileName, { encoding: 'utf8' });
+        if (rawData !== '') {
+            const arr = JSON.parse(rawData)[key];
+            if(arr.includes(value)) 
+                return;
+            arr.push(value);
+            content = JSON.stringify({ [key]: arr });
+        } else {
+            content = JSON.stringify({[key]: [value]});
+        }
+    } else {
+        content = JSON.stringify({[key]: [value]});
+    }
+    // const content = JSON.stringify(req.body.content);
+    fs.writeFileSync(fileName, content, { encoding: 'utf8', flag: 'w' });
+})
+
 router.post('/writeFile', (req, res) => {
     const fileName = req.body.fileName;
-    const rawData = fs.readFileSync(fileName, { encoding: 'utf8' });
     let content;
     if (fs.existsSync(fileName)) {
         const rawData = fs.readFileSync(fileName, { encoding: 'utf8' });
