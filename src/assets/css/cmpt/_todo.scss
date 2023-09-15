@@ -1,6 +1,11 @@
 .todo-wrapper {
+    display: flex;
+    gap: 2.5rem;
+
     .tag {
-        .menu, .action {
+
+        .menu,
+        .action {
             text-align: right;
         }
 
@@ -9,14 +14,22 @@
         }
     }
 
+    .selected__tags {
+        display: flex;
+        gap: 1rem;
+
+        >span {
+            padding: .25rem .5rem;
+            border: 1px solid black;
+            border-radius: .5rem;
+        }
+
+    }
+
     form {
-        [name=todo] {            
+        [name=todo] {
             margin: 0 .5rem;
         }
     }
 
-    .todo-list {
-        display: flex;
-        gap: 1rem;
-    }
 }

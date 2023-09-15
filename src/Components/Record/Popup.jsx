@@ -272,86 +272,83 @@ function Popup({ salesState }) {
     }
     return (
         <>
-            <div className="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">詳細銷售</h5>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
+            {/* <div className="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true"> */}
+            {/* <div className="modal fade"> */}
+            <div>
+                <div>
+                    <h5>詳細銷售</h5>
+                </div>
+                <form className="sale_popup" autoComplete="off" method="post" onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        {/* {inputRadioDay.map(radio => {
+                            return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
+                        })} */}
+                        {/* <input id="datepicker__insert" /> */}
+                        <div id="datepicker__insert"></div>
+                    </div>
+                    <div className="mb-3 modal-place">
+                        {inputRadioPlace.map(radio => {
+                            return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
+                        })}
+                        {
+                            !selling.place && <span className="invalid">請選擇地點</span>
+                        }
+                    </div>
+                    <div className="mb-3 modal-service">
+                        {inputRadioService.map(radio => {
+                            return <FormRadio key={radio.id} {...radio} onchange={onchange} />
+                        })}
+                        {
+                            !selling.service && <span className="invalid">請選擇服務</span>
+                        }
+                    </div>
 
-                        <form className="sale_popup" autoComplete="off" method="post" onSubmit={handleSubmit}>
-                            <div className="mb-3">
-                                {inputRadioDay.map(radio => {
-                                    return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
-                                })}
-                                <div id="datepicker__insert"></div>
+                    {selling.service != 'fix' &&
+                        <div className="mb-3 modal-tire" onChange={handleChange}>
+                            <div>規格</div>
+                            <div>
+                                <FormSelect name="inch" option={optionInch} selling={selling} />
                             </div>
-                            <div className="mb-3 modal-place">
-                                {inputRadioPlace.map(radio => {
-                                    return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
-                                })}
-                                {
-                                    !selling.place && <span className="invalid">請選擇地點</span>
-                                }
-                            </div>
-                            <div className="mb-3 modal-service">
-                                {inputRadioService.map(radio => {
-                                    return <FormRadio key={radio.id} {...radio} onchange={onchange} />
-                                })}
-                                {
-                                    !selling.service && <span className="invalid">請選擇服務</span>
-                                }
-                            </div>
-
-                            {selling.service != 'fix' &&
-                                <div className="mb-3 modal-tire" onChange={handleChange}>
-                                    <div>規格</div>
-                                    <div>
-                                        <FormSelect name="inch" option={optionInch} selling={selling} />
-                                    </div>
-                                    {specs.length != 0 &&
-                                        <div>
-                                            <FormSelect name="spec" option={specs} />
-                                        </div>
-                                    }
+                            {specs.length != 0 &&
+                                <div>
+                                    <FormSelect name="spec" option={specs} />
                                 </div>
                             }
-                            <div className="mb-3 modal-quantity" onChange={handleChange} >
-                                <div>數量</div>
-                                <div>
-                                    <FormSelect name="quantity" option={_.range(1, 11)} />
-                                </div>
-                            </div>
-                            <div className="mb-3 input-icon modal-input-icon">
-                                <input ref={refPrice} className="price" name="price" type="text" placeholder="0.0" value={selling.price} onChange={handleChange} />
-                                <i>$</i>
-                                {selling.service == 'fix' &&
-                                    <>
-                                        {inputRadioPrice.map(radio => {
-                                            return <FormRadio key={radio.id} {...radio} onchange={onchange} />
-                                        })}
-                                    </>
-                                }
-                            </div>
-                            <div className="mb-3 modal-pay">
-                                {inputRadioPay.map(radio => {
+                        </div>
+                    }
+                    <div className="mb-3 modal-quantity" onChange={handleChange} >
+                        <div>數量</div>
+                        <div>
+                            <FormSelect name="quantity" option={_.range(1, 11)} />
+                        </div>
+                    </div>
+                    <div className="mb-3 input-icon modal-input-icon">
+                        <input ref={refPrice} className="price" name="price" type="text" placeholder="0.0" value={selling.price} onChange={handleChange} />
+                        <i>$</i>
+                        {selling.service == 'fix' &&
+                            <>
+                                {inputRadioPrice.map(radio => {
                                     return <FormRadio key={radio.id} {...radio} onchange={onchange} />
                                 })}
-                                {
-                                    !selling.pay && <span className="invalid">請選擇付款方式</span>
-                                }
-                            </div>
-                            <div className="mb-3 modal-note">
-                                <label className="note" htmlFor="note">備註 </label>
-                                <input id="note" name="note" type="text" onChange={handleChange} />
-                            </div>
-                            <div className="modal-footer">
-                                <button type="submit" style={formValidate} className="btn btn-primary">Send message</button>
-                            </div>
-                        </form>
+                            </>
+                        }
                     </div>
-                </div>
+                    <div className="mb-3 modal-pay">
+                        {inputRadioPay.map(radio => {
+                            return <FormRadio key={radio.id} {...radio} onchange={onchange} />
+                        })}
+                        {
+                            !selling.pay && <span className="invalid">請選擇付款方式</span>
+                        }
+                    </div>
+                    <div className="mb-3 modal-note">
+                        <label className="note" htmlFor="note">備註 </label>
+                        <input id="note" name="note" type="text" onChange={handleChange} />
+                    </div>
+                    <div className="modal-footer">
+                        <button type="submit" style={formValidate} className="btn btn-primary">Send message</button>
+                    </div>
+                </form>
             </div>
         </>
 

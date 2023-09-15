@@ -22,3 +22,13 @@ input {
 a {
   text-decoration: none;
 }
+
+dialog {
+  width: 50%;
+
+  .menu {
+    text-align: right;
+
+    .dialog__close {}
+  }
+}

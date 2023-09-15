@@ -9,7 +9,7 @@ import { axi } from "../../lib/axios";
 import { Dom, dt } from "../../lib/helper";
 import API from "../../api";
 import FormText from "../custom/FormText";
-import { capitalize } from "lodash";
+import { capitalize, set } from "lodash";
 
 // Third party
 import { isEmpty } from "lodash";
@@ -28,6 +28,7 @@ const Todo = () => {
     const [invalid, setInvalid] = useState(false);
     const { id, setId, todos, setTodos } = getTodos();
     const [tags, setTags] = useState([]);
+    const [selectedTags, setSelectTags] = useState([]);
 
     const ref = useRef(false);
     const refTag = useRef('');
@@ -47,7 +48,6 @@ const Todo = () => {
             refDialog.current.close();
         })
         getTag().then(tags => setTags(tags));
-        // Dom('.tag').event('click', );
     }, [])
 
     const checkValid = {
@@ -129,6 +129,17 @@ const Todo = () => {
         refDialog.current.close();
     }
 
+    const tagsChange = (e) => {
+        const { name, checked } = e.target;
+        if (selectedTags.includes(name)) {
+            setSelectTags(tags => {
+                return tags.filter(tag => tag !== name)
+            })
+        } else {
+            setSelectTags(tags => [...tags, name]);
+        }
+    }
+
     return (
         <>
             <div className="todo-wrapper">
@@ -143,26 +154,33 @@ const Todo = () => {
                         <button onClick={tagCreate}>新增</button>
                     </div>
                 </dialog>
-                <div className="flex">
-                    <div className="flex flex-col">
-                        <h1 style={{ margin: '1rem 0' }}>Todo</h1 >
-                        <button className="modal__tag__open" onClick={modalShow}>新增標籤</button>
-                        <div>
-                            {!isEmpty(tags) &&
-                                tags.map(tag => (
-                                    <div className="flex g-1">
-                                        <FormCheck id={tag} name={tag} label={tag} />
-                                    </div>
-                                    // <div>{capitalize(tag)}</div>
-                                ))
-                            }
-                        </div>
+                <div className="flex flex-col">
+                    <h1 style={{ margin: '1rem 0' }}>Todo</h1 >
+                    <button className="modal__tag__open" onClick={modalShow}>新增標籤</button>
+                    <div>
+                        {!isEmpty(tags) &&
+                            tags.map(tag => (
+                                <div className="flex g-1">
+                                    <FormCheck id={tag} name={tag} label={tag} onchange={tagsChange} />
+                                </div>
+                                // <div>{capitalize(tag)}</div>
+                            ))
+                        }
                     </div>
+                </div>
+                <div className="flex flex-col">
                     <form onSubmit={handelSubmit}>
                         <label style={checkValid} htmlFor="todo">請輸入</label>
                         <input type="text" name="todo" id="todo" size="50" onChange={handleChange} autoComplete="off" />
                         <button type="submit">Submit</button>
                     </form>
+                    <div className="flex g-1 selected__tags">
+                        {!isEmpty(selectedTags) &&
+                            selectedTags.map(tag =>
+                                <span>{tag}</span>
+                            )
+                        }
+                    </div>
                 </div>
                 {/* {!isEmpty(todos) &&
                     <>{todos.map(todo => (

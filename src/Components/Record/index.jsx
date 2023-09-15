@@ -41,6 +41,7 @@ function Record() {
     const refSearch = useRef('');
     const ref = useRef(false);
     const refDate = useRef(new Date());
+    const refDialogsale = useRef(null);
 
     const toggleSearchClose = {
         display: searchClose ? 'block' : 'none'
@@ -101,17 +102,36 @@ function Record() {
         document.getElementById('datepicker').innerHTML = "";
 
         if (ref.current) {
-            Dom('.overlap').event('click', (e) => {
-                refSearch.current.value = '';
-                setSearchClose(false);
-                setGroupViewShow(false);
-            });
+            Dom('.dialog__sale__open').event('click', () => {
+                refDialogsale.current.showModal();
+            })
+            Dom('.dialog__sale__close').event('click', () => {
+                refDialogsale.current.close();
+            })
+            Dom(refDialogsale.current).event('click', (e) => {
+                const dialogDimensions = refDialogsale.current.getBoundingClientRect();
+                if (
+                    e.clientX > dialogDimensions.right ||
+                    e.clientX < dialogDimensions.left ||
+                    e.clientY < dialogDimensions.top ||
+                    e.clientY > dialogDimensions.bottom
+                ) {
+                    refDialogsale.current.close();
+                }
+
+            })
+
+            // Dom('.overlap').event('click', (e) => {
+            //     refSearch.current.value = '';
+            //     setSearchClose(false);
+            //     setGroupViewShow(false);
+            // });
             const picker = new AirDatepicker('#datepicker', {
                 navTitles: {
                     days: dt.getTodayDate()
                 },
                 locale: localeEn,
-                inline: true,
+                // inline: true,
                 buttons: [prevBtn, button, nextBtn],
                 onSelect: function ({ date, datepicker }) {
                     if (!date) return;
@@ -173,6 +193,14 @@ function Record() {
         <>
             <div className="record-wrapper">
                 <div className="overlap"></div>
+                <dialog className="dialog dialog__sale" ref={refDialogsale}>
+                    <div className="menu">
+                        <span className="material-symbols-outlined dialog__sale__close">
+                            Close
+                        </span>
+                    </div>
+                    <Popup salesState={salesState} />
+                </dialog>
                 <div className="flex-col">
                     <div className="flex g-1 a-i-center">
                         {/* <FormText {...inputSpecWidth} />
@@ -195,11 +223,12 @@ function Record() {
                 </div>
                 <div className="operate-col">
                     <div className="task-bar">
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling">
+                        {/* <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling"> */}
+                        <button type="button" className="btn btn-sm btn-secondary selling dialog__sale__open">
                             <span>詳細銷售</span>
                         </button>
                     </div>
-                    <div id="datepicker"></div>
+                    <input id="datepicker" />
                 </div>
                 {isEmpty(salesState.dbSale) ? <div>No Data</div> :
                     <div className="records">
@@ -210,7 +239,7 @@ function Record() {
                     </div>
                 }
             </div>
-            <Popup salesState={salesState} />
+            {/* <Popup salesState={salesState} /> */}
         </>
     )
 }

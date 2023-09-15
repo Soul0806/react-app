@@ -33,8 +33,9 @@ class datetime {
 
 const Dom = (cls) => {
     // const dom = document.querySelector(cls);
+    const dom = cls instanceof HTMLElement ? cls : document.querySelector(cls);
     return {
-        dom: document.querySelector(cls),
+        dom,
         event: function (event, callback) {
             this.dom.addEventListener(event, callback);
         }

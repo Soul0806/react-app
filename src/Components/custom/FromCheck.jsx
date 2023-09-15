@@ -1,11 +1,11 @@
 import { capitalize } from "lodash";
 
-const FormCheck = ({ label, ...props }) => {
+const FormCheck = ({ label, onchange, ...props }) => {
     return (
         <>
             <label htmlFor={label}>{capitalize(label)}
             </label>
-            <input type="checkbox" {...props} />
+            <input type="checkbox" {...props} onChange={onchange} />
         </>
     );
 }
