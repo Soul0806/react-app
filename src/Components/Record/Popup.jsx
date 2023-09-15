@@ -302,7 +302,6 @@ function Popup({ salesState }) {
                             !selling.service && <span className="invalid">請選擇服務</span>
                         }
                     </div>
-
                     {selling.service != 'fix' &&
                         <div className="mb-3 modal-tire" onChange={handleChange}>
                             <div>規格</div>
