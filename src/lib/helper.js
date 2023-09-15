@@ -91,6 +91,10 @@ function getOffset(el) {
     };
 }
 
+// const capitalize = (str) => {
+//     return str.charAt(0).toUpperCase() + str.slice(1);
+// }
+
 const dt = new datetime();
 export { empty, lowerize, uuid, isObjectEmpty, createElement, dt, Dom }
 // export from ajax;

@@ -9,19 +9,21 @@ import { axi } from "../../lib/axios";
 import { Dom, dt } from "../../lib/helper";
 import API from "../../api";
 import FormText from "../custom/FormText";
+import { capitalize } from "lodash";
 
 // Third party
 import { isEmpty } from "lodash";
+import FormCheck from "../custom/FromCheck";
 
 
-const getTag = async() => {
+const getTag = async () => {
     const payload = { fileName: 'static/test.json' };
     const { data } = await axi.post(API.READ_JSONFILE, payload);
     return data.tag;
 }
 
 const Todo = () => {
-  
+
 
     const [invalid, setInvalid] = useState(false);
     const { id, setId, todos, setTodos } = getTodos();
@@ -35,7 +37,7 @@ const Todo = () => {
 
     useEffect(() => {
         // console.log(todos);
-    }, [todos]) 
+    }, [todos])
 
     useEffect(() => {
         Dom('.modal__tag__open').event('click', () => {
@@ -109,13 +111,13 @@ const Todo = () => {
         onchange: () => {
             console.log(refTag.current.value);
         },
-       
+
     }
 
     const tagCreate = () => {
-        if(!tags.includes(refTag.current.value)) {
+        if (!tags.includes(refTag.current.value)) {
             const fileName = 'static/test.json';
-            const data = { 
+            const data = {
                 key: 'tag',
                 value: refTag.current.value,
             };
@@ -123,7 +125,7 @@ const Todo = () => {
             axi.post(API.WRITE_JSON_PROP, payload);
 
             setTags(prev => [...prev, refTag.current.value]);
-        } 
+        }
         refDialog.current.close();
     }
 
@@ -136,7 +138,7 @@ const Todo = () => {
                             Close
                         </span>
                     </div>
-                    <FormText {...tagProps} ref={refTag}/>
+                    <FormText {...tagProps} ref={refTag} />
                     <div className="action">
                         <button onClick={tagCreate}>新增</button>
                     </div>
@@ -146,9 +148,12 @@ const Todo = () => {
                         <h1 style={{ margin: '1rem 0' }}>Todo</h1 >
                         <button className="modal__tag__open" onClick={modalShow}>新增標籤</button>
                         <div>
-                            {!isEmpty(tags) && 
+                            {!isEmpty(tags) &&
                                 tags.map(tag => (
-                                    <div>{tag}</div>
+                                    <div className="flex g-1">
+                                        <FormCheck id={tag} name={tag} label={tag} />
+                                    </div>
+                                    // <div>{capitalize(tag)}</div>
                                 ))
                             }
                         </div>
