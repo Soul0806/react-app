@@ -156,8 +156,16 @@ function Record() {
             setSearchClose(true);
             allSale.map(item => {
                 const regex = new RegExp(search, 'i');
+                const firstMatch = item.spec.match(regex) && item.note.match('@');
                 const match = item.spec.match(regex) || item.note.match(regex);
 
+                if (firstMatch) {
+                    if (!groupSale[0]) {
+                        groupSale[0] = [item];
+                    } else {
+                        groupSale[0].push(item);
+                    }
+                }
                 if (match) {
                     result.push(item);
                     if (!groupSale[item.date]) {
@@ -167,6 +175,7 @@ function Record() {
                     }
                 }
             })
+
             setGroupViewShow(true);
         } else {
             setGroupViewShow(false);
@@ -189,6 +198,16 @@ function Record() {
         label: '寬度',
         placeholder: '寬度',
     }
+
+    const inputSpec = {
+        id: 'width',
+        className: 'form__input',
+        // label: '請輸入...',
+        // placeholder: '請輸入...',
+        ref: refSearch,
+        onChange: handleSearch,
+    }
+
     return (
         <>
             <div className="record-wrapper">
@@ -211,6 +230,7 @@ function Record() {
                     </div>
                     <div className="flex a-i-start rel">
                         <input className="search" type="text" ref={refSearch} onChange={handleSearch} />
+                        {/* <FormText {...inputSpec} /> */}
                         <span className="material-symbols-outlined search-close" style={toggleSearchClose} onClick={searchDelete}>Close</span>
 
                         <div className="rel groupview">

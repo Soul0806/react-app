@@ -24,7 +24,9 @@
   .search {
     font-size: 1.25rem;
     padding: .5rem;
-    border-radius: .5rem;
+    border-inline: transparent;
+    border-top: transparent;
+    // border-radius: .5rem;
 
     &~.search-close {
       display: none;
