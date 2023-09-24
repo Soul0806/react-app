@@ -3,16 +3,13 @@ import React, { useEffect, useRef, useState, useMemo, useInsertionEffect } from 
 // Comps 
 import Popup from './Popup';
 import GroupView from '../Custom/GroupView';
-import FormText from '../custom/FormText';
+import FormText from '../Custom/FormText';
 
-import { getDbSale } from '../Tire/useSale';
-import { useSale } from '../Tire/useSale';
+import { getDbSale, useSale } from '../Tire/useSale';
 
 // lib 
 import { axi } from '../../lib/axios';
-import { dt } from '../../lib/helper';
-import { Dom } from '../../lib/helper';
-
+import { dt, Dom } from '../../lib/helper';
 
 // Third party lib
 import { isEmpty } from 'lodash';
