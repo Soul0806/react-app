@@ -1,9 +1,8 @@
 @import './root';
 @import './extend';
-@import './global';
 @import './mixin';
-
 @import './animation';
+@import './global';
 
 @import './cmpt/area';
 @import './cmpt/inch';
@@ -16,212 +15,156 @@
 @import './cmpt/modal';
 @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
 
-body {
-  ul {
-    list-style: none;
-  }
-}
+// html {
+//   #container {
+//     main {
+//       width: 90%;
+//       padding: 1rem;
+//       margin: 0 auto;
 
-html {
-  #container {
+//       .merchandise {
+//         display: grid;
+//         grid-template-columns: 200px 1fr;
 
-    header {
-      display: flex;
+//         aside {
+//           >div {
+//             margin: 1rem 2rem;
 
+//           }
 
-      // display: grid;
-      // grid-auto-flow: column;
-      // grid-template-columns: 200px 1fr 200px;
-      // margin: 1rem 1rem;
-      .title {
-        margin: 1rem 2rem;
-      }
+//           .keyword {
+//             text-align: center;
+//           }
 
+//           label {
+//             margin: 0 .5rem;
+//           }
+//         }
 
+//         section {
+//           width: 100%;
+//           margin-left: 1rem;
 
-      nav {
-        display: flex;
-        justify-content: space-between;
-        flex: 1;
-        align-items: center;
-        margin: 1rem;
-        z-index: 1;
+//           .pages {
+//             text-align: center;
 
-        // gap: 1rem;
-        // flex: 1;
-        .navigate {
-          display: flex;
-          gap: 1rem;
-          align-items: center;
+//             span {
+//               margin: 0 .5rem;
 
-          div {
-            padding: .5rem;
-          }
-        }
+//               &.prev::before {
+//                 content: "<<";
+//                 display: inline-block;
+//               }
 
-        .manage {
-          font-style: italic;
+//               &.next::before {
+//                 content: ">>";
+//                 display: inline-block;
+//               }
+//             }
+//           }
 
-        }
-      }
+//           .add {
+//             .md-18 {
+//               font-size: 18px;
+//             }
 
-    }
+//             cursor: pointer;
+//             text-align: right;
+//             margin-right: 150px;
+//           }
 
-    main {
-      width: 90%;
-      padding: 1rem;
-      margin: 0 auto;
+//           table {
+//             border-collapse: separate;
+//             border-spacing: 0 1rem;
 
-      .merchandise {
-        display: grid;
-        grid-template-columns: 200px 1fr;
+//             tr {
+//               text-align: center;
+//               display: grid;
+//               // grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+//               grid-template-columns: repeat(5, 1fr) 100px;
+//               // max-width: 1200px;
 
-        aside {
-          >div {
-            margin: 1rem 2rem;
+//               th {
+//                 padding: .5rem;
+//               }
+//             }
 
-          }
+//             tbody {
 
-          .keyword {
-            text-align: center;
-          }
+//               tr {
+//                 .material-symbols-outlined {
+//                   margin: 0 .5rem;
+//                   cursor: pointer;
+//                   visibility: hidden;
+//                 }
 
-          label {
-            margin: 0 .5rem;
-          }
-        }
+//                 &:hover {
+//                   .material-symbols-outlined {
+//                     visibility: visible;
+//                     opacity: .4;
 
-        section {
-          width: 100%;
-          margin-left: 1rem;
-
-          .pages {
-            text-align: center;
-
-            span {
-              margin: 0 .5rem;
-
-              &.prev::before {
-                content: "<<";
-                display: inline-block;
-              }
-
-              &.next::before {
-                content: ">>";
-                display: inline-block;
-              }
-            }
-          }
-
-          .add {
-            .md-18 {
-              font-size: 18px;
-            }
-
-            cursor: pointer;
-            text-align: right;
-            margin-right: 150px;
-          }
-
-          table {
-            border-collapse: separate;
-            border-spacing: 0 1rem;
-
-            tr {
-              text-align: center;
-              display: grid;
-              // grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-              grid-template-columns: repeat(5, 1fr) 100px;
-              // max-width: 1200px;
-
-              th {
-                padding: .5rem;
-              }
-            }
-
-            tbody {
-
-              tr {
-                .material-symbols-outlined {
-                  margin: 0 .5rem;
-                  cursor: pointer;
-                  visibility: hidden;
-                }
-
-                &:hover {
-                  .material-symbols-outlined {
-                    visibility: visible;
-                    opacity: .4;
-
-                    &:hover {
-                      opacity: 1;
-                    }
-                  }
-                }
+//                     &:hover {
+//                       opacity: 1;
+//                     }
+//                   }
+//                 }
 
 
-                .left_round {
-                  border-top-left-radius: 10px;
-                  border-bottom-left-radius: 10px;
-                }
+//                 .left_round {
+//                   border-top-left-radius: 10px;
+//                   border-bottom-left-radius: 10px;
+//                 }
 
-                .right_round {
-                  border-top-right-radius: 10px;
-                  border-bottom-right-radius: 10px;
-                }
+//                 .right_round {
+//                   border-top-right-radius: 10px;
+//                   border-bottom-right-radius: 10px;
+//                 }
 
 
-                &:hover {
-                  td:not(:last-child) {
-                    background-color: rgba(224, 224, 224, 0.993);
-                  }
-                }
-              }
-            }
+//                 &:hover {
+//                   td:not(:last-child) {
+//                     background-color: rgba(224, 224, 224, 0.993);
+//                   }
+//                 }
+//               }
+//             }
 
-          }
+//           }
 
-          .modal {
-            input {
-              padding: 0.1rem 0.5rem;
-              border: .1px solid rgb(216, 210, 210);
-              border-radius: 10px;
-              transition: all 0.3s ease;
-              opacity: .6;
+//           .modal {
+//             input {
+//               padding: 0.1rem 0.5rem;
+//               border: .1px solid rgb(216, 210, 210);
+//               border-radius: 10px;
+//               transition: all 0.3s ease;
+//               opacity: .6;
 
-              &:focus {
-                opacity: 1;
-                outline: none;
-                box-shadow: 0 0 0 2px rgba(21, 156, 228, 0.4);
-                transform: scale(1.04);
-              }
-            }
-          }
+//               &:focus {
+//                 opacity: 1;
+//                 outline: none;
+//                 box-shadow: 0 0 0 2px rgba(21, 156, 228, 0.4);
+//                 transform: scale(1.04);
+//               }
+//             }
+//           }
 
-        }
-      }
+//         }
+//       }
 
-      .tire {
-        text-align: center;
-        display: flex;
-        // display: grid;
-        // grid-template-columns: repeat(5, minmax(max-content, min-content));
-        width: 90%;
-        margin: 0 auto;
-        gap: 1rem;
-      }
-    }
-  }
-}
+//       .tire {
+//         text-align: center;
+//         display: flex;
+//         // display: grid;
+//         // grid-template-columns: repeat(5, minmax(max-content, min-content));
+//         width: 90%;
+//         margin: 0 auto;
+//         gap: 1rem;
+//       }
+//     }
+//   }
+// }
 
 // .title {
 //   // display: none;
 //   color: red;
 // }
-
-@media (max-width : 200px) {
-  header {
-    display: none;
-    color: red;
-  }
-}

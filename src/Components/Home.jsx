@@ -4,12 +4,12 @@ import Header from './Header';
 export default function Home() {
     return (
         <>
-            <div id="container">
-                <Header />
-                <main>
+            <Header />
+            <main>
+                <div className="wrapper">
                     <Outlet />
-                </main>
-            </div >
+                </div>
+            </main>
         </>
     );
 }

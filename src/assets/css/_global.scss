@@ -1,3 +1,86 @@
+// GLOBAL
+
+:root {
+  --active: #ff0000;
+  --inactive: #cac7c7;
+  --invalid: #ff0000;
+
+  --fs-48: 3rem;
+  --fs-36: 2.25rem;
+  --fs-24: 1.5rem;
+  --fs-18: 1.125rem;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'SF Pro Display', sans-serif;
+
+  input {
+    outline: 0;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.wrapper {
+  width: calc(100% - 2rem);
+  max-width: 1100px;
+  margin-inline: auto;
+}
+
+.nav {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+
+  margin-top: 10px;
+
+  .header__home {
+    font-size: var(--fs-36);
+  }
+
+  .header__app {
+    // flex: 1 0;
+  }
+
+  .header__backend {
+    flex: 1;
+    text-align: right;
+  }
+}
+
+dialog {
+  width: 50%;
+
+  .menu {
+    text-align: right;
+  }
+}
+
+dialog[open] {
+  animation: fade-in 450ms ease-in-out;
+}
+
 .input-icon {
   position: relative;
 
