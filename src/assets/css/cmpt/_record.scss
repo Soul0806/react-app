@@ -41,6 +41,10 @@
   }
 
   .groupview {
+    .search-close {
+      text-align: right;
+      cursor: pointer;
+    }
     &>div {
       width: 35rem;
       // visibility: hidden;

@@ -5,6 +5,8 @@
   --inactive: #cac7c7;
   --invalid: #ff0000;
 
+  --dialog-border: hwb(0 83% 17%);
+
   --fs-48: 3rem;
   --fs-36: 2.25rem;
   --fs-24: 1.5rem;
@@ -32,6 +34,18 @@ body {
   a {
     text-decoration: none;
   }
+
+  ul {
+    list-style-type: none;
+  }
+
+  [type=radio] {
+    margin-inline: 3px;
+  }
+
+  label {
+    line-height: 1;
+  }
 }
 
 #root {
@@ -42,8 +56,12 @@ body {
 
 .wrapper {
   width: calc(100% - 2rem);
-  max-width: 1100px;
+  max-width: 1280px;
   margin-inline: auto;
+}
+
+.header {
+  z-index: 999;
 }
 
 .nav {
@@ -71,9 +89,29 @@ body {
 
 dialog {
   width: 50%;
+  border-radius: 20px;
+  border: 1px solid var(--dialog-border);
 
   .menu {
     text-align: right;
+  }
+
+  .dialog__content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px 20px;
+  }
+
+  .dialog__form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    [class*="modal"] {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
   }
 }
 

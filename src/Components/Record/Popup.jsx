@@ -274,19 +274,11 @@ function Popup({ salesState }) {
         <>
             {/* <div className="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true"> */}
             {/* <div className="modal fade"> */}
-            <div>
-                <div>
-                    <h5>詳細銷售</h5>
-                </div>
-                <form className="sale_popup" autoComplete="off" method="post" onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        {/* {inputRadioDay.map(radio => {
-                            return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
-                        })} */}
-                        {/* <input id="datepicker__insert" /> */}
-                        <div id="datepicker__insert"></div>
-                    </div>
-                    <div className="mb-3 modal-place">
+            <div className="dialog__content">
+                <h5>詳細銷售</h5>
+                <form className="dialog__form" autoComplete="off" method="post" onSubmit={handleSubmit}>
+                    <div id="datepicker__insert"></div>
+                    <div className="modal-place">
                         {inputRadioPlace.map(radio => {
                             return <FormRadio key={radio.id} {...radio} onchange={handleChange} />
                         })}
@@ -294,7 +286,7 @@ function Popup({ salesState }) {
                             !selling.place && <span className="invalid">請選擇地點</span>
                         }
                     </div>
-                    <div className="mb-3 modal-service">
+                    <div className="modal-service">
                         {inputRadioService.map(radio => {
                             return <FormRadio key={radio.id} {...radio} onchange={onchange} />
                         })}
@@ -303,7 +295,7 @@ function Popup({ salesState }) {
                         }
                     </div>
                     {selling.service != 'fix' &&
-                        <div className="mb-3 modal-tire" onChange={handleChange}>
+                        <div className="modal-tire" onChange={handleChange}>
                             <div>規格</div>
                             <div>
                                 <FormSelect name="inch" option={optionInch} selling={selling} />
@@ -315,13 +307,13 @@ function Popup({ salesState }) {
                             }
                         </div>
                     }
-                    <div className="mb-3 modal-quantity" onChange={handleChange} >
+                    <div className="modal-quantity" onChange={handleChange} >
                         <div>數量</div>
                         <div>
                             <FormSelect name="quantity" option={_.range(1, 11)} />
                         </div>
                     </div>
-                    <div className="mb-3 input-icon modal-input-icon">
+                    <div className="input-icon modal-input-icon">
                         <input ref={refPrice} className="price" name="price" type="text" placeholder="0.0" value={selling.price} onChange={handleChange} />
                         <i>$</i>
                         {selling.service == 'fix' &&
@@ -332,7 +324,7 @@ function Popup({ salesState }) {
                             </>
                         }
                     </div>
-                    <div className="mb-3 modal-pay">
+                    <div className="modal-pay">
                         {inputRadioPay.map(radio => {
                             return <FormRadio key={radio.id} {...radio} onchange={onchange} />
                         })}
@@ -340,7 +332,7 @@ function Popup({ salesState }) {
                             !selling.pay && <span className="invalid">請選擇付款方式</span>
                         }
                     </div>
-                    <div className="mb-3 modal-note">
+                    <div className="modal-note">
                         <label className="note" htmlFor="note">備註 </label>
                         <input id="note" name="note" type="text" onChange={handleChange} />
                     </div>

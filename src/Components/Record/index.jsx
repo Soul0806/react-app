@@ -228,10 +228,11 @@ function Record() {
                     <div className="flex a-i-start rel">
                         <input className="search" type="text" ref={refSearch} onChange={handleSearch} />
                         {/* <FormText {...inputSpec} /> */}
-                        <span className="material-symbols-outlined search-close" style={toggleSearchClose} onClick={searchDelete}>Close</span>
+                        {/* <span className="material-symbols-outlined search-close" style={toggleSearchClose} onClick={searchDelete}>Close</span> */}
 
                         <div className="rel groupview">
                             <div className={`flex abs `} style={toggleGroupViewShow}>
+                                <span className="material-symbols-outlined search-close" style={toggleSearchClose} onClick={searchDelete}>Close</span>
                                 <GroupView filteredSale={filteredSale} groupViewProps={groupViewProps} />
                             </div>
                         </div>
@@ -242,7 +243,7 @@ function Record() {
                     <div className="task-bar">
                         {/* <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling"> */}
                         <button type="button" className="btn btn-sm btn-secondary selling dialog__sale__open">
-                            <span>詳細銷售</span>
+                            <span>新增銷售</span>
                         </button>
                     </div>
                     <input id="datepicker" />

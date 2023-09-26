@@ -19,6 +19,7 @@ export default function Header() {
                         <NavLink to="csv">CSV</NavLink>
                     </li>               
                 </ul>
+                <a class="header__backend" href="/backend">後台管理</a>
             </nav>
             <h5 className="manage"><Link to="/backend">後台管理</Link></h5>
         </header>
