@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo, useInsertionEffect } from 'react'
 
 // Comps 
-import Popup from './Popup';
+import SaleForm from './SaleForm';
 import GroupView from '../Custom/GroupView';
 import FormText from '../Custom/FormText';
 
@@ -102,7 +102,7 @@ function Record() {
             Dom('.dialog__sale__open').event('click', () => {
                 refDialogsale.current.showModal();
             })
-            Dom('.dialog__sale__close').event('click', () => {
+            Dom('.dialog__close').event('click', () => {
                 refDialogsale.current.close();
             })
             Dom(refDialogsale.current).event('click', (e) => {
@@ -210,12 +210,15 @@ function Record() {
             <div className="record-wrapper">
                 <div className="overlap"></div>
                 <dialog className="dialog dialog__sale" ref={refDialogsale}>
-                    <div className="menu">
-                        <span className="material-symbols-outlined dialog__sale__close">
-                            Close
-                        </span>
+                    <div className="wrapper">
+                        <div className="dialog__menu">
+                            <h5 className="dialog__title">詳細銷售</h5>
+                            <span className="material-symbols-outlined dialog__close">
+                                Close
+                            </span>
+                        </div>
+                        <SaleForm salesState={salesState} />
                     </div>
-                    <Popup salesState={salesState} />
                 </dialog>
                 <div className="flex-col">
                     <div className="flex g-1 a-i-center">

@@ -19,7 +19,7 @@ const SALE_API_URL = `https://localhost:7123/api/Sale/`;
 
 const toDate = dt.getTodayDate();
 
-function Popup({ salesState }) {
+function SaleForm({ salesState }) {
 
     const [inches] = useTire();
     const optionInch = _.range(12, 23);
@@ -272,10 +272,7 @@ function Popup({ salesState }) {
     }
     return (
         <>
-            {/* <div className="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true"> */}
-            {/* <div className="modal fade"> */}
             <div className="dialog__content">
-                <h5>詳細銷售</h5>
                 <form className="dialog__form" autoComplete="off" method="post" onSubmit={handleSubmit}>
                     <div id="datepicker__insert"></div>
                     <div className="modal-place">
@@ -345,4 +342,4 @@ function Popup({ salesState }) {
 
     )
 }
-export default Popup;
+export default SaleForm;

@@ -1092,18 +1092,6 @@
         "createdAt": "2023/9/9 下午9:23:09"
     },
     {
-        "id": 96,
-        "area": "",
-        "service": "",
-        "spec": "",
-        "price": "",
-        "quantity": "",
-        "pay": "",
-        "note": "",
-        "date": "2023/9/29",
-        "createdAt": "2023/9/11 上午10:42:12"
-    },
-    {
         "id": 97,
         "area": "store",
         "service": "fix",
