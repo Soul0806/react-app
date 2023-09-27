@@ -230,6 +230,15 @@ function Record() {
                     </div>
                     <div className="flex a-i-start rel">
                         <input className="search" type="text" ref={refSearch} onChange={handleSearch} />
+
+                        <div className="groupview" style={toggleGroupViewShow}>
+                            <div className="wrapper">
+                                <div className="groupview__menu">
+                                    <span className="material-symbols-outlined groupview__close" style={toggleSearchClose} onClick={searchDelete}>Close</span>
+                                </div>
+                                <GroupView filteredSale={filteredSale} groupViewProps={groupViewProps} />
+                            </div>
+                        </div>
                         {/* <FormText {...inputSpec} /> */}
                         {/* <span className="material-symbols-outlined search-close" style={toggleSearchClose} onClick={searchDelete}>Close</span> */}
                     </div>
@@ -251,14 +260,6 @@ function Record() {
                         }
                     </div>
                 }
-            </div>
-            <div className="groupview" style={toggleGroupViewShow}>
-                <div className="wrapper">
-                    <div className="groupview__menu">
-                        <span className="material-symbols-outlined groupview__close" style={toggleSearchClose} onClick={searchDelete}>Close</span>
-                    </div>
-                    <GroupView filteredSale={filteredSale} groupViewProps={groupViewProps} />
-                </div>
             </div>
             {/* <Popup salesState={salesState} /> */}
         </>

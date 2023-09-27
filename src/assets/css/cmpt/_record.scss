@@ -1,5 +1,4 @@
 .record-wrapper {
-  position: fixed;
   display: flex;
   gap: 2rem;
 
@@ -126,9 +125,10 @@
 }
 
 .groupview {
-  position: absolute;
-  left: 250px;
+  // position: absolute;
+  // left: 250px;
   width: 35rem;
+  height: 900px;
 
   display: flex;
   flex-direction: column;
@@ -143,6 +143,7 @@
   z-index: 9;
 
   .wrapper {
+    // padding: 1rem;
     .groupview__menu {
       text-align: right;
     }
@@ -152,21 +153,23 @@
       position: fixed;
       cursor: pointer;
     }
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+  
+    &::-webkit-scrollbar-track {
+      background-color: rgba(220, 211, 211, 0.5);
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      border-radius: .5rem;
+      background-color: rgba(0, 0, 0, .5);
+      box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+    }
+  
   }
 
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background-color: rgba(220, 211, 211, 0.5);
-  }
-
-  &::-webkit-scrollbar-thumb {
-    border-radius: .5rem;
-    background-color: rgba(0, 0, 0, .5);
-    box-shadow: 0 0 1px rgba(255, 255, 255, .5);
-  }
 
   li {
     width: max-content;
