@@ -1,4 +1,5 @@
 .record-wrapper {
+  position: fixed;
   display: flex;
   gap: 2rem;
 
@@ -40,52 +41,7 @@
     }
   }
 
-  .groupview {
-    .search-close {
-      text-align: right;
-      cursor: pointer;
-    }
-    &>div {
-      width: 35rem;
-      // visibility: hidden;
-      position: absolute;
-      display: flex;
-      flex-direction: column;
-      background-color: gray;
-      color: white;
 
-      opacity: .9;
-      margin: 0 1rem;
-      padding: 1rem;
-      border-radius: .5rem;
-      border: 2px solid gray;
-
-      height: 30rem;
-      overflow: scroll;
-      z-index: 9;
-
-      transition: .4s;
-      overflow-x: hidden;
-
-      &::-webkit-scrollbar {
-        width: 5px;
-      }
-
-      &::-webkit-scrollbar-track {
-        background-color: rgba(220, 211, 211, 0.5);
-      }
-
-      &::-webkit-scrollbar-thumb {
-        border-radius: .5rem;
-        background-color: rgba(0, 0, 0, .5);
-        box-shadow: 0 0 1px rgba(255, 255, 255, .5);
-      }
-
-      li {
-        width: max-content;
-      }
-    }
-  }
 
   #datepicker {
     z-index: 1;
@@ -167,4 +123,53 @@
       }
     }
   }
+}
+
+.groupview {
+  position: absolute;
+  left: 250px;
+  width: 35rem;
+
+  display: flex;
+  flex-direction: column;
+
+  margin: 0 1rem;
+  padding: 1rem;
+  border: 2px solid lightgray;
+  border-radius: 20px;
+  background-color: var(--bg-modal);
+
+  overflow: scroll;
+  z-index: 9;
+
+  .wrapper {
+    .groupview__menu {
+      text-align: right;
+    }
+
+    .groupview__close {
+      display: inline !important;
+      position: fixed;
+      cursor: pointer;
+    }
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: rgba(220, 211, 211, 0.5);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: .5rem;
+    background-color: rgba(0, 0, 0, .5);
+    box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+  }
+
+  li {
+    width: max-content;
+  }
+
 }

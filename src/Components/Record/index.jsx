@@ -232,14 +232,6 @@ function Record() {
                         <input className="search" type="text" ref={refSearch} onChange={handleSearch} />
                         {/* <FormText {...inputSpec} /> */}
                         {/* <span className="material-symbols-outlined search-close" style={toggleSearchClose} onClick={searchDelete}>Close</span> */}
-
-                        <div className="rel groupview">
-                            <div className={`flex abs `} style={toggleGroupViewShow}>
-                                <span className="material-symbols-outlined search-close" style={toggleSearchClose} onClick={searchDelete}>Close</span>
-                                <GroupView filteredSale={filteredSale} groupViewProps={groupViewProps} />
-                            </div>
-                        </div>
-
                     </div>
                 </div>
                 <div className="operate-col">
@@ -259,6 +251,14 @@ function Record() {
                         }
                     </div>
                 }
+            </div>
+            <div className="groupview" style={toggleGroupViewShow}>
+                <div className="wrapper">
+                    <div className="groupview__menu">
+                        <span className="material-symbols-outlined groupview__close" style={toggleSearchClose} onClick={searchDelete}>Close</span>
+                    </div>
+                    <GroupView filteredSale={filteredSale} groupViewProps={groupViewProps} />
+                </div>
             </div>
             {/* <Popup salesState={salesState} /> */}
         </>
@@ -327,6 +327,7 @@ function Sale(props) {
                 </div>
             </div> */}
         </div>
+
     )
 }
 
