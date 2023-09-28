@@ -1,46 +1,10 @@
-.record-wrapper {
-  display: flex;
-  gap: 2rem;
+.record {
 
-  // transform: translateX(30%);
-  .overlap {
-    position: fixed;
-    inset: 0;
-  }
-
-  .operate-col {
+  >.wrapper {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    align-items: flex-start;
+    gap: 2rem;
   }
-
-  .task-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    z-index: 1;
-  }
-
-  .search {
-    font-size: 1.25rem;
-    padding: .5rem;
-    border-inline: transparent;
-    border-top: transparent;
-    // border-radius: .5rem;
-
-    &~.search-close {
-      display: none;
-      position: absolute;
-      right: 0;
-      top: .3rem;
-      // left: -2.5rem;
-      // transform: transate(-2.5rem, .3rem);
-      padding: .5rem;
-      cursor: pointer;
-    }
-  }
-
-
 
   #datepicker {
     z-index: 1;
@@ -124,14 +88,33 @@
   }
 }
 
-.groupview {
-  // position: absolute;
-  // left: 250px;
-  width: 35rem;
-  height: 900px;
+.record__search {
+  font-size: 1.25rem;
+  padding: .5rem;
+  border: 1px solid hsl(0, 0%, 50%);
+  border-inline: transparent;
+  border-top: transparent;
+  // border-radius: .5rem;
+}
 
+.operate-col {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
+}
+
+.task-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  z-index: 1;
+}
+
+.record__groupview {
+  position: absolute;
+  left: 250px;
+  width: 35rem;
+  height: 500px;
 
   margin: 0 1rem;
   padding: 1rem;
@@ -142,37 +125,42 @@
   overflow: scroll;
   z-index: 9;
 
-  .wrapper {
+  >.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
     // padding: 1rem;
     .groupview__menu {
       text-align: right;
+      position: sticky;
+      top: 0;
     }
 
     .groupview__close {
       display: inline !important;
-      position: fixed;
       cursor: pointer;
     }
 
     &::-webkit-scrollbar {
       width: 5px;
     }
-  
+
     &::-webkit-scrollbar-track {
       background-color: rgba(220, 211, 211, 0.5);
     }
-  
+
     &::-webkit-scrollbar-thumb {
       border-radius: .5rem;
       background-color: rgba(0, 0, 0, .5);
       box-shadow: 0 0 1px rgba(255, 255, 255, .5);
     }
-  
-  }
 
+  }
 
   li {
     width: max-content;
+    padding: 3px 0;
   }
 
 }

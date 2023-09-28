@@ -6,9 +6,7 @@ export default function Home() {
         <>
             <Header />
             <main>
-                <div className="wrapper">
-                    <Outlet />
-                </div>
+                <Outlet />
             </main>
         </>
     );
