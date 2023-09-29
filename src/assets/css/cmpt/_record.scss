@@ -1,5 +1,5 @@
+// @media (width >=768px) {
 .record {
-
   >.wrapper {
     display: flex;
     align-items: flex-start;
@@ -144,4 +144,14 @@
     }
   }
 
+}
+
+// }
+
+@media(max-width: 768px) {
+  .record {
+    dialog {
+      width: 90%;
+    }
+  }
 }
