@@ -90,7 +90,7 @@ function Record() {
     }, [dbSale, setDbSale, id])
 
     useEffect(() => {
-        const modal = document.querySelector('.record__groupview');
+        const modal = document.querySelector('.record__operate__groupview');
         const modelDimensions = modal.getBoundingClientRect();
 
     }, [filteredSale])
@@ -213,7 +213,7 @@ function Record() {
                     <dialog className="dialog dialog__sale" ref={refDialogsale}>
                         <div className="wrapper">
                             <div className="dialog__menu">
-                                <h5 className="dialog__title">詳細銷售</h5>
+                                <h5 className="dialog__title">新增銷售</h5>
                                 <span className="material-symbols-outlined dialog__close">
                                     Close
                                 </span>
@@ -221,37 +221,46 @@ function Record() {
                             <SaleForm salesState={salesState} />
                         </div>
                     </dialog>
-                    <input className="record__search" type="text" ref={refSearch} onChange={handleSearch} />
-                    <div className="record__groupview" style={toggleGroupViewShow}>
-                        <div className="wrapper">
-                            <div className="groupview__menu">
-                                <svg className="groupview__close" style={toggleSearchClose} onClick={searchDelete} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 24 24">
-                                    <path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"></path>
-                                </svg>
-                                {/* <span className="material-symbols-outlined groupview__close" style={toggleSearchClose} onClick={searchDelete}>Close</span> */}
-                            </div>
-                            <GroupView filteredSale={filteredSale} groupViewProps={groupViewProps} />
-                        </div>
-                    </div>
-                    {/* <FormText {...inputSpec} /> */}
-                    {/* <span className="material-symbols-outlined search-close" style={toggleSearchClose} onClick={searchDelete}>Close</span> */}
-                    <div className="operate-col">
-                        <div className="task-bar">
+                    <div className="record__operate">
+                        <div className="record__operate__insert">
                             {/* <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" className="btn btn-sm btn-secondary selling"> */}
-                            <button type="button" className="btn btn-sm btn-secondary selling dialog__sale__open">
-                                <span>新增銷售</span>
+                            <button type="button" className="btn btn-sm btn-secondary dialog__sale__open">
+                                新增銷售
                             </button>
                         </div>
-                        <input id="datepicker" />
+                        <input className="record__operate__input" type="text" ref={refSearch} onChange={handleSearch} />
+                        <div className="record__operate__groupview" style={toggleGroupViewShow}>
+                            <div className="groupview__wrapper">
+                                <div className="groupview__menu">
+                                    <svg className="groupview__close" style={toggleSearchClose} onClick={searchDelete} xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 24 24">
+                                        <path d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z"></path>
+                                    </svg>
+                                    {/* <span className="material-symbols-outlined groupview__close" style={toggleSearchClose} onClick={searchDelete}>Close</span> */}
+                                </div>
+                                <GroupView filteredSale={filteredSale} groupViewProps={groupViewProps} />
+                            </div>
+                        </div>
                     </div>
-                    {isEmpty(salesState.dbSale) ? <div>No Data</div> :
-                        <div className="records">
-                            {salesState.dbSale.map(sale => {
-                                return <Sale key={sale.id} sale={sale} salesState={salesState} remove={remove} />
-                            })
+                    {/* <div className="record__insert">
+                        <div className="record__insert__menu">                        
+                            <button type="button" className="btn btn-sm btn-secondary dialog__sale__open">
+                                新增銷售
+                            </button>
+                        </div>
+                    </div> */}
+                    <div className="record__overview">
+                        <input id="datepicker" />
+                        <div className="record__overview__view">
+                            {isEmpty(salesState.dbSale) ? <div>No Data</div> :
+                                <>
+                                    {salesState.dbSale.map(sale => {
+                                        return <Sale key={sale.id} sale={sale} salesState={salesState} remove={remove} />
+                                    })
+                                    }
+                                </>
                             }
                         </div>
-                    }
+                    </div>
                 </div>
             </div>
             {/* <Popup salesState={salesState} /> */}
@@ -273,55 +282,31 @@ async function handleDel(id, salesState) {
 
 function Sale(props) {
     const { sale, salesState, remove } = props;
-    const invisible = {
-        visibility: remove ? 'visible' : 'hidden'
-    }
-
 
     return (
-        <div className="record">
-            {sale.service == 'fix' ? <div className="fix_pseudo">補</div>
+        <div className="list">
+            {sale.service == 'fix' ? <div className="fix">補</div>
                 :
                 <>
-                    <div className="sale_pseudo">售</div>
+                    <div className="sale">售</div>
                     <div>{sale.spec}</div>
                     <div>{sale.quantity}</div>
                 </>
             }
-            <div className="d-sign">{sale.price}</div>
+            <div className="list__price">{sale.price}</div>
             {sale.note &&
                 <>
-                    <div className="star_pseudo"></div>
-                    <div className="note">
-                        <div className="title flex j-c-between">
-                            <span>ID: {sale.id}</span>
-                            <span className="del"><span className="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
-                                delete
-                            </span></span>
-                        </div>
-                        <div className="desc">{sale.note}</div>
+                    {/* <div className="star__pseudo"></div> */}
+                    <div className="list__note">
+                        <span>ID: {sale.id}</span>
+                        <span className="del"><span className="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
+                            delete
+                        </span></span>
+                        <div className="list__note__desc">{sale.note}</div>
                     </div>
-
                 </>
             }
-            {/* <div className="flex f-1 j-c-end red" style={invisible}>
-                <div className="flex">
-                    <div className="material-symbols-outlined" data-bs-toggle="tooltip" data-bs-placement="right" title={PAY[sale.pay.toUpperCase()]}>
-                        {sale.pay == 'cash' && 'monetizaoutlined" data-bs-toggle="tooltip" data-bs-placement="right" title={PAY[sale.pay.toUpperCase()]}>
-                        {sale.pay == 'cash' && 'monettion_on'}
-                        {sale.pay == 'credit' && 'credit_card'}
-                        {sale.pay == 'transfer' && 'phone_iphone'}
-                    </div>
-                    <div className="f-1">
-                        {sale.createdAt.split(' ')[1]}
-                    </div>
-                    <div className="del"><span className="material-symbols-outlined" onClick={() => handleDel(sale.id, salesState)}>
-                        delete
-                    </span></div>
-                </div>
-            </div> */}
         </div>
-
     )
 }
 
