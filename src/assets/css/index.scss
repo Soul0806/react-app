@@ -1,16 +1,15 @@
-@import './root';
 @import './extend';
 @import './mixin';
 @import './animation';
 @import './global';
 
-@import './cmpt/area';
-@import './cmpt/inch';
-@import './cmpt/sepc';
-@import './cmpt/note';
-@import './cmpt/popup';
-@import './cmpt/sale';
-@import './cmpt/record';
-@import './cmpt/todo';
-@import './cmpt/modal';
+@import './comps/area';
+@import './comps/inch';
+@import './comps/sepc';
+@import './comps/note';
+@import './comps/popup';
+@import './comps/sale';
+@import './comps/record';
+@import './comps/todo';
+@import './comps/modal';
 @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
